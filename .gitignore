@@ -7,3 +7,10 @@ section-heads.html
 
 # Release artifact is built by CI, not committed
 Ember.nnwtheme.zip
+
+# Rendered theme previews (nnw-theme-dev skill)
+test/preview/
+
+# Python bytecode (nnw-theme-dev skill tooling)
+__pycache__/
+*.pyc
