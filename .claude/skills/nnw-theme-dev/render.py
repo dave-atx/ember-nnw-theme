@@ -13,7 +13,7 @@ running NetNewsWire itself.
 
 Usage:
     python3 render.py FIXTURE.toml [--platform {mac,ios,ipad,all}]
-        [--theme DIR] [--nnw DIR] [--out DIR] [--keep-scripts] [--open]
+        [--theme DIR] [--nnw DIR] [--out DIR] [--no-scripts] [--open]
 """
 
 from __future__ import annotations
@@ -38,6 +38,52 @@ TEMPLATE_KEYS = [
 ]
 
 SCRIPT_RE = re.compile(r"<script\b[^>]*>.*?</script>", re.DOTALL | re.IGNORECASE)
+
+# Directories under a NetNewsWire checkout that hold the article-rendering JS.
+SCRIPT_DIRS = [
+    ("Shared", "Article Rendering"),
+    ("Mac", "MainWindow", "Detail"),
+    ("iOS", "Article"),
+]
+
+# NetNewsWire's JS calls window.webkit.messageHandlers.* (only inside scroll /
+# hover callbacks). Those handlers don't exist in a plain browser, so shim them
+# to no-ops; everything else (footnote styling, table wrapping, …) runs for real.
+WEBKIT_SHIM = ("window.webkit=window.webkit||{messageHandlers:"
+               "new Proxy({},{get:function(){return {postMessage:function(){}};}})};")
+
+
+def _find_script(nnw_dir: Path, name: str):
+    for parts in SCRIPT_DIRS:
+        path = nnw_dir.joinpath(*parts, name)
+        if path.is_file():
+            return path
+    return None
+
+
+def inject_scripts(page: str, platform: str, nnw_dir: Path) -> str:
+    """Inject and run NetNewsWire's real article JS in the preview.
+
+    NNW injects these as WKUserScripts (main + platform main + newsfoot), which
+    the iOS page skeleton *also* lists as <script src> tags but the macOS one
+    does not. So rather than rewrite existing refs, strip whatever scripts the
+    skeleton has and inject the real files ourselves for either platform. This
+    makes footnotes render as in-app: main.js's styleLocalFootnotes() adds the
+    `.footnote` class to inline `<sup>` markers (the badges), and newsfoot.js
+    turns them into click popovers. A webkit shim keeps message-handler calls
+    harmless; main.js self-runs processPage() on DOMContentLoaded.
+    """
+    page = SCRIPT_RE.sub("", page)
+    platform_main = "main_ios.js" if platform in ("ios", "ipad") else "main_mac.js"
+    blocks = ["<script>" + WEBKIT_SHIM + "</script>"]
+    for name in ("main.js", platform_main, "newsfoot.js"):
+        path = _find_script(nnw_dir, name)
+        if path:
+            blocks.append("<script>\n" + path.read_text() + "\n</script>")
+    bundle = "\n".join(blocks) + "\n"
+    if "</body>" in page:
+        return page.replace("</body>", bundle + "</body>", 1)
+    return page + bundle
 
 PCS_DARK_RE = re.compile(r"\(\s*prefers-color-scheme\s*:\s*dark\s*\)", re.IGNORECASE)
 PCS_LIGHT_RE = re.compile(r"\(\s*prefers-color-scheme\s*:\s*light\s*\)", re.IGNORECASE)
@@ -158,7 +204,7 @@ def build_fixture_dict(fixture: dict) -> dict:
     return data
 
 
-def render_platform(platform: str, fixture: dict, theme_dir: Path, nnw_dir: Path, keep_scripts: bool, dark: bool = False) -> str:
+def render_platform(platform: str, fixture: dict, theme_dir: Path, nnw_dir: Path, scripts: bool, dark: bool = False) -> str:
     is_ios = platform in ("ios", "ipad")
     skeleton_path = (
         nnw_dir / "Mac" / "MainWindow" / "Detail" / "page.html"
@@ -191,7 +237,9 @@ def render_platform(platform: str, fixture: dict, theme_dir: Path, nnw_dir: Path
     }
     page = substitute(skeleton_html, page_mapping)
 
-    if not keep_scripts:
+    if scripts:
+        page = inject_scripts(page, platform, nnw_dir)
+    else:
         page = SCRIPT_RE.sub("", page)
 
     # NNW loads the document via loadHTMLString, which defaults to UTF-8. A
@@ -222,7 +270,7 @@ def main() -> None:
     parser.add_argument("--nnw", type=Path, default=None, help="NetNewsWire source checkout (default: $NNW_SRC or <repo_root>/../NetNewsWire)")
     parser.add_argument("--out", type=Path, default=None, help="Output directory (default: <repo_root>/test/preview/)")
     parser.add_argument("--dark", action="store_true", help="Force the theme's dark (prefers-color-scheme: dark) rules; writes .dark.html files")
-    parser.add_argument("--keep-scripts", action="store_true", help="Do not strip <script> tags from the rendered HTML")
+    parser.add_argument("--no-scripts", dest="scripts", action="store_false", help="Strip NetNewsWire's JS instead of running it. By default render.py injects and runs main.js/<platform>.js/newsfoot.js (as NNW does via WKUserScripts on both platforms) so inline-style stripping, table/iframe wrapping, footnote badges and popovers all render as in-app. Use this to inspect the raw macro output instead.")
     parser.add_argument("--open", action="store_true", help="Open each rendered file with the macOS `open` command")
     args = parser.parse_args()
 
@@ -272,7 +320,7 @@ def main() -> None:
     written = []
     suffix = ".dark" if args.dark else ""
     for platform in platforms:
-        page = render_platform(platform, fixture, theme_dir, nnw_dir, args.keep_scripts, args.dark)
+        page = render_platform(platform, fixture, theme_dir, nnw_dir, args.scripts, args.dark)
         out_path = out_dir / f"{fixture_path.stem}.{platform}{suffix}.html"
         out_path.write_text(page)
         written.append(out_path)

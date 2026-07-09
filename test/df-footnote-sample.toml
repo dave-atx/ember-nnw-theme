@@ -1,0 +1,126 @@
+# NetNewsWire article fixture captured with nnwdump.
+# Replay with: python3 render.py df-footnote-sample.toml
+
+avatar_src = 'data:image/png;base64,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'
+byline = 'John Gruber'
+date_long = 'July 3, 2026'
+date_medium = 'Jul 3, 2026'
+date_short = '7/3/26'
+dateline_style = 'articleDateline'
+datetime_long = 'July 3, 2026 at 2:24:05 PM'
+datetime_medium = 'Jul 3, 2026 at 2:24 PM'
+datetime_short = '7/3/26, 2:24 PM'
+feed_link = 'https://daringfireball.net/'
+feed_link_title = 'Daring Fireball'
+preferred_link = 'https://daringfireball.net/2026/07/claudes_criminally_bad_mac_app_is_an_inside_job'
+text_size_class = 'mediumText'
+time_long = '2:24:05 PM PDT'
+time_medium = '2:24:05 PM'
+time_short = '2:24 PM'
+title = '★ Claude’s Criminally Bad Electron Mac App Is an Inside Job'
+body = '''
+<p>Anthropic released the first version of the Claude “desktop” app for MacOS in October 2024 — an Electron clunker that <a href="https://x.com/sdw/status/1852065949312233854" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">did not impress UI designers</a>. When it came out, <a href="https://daringfireball.net/linked/2024/10/31/anthropic-mac-app-electron-turd" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">I wrote</a>:</p>
+
+<blockquote>
+  <p><a href="https://openai.com/chatgpt/download/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">ChatGPT’s native Mac app</a>, on the other hand, is a truly
+native Mac app. It looks like a Mac app and feels like a Mac app
+because it really is a Mac app. I’ve liked it ever since it
+launched <a href="https://www.cultofmac.com/news/chatgpt-finally-gets-official-mac-app" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">back in May</a>, and it keeps getting better. And
+I keep using it more and more as my go-to resource for answering
+questions.</p>
+
+<p>I asked Claude, “What is the best way to engineer a native Mac
+app? What frameworks and developer tools should one use if the
+goal is a great Mac experience?” <a href="https://daringfireball.net/misc/2024/10/claude-mac-why.png" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Claude’s answer</a>
+started by positing it as a decision between SwiftUI and AppKit.
+Perhaps Anthropic’s Mac engineers should have asked Claude this
+same question before they built this turd of an Electron app.</p>
+</blockquote>
+
+<p>In March of this year, linking to Anthropic’s announcement that Claude Code and Claude Cowork can take control of your Mac to accomplish agentic tasks, <a href="https://daringfireball.net/linked/2026/03/24/claude-control-mac" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">I returned to the same question</a>:</p>
+
+<blockquote>
+  <p>The Claude Mac client itself remains a lazy Electron clunker. If
+Claude Code is so good I don’t get why they don’t prove it by
+using it to make an even halfway decent native Mac app.</p>
+</blockquote>
+
+<p>I’m not the only one who has pondered this. Drew Breunig wrote “<a href="https://www.dbreunig.com/2026/02/21/why-is-claude-an-electron-app.html" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Why is Claude an Electron App?</a>” in February this year:</p>
+
+<blockquote>
+  <p>On the surface, this ability should render Electron’s benefits
+obsolete! Rather than write one web app and ship it to each
+platform, we should write <em>one spec and test suite</em> and use coding
+agents to ship <em>native</em> code to each platform. If this ability is
+real and adopted, users get snappy, performant, native apps from
+small, focused teams serving a broad market.</p>
+
+<p>But we’re still leaning on Electron. Even Anthropic, one of the
+leaders in AI coding tools, who keeps publishing flashy agentic
+coding achievements, still uses Electron in the Claude desktop
+app. And it’s a slow, buggy, and bloated app.</p>
+
+<p><em>So why are we still using Electron and not embracing the
+agent-powered, spec driven development future?</em></p>
+
+<p>For one thing, coding agents are <em>really</em> good at the first 90% of
+dev. But that last bit — nailing down all the edge cases and
+continuing support once it meets the real world — remains hard,
+tedious, and requires plenty of agent hand-holding. [...]</p>
+
+<p>For now, Electron still makes sense. Coding agents are amazing.
+But the last mile of dev and the support surface area remains a
+real concern.</p>
+</blockquote>
+
+<p>I’m with Breunig up until the point where he accepts coding agents struggling with the final 10 percent as a justification for choosing Electron to create a Mac app. Plenty of people — individuals and teams alike — are using Claude Code to create terrific new native Mac apps. Just among my friends, <a href="https://misterplimsoll.app/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Glenn Fleishman</a>, <a href="https://lexfriedman.com/gnome/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Lex Friedman</a>, and <a href="https://sixcolors.com/post/2026/06/road-to-wwdc-2026-whats-a-developer/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Jason Snell<s>man</s></a>, have all in recent months used not just AI coding assistants in general, but Claude Code specifically, to create genuinely native Mac apps that meet their own personal high standards for Mac-assedness, forged through decades of literally professional Mac snobbery. A comprehensive catalog of Mac-assed apps made with the assistance of Claude Code, would, I suspect, be remarkably long.</p>
+
+<p>The struggle with the last 10 percent is unrelated to AI coding. It’s the nature of all software engineering. There’s a well-known adage that Wikipedia names the “<a href="https://en.wikipedia.org/wiki/Ninety–ninety_rule" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Ninety-Ninety Rule</a>”, attributed to Tom Cargill of Bell Labs:</p>
+
+<blockquote>
+  <p>The first 90 percent of the code accounts for the first 90 percent
+of the development time. The remaining 10 percent of the code
+accounts for the other 90 percent of the development time.</p>
+</blockquote>
+
+<p>Cargill’s mathematically humorous formulation resonates because it not only explains why the final 10 percent consumes half the time, but also why software projects tend to take twice as long as expected. This universal truth holds whether the code is human-written, AI-generated, or a mix of both.</p>
+
+<p>Breunig gets closer to the truth in a postscript, linking to <a href="https://news.ycombinator.com/item?id=47104973" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">the Hacker News thread discussing his post</a>. The top-rated comment in the HN thread is from <a href="https://borischerny.com/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Boris Cherny</a>, who works at Anthropic on the Claude Code team. <a href="https://news.ycombinator.com/item?id=47106368" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Cherny wrote</a>:</p>
+
+<blockquote>
+  <p>Boris from the Claude Code team here.</p>
+
+<p>Some of the engineers working on the app worked on Electron back
+in the day, so preferred building non-natively. It’s also a nice
+way to share code so we’re guaranteed that features across web
+and desktop have the same look and feel. Finally, Claude is
+great at it.</p>
+
+<p>That said, engineering is all about tradeoffs and this may change
+in the future!</p>
+</blockquote>
+
+<p>I would rephrase the guarantee that “features across web and desktop have the same look and feel” as guaranteeing that the Mac app is restrained by the limits of the web and cut off from the breadth of idiomatically native functionality provided by the Mac’s native frameworks. Electron guarantees that an app feels just as wrong on all platforms. But the more relevant tidbit is this sentence: “Some of the engineers working on the app worked on Electron back in the day, so preferred building non-natively.” So it’s not that <em>Claude</em> somehow prefers Electron, but that “some of the engineers” at Anthropic do.</p>
+
+<p><em>Some</em> is doing some heavy lifting there, given that “some of the engineers” includes <a href="https://felixrieseberg.com/about-me/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Felix Rieseberg</a>, currently Anthropic’s engineering lead for Claude Cowork and Claude Code Desktop, and previously engineering lead for the Claude apps for MacOS and Windows. Rieseberg didn’t merely “work on Electron back in the day”. He is one of the principal people responsible for creating Electron, and <a href="https://www.electronjs.org/governance" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">remains today one of three members of the Electron project’s Administrative Working Group</a> that “oversees the entire governance and project”. He literally <a href="https://www.safaribooksonline.com/library/view/introducing-electron/9781491996041/?ref=felixrieseberg.com" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">wrote <em>the</em> book on Electron</a>.</p>
+
+<p>Felix Rieseberg, quite obviously, is the answer to the question why Claude is an Electron app. It’s like wondering why all the screws in a building were hammered into the walls, and then finding out that the guy who oversaw construction founded and co-owns the world’s biggest hammer manufacturer. Windows uses Philips head screws, Linux uses hex screws, and MacOS requires Torx (<a href="https://www.nytimes.com/wirecutter/reviews/torx-screws-review/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">of course</a>) — but a hammer works the same way with all screws. That’s Electron. That’s Rieseberg’s baby.</p>
+
+<p>Rieseberg, it turns out, hasn’t only had a hand in Claude being an Electron app. Per both <a href="https://felixrieseberg.com/about-me/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">his personal home page</a> and <a href="https://www.linkedin.com/in/felixrieseberg/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">LinkedIn profile</a>, before joining Anthropic he spent over two years as the engineering manager for the desktop team at Notion, <a href="https://www.notion.com/desktop" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">whose client for Mac</a> is a massive 518 MB Electron app and a <a href="https://www.reddit.com/r/macapps/comments/1g153yc/anyone_here_using_the_notion_app_it_seems_like_it/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">notoriously</a> non-native experience.<sup id="fnr1-2026-07-03"><a href="#fn1-2026-07-03">1</a></sup> Before Notion, Rieseberg spent 2016–2021 “as a Senior Staff Engineer and Engineering Manager at Slack, where I got to support a team of amazing C++ engineers building the cross-platform desktop framework Electron — as well as Slack’s desktop apps for macOS, Windows, and Linux.”<sup id="fnr2-2026-07-03"><a href="#fn2-2026-07-03">2</a></sup></p>
+
+<p>Finding out that one guy — who is a senior Electron maintainer — has led the teams for the desktop clients for Slack, Notion, and now Claude is like discovering that it was one guy — whose family business was a distillery — who helmed the Titanic, piloted the Hindenburg, and then served as air traffic controller for Amelia Earhart.</p>
+
+
+<hr/>
+<ol>
+
+<li id="fn1-2026-07-03">
+<p>Notion, it’s worth pointing out, has perhaps seen the error of their ways. Apple <a href="https://www.macrumors.com/2026/06/12/notion-is-migrating-to-swiftui/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">prominently featured Notion</a> during the <a href="https://developer.apple.com/videos/play/wwdc2026/102" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Platforms State of the Union technical keynote</a> at WWDC last month, saying, “And apps that previously used cross-platform or web technologies like Notion are migrating their user interface to SwiftUI because they want a level of performance and UI consistency that other technologies can’t deliver.” This, just one year after Rieseberg left for Anthropic. Perhaps Claude will similarly seek to wash the Electron stink off the Claude app eventually. I suspect an Electron codebase is like sap, though — sticky, dirty, and harder to wash off the longer you wait. <a href="#fnr1-2026-07-03" title="Jump back to footnote 1 in the text.">↩︎</a></p>
+</li>
+
+<li id="fn2-2026-07-03">
+<p>Before getting promoted to engineering manager in charge of all of Slack’s “desktop” apps, Rieseberg started at Slack <a href="https://www.linkedin.com/in/felixrieseberg/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">as engineering team lead for Windows</a>, which offers an inkling as to his platform taste. <a href="#fnr2-2026-07-03" title="Jump back to footnote 2 in the text.">↩︎︎</a></p>
+</li>
+
+</ol>
+'''
