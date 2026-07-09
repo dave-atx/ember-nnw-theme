@@ -102,10 +102,12 @@ body .header {
 	line-height: 1.45;
 }
 
-/* Top-align both cells so the avatar sits beside the feed title rather than
-   floating to the vertical middle of a tall, multi-line byline. */
+/* Center both cells vertically. The avatar is sized to a standard two-line
+   feed title + byline stack (see .avatar img), so in the common case it fills
+   the masthead; when a byline runs to three or more lines the avatar sits at
+   the vertical middle of the taller stack rather than clinging to the top. */
 .headerTable td.header {
-	vertical-align: top;
+	vertical-align: middle;
 }
 
 body .header a:link, .header a:visited {
@@ -124,13 +126,19 @@ body .header a:link, .header a:visited {
 }
 
 /* Fixed, non-shrinking column for the icon with a gap so a long byline can
-   never crowd or overlap it. */
+   never crowd or overlap it. Width tracks the avatar so the column is no wider
+   than the icon it holds. */
 .avatar {
-	width: 48px;
+	width: 2.64em;
 	padding-inline-start: 16px;
 }
 
+/* Size the icon to a standard two-line masthead stack: the feed-title line
+   (0.82em, line-height 1.45) plus one byline line (1em, line-height 1.45) =
+   2.64em. The global `img { height: auto !important }` rule forces height to
+   track width, so setting width alone keeps the square icon that tall. */
 .avatar img {
+	width: 2.64em;
 	border-radius: 9px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
 	display: block;
