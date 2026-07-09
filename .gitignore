@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Local build / preview artifacts (screenshots live in docs/assets)
+preview.html
+section-heads.html
+
+# Release artifact is built by CI, not committed
+Ember.nnwtheme.zip

@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7
+
+      - name: Build theme bundle
+        run: |
+          zip -r -X Ember.nnwtheme.zip Ember.nnwtheme
+          unzip -l Ember.nnwtheme.zip
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: Ember.nnwtheme.zip
+          generate_release_notes: true
