@@ -491,19 +491,92 @@ body > .systemMessage { color: var(--system-message-color); }
 
 .newsfoot-footnote-popover-inner { background: var(--ember-bg); }
 
-body a.footnote,
-body a.footnote:visited,
-.newsfoot-footnote-popover + a.footnote:hover {
-	background: var(--ember-accent);
-	color: white;
-	transition: background-color 200ms ease-out;
+/* Inline reference marker: a light accent superscript numeral, not a filled
+   badge. core.css styles a.footnote as a pill; we strip that back to a plain
+   editorial numeral. The theme's global `sup` raise (below) was tuned for the
+   badge, so restore normal superscript positioning for footnote sups only. */
+.articleBody sup:has(> a.footnote) {
+	vertical-align: super;
+	position: static;
+	bottom: auto;
 }
 
-a.footnote:hover,
-.newsfoot-footnote-popover + a.footnote {
-	background: var(--ember-accent-2);
-	transition: background-color 200ms ease-out;
+.articleBody a.footnote,
+.articleBody a.footnote:link,
+.articleBody a.footnote:visited {
+	background: none;
+	color: var(--ember-accent);
+	text-decoration: none;
+	border-bottom: none;
+	padding: 0;
+	min-width: 0;
+	border-radius: 0;
+	top: 0;
+	font-size: 0.72em;
+	font-weight: 700;
+	line-height: 1;
+	transition: color 200ms ease-out;
 }
+
+.articleBody a.footnote:hover,
+.newsfoot-footnote-popover + a.footnote {
+	background: none;
+	border-bottom: none;
+	color: var(--ember-accent-2);
+}
+
+/* Footnote list at the foot of the article: a flagged "Notes" apparatus.
+   Reuse Ember's section-head flag bar (short accent tick) for the trailing
+   rule, label the block, and demote the list so it reads as endmatter. */
+.articleBody hr:has(+ ol) {
+	width: 2.1em;
+	height: 4px;
+	background: var(--ember-accent);
+	opacity: 1;
+	border-radius: 2px;
+	margin: 3.6em 0 0;
+}
+
+.articleBody hr + ol {
+	margin-top: 0.7em;
+	font-size: 0.86em;
+	line-height: 1.55;
+	color: var(--ember-ink-mute);
+	padding-left: 1.7em;
+}
+
+.articleBody hr + ol::before {
+	content: "Notes";
+	display: block;
+	margin: 0 0 1em -1.7em;
+	font-size: 0.82rem;
+	font-weight: 700;
+	letter-spacing: 0.13em;
+	text-transform: uppercase;
+	color: var(--ember-accent);
+}
+
+.articleBody hr + ol > li {
+	margin-bottom: 0.7em;
+	padding-left: 0.3em;
+}
+
+.articleBody hr + ol > li::marker {
+	color: var(--ember-ink-mute);
+	font-variant-numeric: tabular-nums;
+}
+
+.articleBody hr + ol > li p { margin: 0 0 0.5em; }
+
+/* The ↩︎ backlink: quiet, no underline/border, accent on hover. */
+.articleBody hr + ol a[href^="#fnr"]:link,
+.articleBody hr + ol a[href^="#fnr"]:visited {
+	color: var(--ember-ink-mute);
+	text-decoration: none;
+	border-bottom: none;
+	margin-left: 0.3em;
+}
+.articleBody hr + ol a[href^="#fnr"]:hover { color: var(--ember-accent); }
 
 /* =====================================================================
    Platform specifics
