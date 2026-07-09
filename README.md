@@ -60,6 +60,28 @@ Ember.nnwtheme/
 The `docs/` folder is the [project site](https://ember.marquard.org) served via GitHub
 Pages.
 
+## Developing & testing
+
+Theme changes are previewed by reproducing NetNewsWire's own rendering pipeline and
+screenshotting the result in WebKit — no need to launch the app for CSS/layout work.
+The tooling lives in [`.claude/skills/nnw-theme-dev/`](.claude/skills/nnw-theme-dev/)
+(a [Claude Code](https://claude.com/claude-code) skill, but the scripts are plain
+Python and usable on their own):
+
+```sh
+# Requires a NetNewsWire checkout for core.css + page skeletons.
+export NNW_SRC=/path/to/NetNewsWire        # or clone as a sibling ../NetNewsWire
+
+python3 .claude/skills/nnw-theme-dev/render.py test/long-byline.toml           # light
+python3 .claude/skills/nnw-theme-dev/render.py test/long-byline.toml --dark    # dark
+# → open the files it writes under test/preview/ in any browser
+```
+
+Test cases are TOML fixtures in `test/` whose keys mirror the `[[variables]]` in
+`template.html`. Capture new ones from a running NetNewsWire with the bundled
+`nnwdump` lldb command (see the skill's `SKILL.md`). Contributor and agent
+orientation lives in [`CLAUDE.md`](CLAUDE.md).
+
 ## Releasing
 
 Pushing a `v*` tag builds `Ember.nnwtheme.zip` and publishes a GitHub Release with the
