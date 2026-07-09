@@ -1,7 +1,7 @@
 # Ember — a NetNewsWire theme
 
-A warm, editorial theme for [NetNewsWire](https://netnewswire.com) in Apple system
-fonts — a vermilion accent, big headline type, a drop cap, flagged section headings,
+A warm, editorial theme for [NetNewsWire](https://netnewswire.com) using Apple system
+fonts with a vermilion accent, big headline type, a drop cap, flagged section headings,
 and full-bleed images. Designed for **macOS, iOS, and iPadOS**, with first-class light
 and dark modes.
 
