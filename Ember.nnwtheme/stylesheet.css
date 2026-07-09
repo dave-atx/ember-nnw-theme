@@ -129,18 +129,19 @@ body .header a:link, .header a:visited {
    never crowd or overlap it. Width tracks the avatar so the column is no wider
    than the icon it holds. */
 .avatar {
-	width: 2.64em;
+	width: 2.3em;
 	padding-inline-start: 16px;
 }
 
-/* Size the icon to a standard two-line masthead stack: the feed-title line
-   (0.82em, line-height 1.45) plus one byline line (1em, line-height 1.45) =
-   2.64em. The global `img { height: auto !important }` rule forces height to
-   track width, so setting width alone keeps the square icon that tall. */
+/* Size the icon to the *ink* of a standard two-line masthead: the feed-title
+   cap height down to the byline baseline (roughly 2.3em for a 0.82em title +
+   1em byline at line-height 1.45), rather than the full line box, which reads
+   too tall against the text. The global `img { height: auto !important }` rule
+   forces height to track width, so setting width alone keeps the square icon
+   that tall. */
 .avatar img {
-	width: 2.64em;
+	width: 2.3em;
 	border-radius: 9px;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
 	display: block;
 }
 
@@ -293,7 +294,7 @@ blockquote {
 	margin-top: 1.7em;
 	margin-bottom: 1.7em;
 	padding: 0.7em 1.2em 0.7em 1.15em;
-	font-size: 1.16em;
+	font-size: 1em;
 	line-height: 1.5;
 	font-weight: 500;
 	color: var(--ember-ink-soft);
@@ -403,6 +404,16 @@ iframe.nnw-constrained { max-height: 50vw; }
 figure {
 	margin-top: 1.6em;
 	margin-bottom: 1.6em;
+}
+
+/* When the article opens on an image or figure, don't stack its top margin on
+   top of the articleBody's own padding — the leading media should sit right
+   below the dateline rule, matching how a text lede opens. */
+.articleBody > figure:first-child,
+.articleBody > img:first-child,
+.articleBody > p:first-child > img:only-child,
+.articleBody > a:first-child > img {
+	margin-top: 0;
 }
 
 /* Full-bleed media: images span the full width of the article column,
