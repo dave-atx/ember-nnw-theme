@@ -54,9 +54,8 @@ Fixtures live in `test/*.toml`, each holding one article's template variables.
    ```
 
    Options: `--platform mac|ios|ipad|all`, `--theme DIR`, `--nnw DIR`,
-   `--out DIR`, `--keep-scripts` (leave NNW's `<script>` tags in; off by
-   default because they need app message handlers that don't exist in a plain
-   browser), `--open` (open the files in a browser).
+   `--out DIR`, `--dark` (see below), `--no-scripts` (see "Fidelity notes"),
+   `--open` (open the files in a browser).
 
 2. **View / screenshot.** Humans can just open the file (`--open`). Agents
    screenshot it with a WebKit MCP (WebKit = faithful to NNW) — this repo uses
@@ -152,10 +151,19 @@ smart quotes / em dashes.
 ## Fidelity notes
 
 - WebKit renders `-apple-system` fonts faithfully, so type is accurate.
-- `<script>`-driven behavior (footnote popovers, image zoom, `processPage()`) is
-  **not** exercised by default — this loop is for CSS/layout/typography. Use
-  `--keep-scripts` only to inspect the markup they'd act on.
+- **NNW's article JS runs by default, on both platforms.** NetNewsWire injects
+  `main.js` + the platform script + `newsfoot.js` as `WKUserScript`s (not via
+  `page.html`), so `processPage()` runs on Mac *and* iOS — inline-style stripping,
+  table/iframe wrapping, image-src resolution, footnote badges (`styleLocalFootnotes()`
+  adds `.footnote` at runtime) and newsfoot popovers. render.py reproduces this,
+  with a `window.webkit.messageHandlers` shim so the native-only scroll/hover/zoom
+  calls no-op instead of throwing. Pass `--no-scripts` to skip it and inspect the
+  raw macro output (smaller, un-transformed HTML) — useful when a bug might live in
+  the template itself rather than after the JS runs.
 - render.py injects `<meta charset="utf-8">` (NNW's `loadHTMLString` defaults to
   UTF-8; a bare `file://` would otherwise mangle smart quotes).
-- See `references/pipeline.md` for the authoritative assembly order and the exact
-  macOS-vs-iOS differences (`font-size`, `text_size_class`, scripts).
+- Not reproduced (not theme-relevant): the `ContentRules.json` network blocking
+  layer and the `theverge.com`-only mojibake fixup — both described in
+  `references/pipeline.md`.
+- See `references/pipeline.md` for the authoritative two-pass assembly order and
+  the exact macOS-vs-iOS differences (`font-size`, `text_size_class`, scripts).
