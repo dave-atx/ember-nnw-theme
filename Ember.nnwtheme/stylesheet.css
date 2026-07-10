@@ -235,7 +235,12 @@ body .header a:link, .header a:visited {
 	padding: 0px 1px;
 }
 
-/* Drop cap on the opening paragraph */
+/* Drop cap on the opening paragraph. flow-root contains the floated cap within
+   the paragraph so a short opener (one line of text + a 3.5em cap) doesn't leak
+   the float onto the next block — otherwise a following pre, which is its own
+   BFC, dodges the cap and gets shoved right/narrowed or overlapped. */
+.articleBody > p:first-of-type { display: flow-root; }
+
 .articleBody > p:first-of-type::first-letter {
 	float: left;
 	font-size: 3.5em;
@@ -348,7 +353,6 @@ code {
 
 pre code {
 	letter-spacing: -.027em;
-	font-size: 0.9375em;
 	border: none;
 	padding: 0;
 	background: none;
