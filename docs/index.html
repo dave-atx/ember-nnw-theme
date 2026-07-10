@@ -108,6 +108,11 @@
 
   footer{border-top:1px solid var(--rule); padding:34px 0 60px; color:var(--mute); font-size:14px; text-align:center;}
   footer a{color:var(--mute); text-decoration:underline;}
+
+  /* Version stamp under the hero CTA — populated from the GitHub releases API; stays hidden if that fails */
+  .version{margin-top:20px; min-height:1em; font-size:13.5px; color:var(--mute);}
+  .version a{color:var(--mute); text-decoration:none; border-bottom:1px solid var(--rule);}
+  .version a:hover{color:var(--ink);}
 </style>
 </head>
 <body>
@@ -125,6 +130,7 @@
       <a class="btn btn-ghost" href="https://github.com/dave-atx/ember-nnw-theme/releases/latest/download/Ember.nnwtheme.zip">Download&nbsp;.zip</a>
       <a class="btn btn-ghost" href="https://github.com/dave-atx/ember-nnw-theme">View on GitHub</a>
     </div>
+    <p class="version" id="version"></p>
   </div>
 </header>
 
@@ -181,6 +187,31 @@
     Open source under the <a href="https://github.com/dave-atx/ember-nnw-theme/blob/main/LICENSE">Apache 2.0</a> license · <a href="https://github.com/dave-atx/ember-nnw-theme">Source on GitHub</a>
   </div>
 </footer>
+
+<script>
+  // Stamp the latest released version + date under the hero CTA. If the API is
+  // unreachable, the element simply stays empty — nothing is hardcoded.
+  (function () {
+    var el = document.getElementById('version');
+    if (!el) return;
+    fetch('https://api.github.com/repos/dave-atx/ember-nnw-theme/releases/latest', {
+      headers: { Accept: 'application/vnd.github+json' }
+    })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (data) {
+        if (!data || !data.tag_name) return;
+        var date = new Date(data.published_at).toLocaleDateString('en-US', {
+          year: 'numeric', month: 'long', day: 'numeric'
+        });
+        var a = document.createElement('a');
+        a.href = data.html_url;
+        a.textContent = 'Ember ' + data.tag_name;
+        el.appendChild(a);
+        el.appendChild(document.createTextNode(', released ' + date));
+      })
+      .catch(function () { /* leave the stamp empty */ });
+  })();
+</script>
 
 </body>
 </html>
