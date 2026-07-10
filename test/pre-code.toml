@@ -1,0 +1,24 @@
+# NetNewsWire article fixture captured with nnwdump.
+# Replay with: python3 render.py hn.toml
+
+avatar_src = 'data:image/png;base64,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'
+byline = 'Diogenesian'
+date_long = 'July 9, 2026'
+date_medium = 'Jul 9, 2026'
+date_short = '7/9/26'
+dateline_style = 'articleDateline'
+datetime_long = 'July 9, 2026 at 12:43:29 PM'
+datetime_medium = 'Jul 9, 2026 at 12:43 PM'
+datetime_short = '7/9/26, 12:43 PM'
+feed_link = 'https://news.ycombinator.com/bestcomments'
+feed_link_title = 'Hacker News: Best Comments'
+preferred_link = 'https://news.ycombinator.com/item?id=48851406'
+text_size_class = 'largeText'
+time_long = '12:43:29 PM PDT'
+time_medium = '12:43:29 PM'
+time_short = '12:43 PM'
+title = 'New comment by Diogenesian in "GLM 5.2 is nearly as accurate as a human book keeper"'
+body = '''
+<p>This shouldn&#39;t be ignored in the discussion here:</p><p></p><pre><code>  The job performed by the humans was broader than what was requested of the model in this benchmark: humans also had to find the relevant invoices (searching through mailboxes, or requesting them from providers) and reason through any circumstances which cannot be inferred from the bank feed and invoices/receipts on their own. In the benchmark these circumstances are presented to the model as “user notes.&#34;
+</code></pre>
+This is precisely the kind of fine print on white-collar AI capability that companies keep running into: pretty much any non-entry office job worth having involves a lot of undocumented (even undocumentable) problems requiring judgment and experience.<p>And I would be pretty nervous about asking any of the frontier LLMs to retrieve invoices: &#34;cool, Claude logged that it found the May 6th bill from the paper supplier, I am sure it didn&#39;t just make something up arbitrary, then compound on the error by agentically iterating over the made-up invoice lurking in its reasoning traces. I checked the first 30 times and there were no problems!&#34;</p>'''
