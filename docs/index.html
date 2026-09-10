@@ -87,9 +87,10 @@
     .shots.phone{max-width:340px; margin:0 auto;}
   }
 
-  /* Features */
-  .features{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:8px;}
-  @media (max-width:720px){ .features{grid-template-columns:1fr;} }
+  /* Features — a trailing partial row centers instead of hanging left. */
+  .features{display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:8px;}
+  .features .feature{flex:1 1 calc((100% - 40px)/3); min-width:min(260px,100%); max-width:calc((100% - 40px)/3);}
+  @media (max-width:720px){ .features .feature{flex-basis:100%; max-width:100%;} }
   .feature{background:var(--card); border:1px solid var(--rule); border-radius:14px; padding:20px 22px;}
   .feature h3{margin:0 0 6px; font-size:16.5px; font-weight:700; letter-spacing:-.01em;}
   .feature p{margin:0; color:var(--mute); font-size:14.5px;}
@@ -166,6 +167,7 @@
       <div class="feature"><h3>Flagged section heads</h3><p>A short accent bar marks each section — structure you can scan.</p></div>
       <div class="feature"><h3>Full-bleed images</h3><p>Photos span the full column edge-to-edge, with captions kept neatly inset.</p></div>
       <div class="feature"><h3>Light &amp; dark, done right</h3><p>Both themes are designed, not inverted — with a warm ground on either side.</p></div>
+      <div class="feature"><h3>Footnotes that just work</h3><p>Tap-to-read popovers for Markdown, Substack, and a dozen WordPress plugins — far past the default.</p></div>
     </div>
   </div>
 </section>
