@@ -1,0 +1,200 @@
+# NetNewsWire article fixture captured with nnwdump.
+# Replay with: python3 render.py df-image.toml
+
+avatar_src = 'data:image/png;base64,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'
+byline = 'John Gruber'
+date_long = 'July 11, 2026'
+date_medium = 'Jul 11, 2026'
+date_short = '7/11/26'
+dateline_style = 'articleDateline'
+datetime_long = 'July 11, 2026 at 12:43:35 PM'
+datetime_medium = 'Jul 11, 2026 at 12:43 PM'
+datetime_short = '7/11/26, 12:43 PM'
+feed_link = 'https://daringfireball.net/'
+feed_link_title = 'Daring Fireball'
+preferred_link = 'https://daringfireball.net/2026/07/exactly_like_om_malik'
+text_size_class = 'largeText'
+time_long = '12:43:35 PM PDT'
+time_medium = '12:43:35 PM'
+time_short = '12:43 PM'
+title = '★ Exactly Like Om Malik'
+body = '''
+<p><a href="https://crazystupidtech.com/2026/06/27/how-an-argument-with-om-spawned-this-newsletter-rip-brother/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Fred Vogelstein</a> (Om’s partner at Crazy Stupid Tech):</p>
+
+<blockquote>
+  <p>We met a week later at his outdoor office — a bench in SF’s South
+Park. He told me that he was going emeritus at True Ventures, the
+VC firm, and that he was going to spend more of his time writing.</p>
+
+<p>It was awesome to see him. Sitting on a bench with Om could be
+quasi religious. He talked so softly and deliberately that it
+forced you to slow down, lean in and forget about everything else.</p>
+
+<p>What became clear was that we actually saw the world the same
+way. We didn’t agree what Wired should be doing about it. But
+we did agree on this: While everyone was fixated on big tech,
+an explosion in tech innovation not seen in a generation was
+taking place. We both agreed that not enough people were
+writing about it.</p>
+
+<p>“Maybe we should do something together then,” I said.</p>
+</blockquote>
+
+<p><a href="https://www.threads.com/@joannastern/post/DaBo4a2CeNE" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Joanna Stern</a>:</p>
+
+<blockquote>
+  <p>So saddened to hear about <a href="https://www.threads.com/@om/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">@om</a>. His writing was one of the
+reasons I went into tech journalism. Right out of college, I was
+working at a PR agency and started reading his site. It inspired
+me to start blogging.</p>
+
+<p>Years later, he tried to recruit me. Even after I went elsewhere,
+he’d send me notes telling me how proud he was of my work. He’d
+often review my reviews, so here’s mine of him: Generous with his
+time. Honest with his feedback. Endlessly encouraging to those
+coming up behind him.</p>
+</blockquote>
+
+<p><a href="https://www.threads.com/@crumbler/post/DaBhc8XjImx" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Casey Newton</a>:</p>
+
+<blockquote>
+  <p>Very sad to hear about the passing of <a href="https://www.threads.com/@om/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">@om</a>. He shared two lasting
+lessons with me: the first when I was a cub tech reporter at the
+SF Chronicle; he interviewed me for a job but told me he didn’t
+think I could hack it at GigaOm because newspaper writers were too
+slow. It taught me that I needed to get out of print media ASAP.</p>
+
+<p>The second was many years later, when I was having a drink with
+him and some other reporters. We asked him for advice. “Never name
+a blog after yourself,” he said. RIP</p>
+</blockquote>
+
+<p><a href="https://blog.jim-nielsen.com/2026/tribute-to-om/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Jim Nielsen</a>:</p>
+
+<blockquote>
+  <p>One day on Twitter I got a DM from someone with the handle @om.</p>
+
+<p>“I don’t know who this is,” I thought, “but damn that is a great
+handle!”</p>
+
+<p>Then I peaked at the follower count: over 1 million!</p>
+
+<p>“WTF? Who is this???” I thought.</p>
+
+<p>I’d never — then or since — been contacted by someone with such
+a high profile online.</p>
+
+<p>How was I even on this person’s radar?</p>
+</blockquote>
+
+<p>Om seemingly read <em>everything</em>.</p>
+
+<p><a href="https://www.linkedin.com/pulse/how-om-malik-finally-got-his-big-break-jason-hiner-7d3fc/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Jason Hiner, in a post on LinkedIn</a>:</p>
+
+<blockquote>
+  <p><em>This is the opening anecdote from “Chapter Six: The Blogger” from
+my 2016 book,</em> Follow the Geeks<em>, co-authored with Lyndsey Gilpin.
+Om once told me that “For three years, it was every day a
+rejection” as he tried to break into tech journalism. This was how
+he finally broke through.</em></p>
+
+<p>David Churbuck checked his voicemail. There was a message from
+someone looking for a job.</p>
+
+<p>Because of the guy’s thick Indian accent, David could barely make
+out what he was saying, except that he worked for a wire service
+down on Wall Street and was a big Forbes fan. The guy heard that
+Forbes was going to be one of the first media companies to launch
+its magazine on the web and he wanted to come help.</p>
+
+<p>David ignored the message. He had a small team and hardly
+any budget.</p>
+
+<p>Then he got a fax. It was from this guy, explaining why he was a
+perfect fit to join the team.</p>
+
+<p>The next day, the guy left another message. If David would just
+give him a call, it would be great to talk with him. He wouldn’t
+regret it.</p>
+
+<p>Ignore.</p>
+
+<p>The following day, he left another. Whatever time limit there was
+for voicemails, this guy always used up every minute.</p>
+
+<p>Still, David ignored it.</p>
+
+<p>And then the guy started getting creative.</p>
+
+<p>[...]</p>
+
+<p>One of the journalists, Michael Noer, said half jokingly, “Just
+call the guy in!” So, partly out of admiration, and partly out of
+pure morbid curiosity, David called him back.</p>
+
+<p>One interview. Fifteen minutes. That was all it took for David to
+hire Om Malik.</p>
+</blockquote>
+
+<p>“They do not sell themselves”, <a href="https://daringfireball.net/2026/06/om" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Om told me</a> in a separate story from that same time in his life.</p>
+
+<p>Hiner made <a href="https://static1.squarespace.com/static/5793d5d7725e254c7c7faefd/t/6a4060f2f60bc831ed1a981e/1782604018112/om-malik-chapter-6-follow-the-geeks.pdf" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">the entire chapter available to read as a handsome PDF</a>. It’s so good, and so utterly Om. It’s a crackerjack good read about the very early “WWW” days of the web. A bit:</p>
+
+<blockquote>
+  <p>Om is charming and disarming, forceful and accommodating. He has
+an easy smile, a quiet, melodic voice, and a handsome face. Once
+he opens his mouth, it’s obvious how much he reads and how thirsty
+he is to learn. It’s rare to meet someone who is ready to debate
+you on almost any topic, but who’s also genuinely curious about
+your life and your opinion. It all makes the burly journalist one
+of the most huggable people on Earth. That’s what David was up
+against when he met Om. He didn’t stand a chance.</p>
+
+<p>“It was destiny,” said David, with a self-deprecating laugh. “It
+was total destiny.”</p>
+</blockquote>
+
+<p>Om’s close friend, photographer Christopher Michel, published “<a href="https://www.christophermichel.com/People/Om-the-Great/n-WkMDW" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">Om the Great</a>”, an enormous gallery of portraits of him. Here’s just one of hundreds:</p>
+
+<p><a href="https://daringfireball.net/misc/2026/06/michel-om-malike-2024.jpeg" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">
+  <img src="https://daringfireball.net/misc/2026/06/michel-om-malike-2024.jpeg" alt="July 2024 portrait of Om Malik, holding a camera, by Christopher Michel." loading="lazy"/></a></p>
+
+<p>Lastly, here’s a story from Andrew Sasaki, which he sent me by email, and I’m reproducing with his permission. It’s the perfect Om story:</p>
+
+<blockquote>
+  <p>I met Om briefly at a tech event in NYC around 2008 or so. He was
+talking with a friend of mine, and when I walked up he introduced
+himself: “Hi, I’m Om.”</p>
+
+<p>“‘Om’ like ‘Om Malik’?” I asked.</p>
+
+<p>This amused him greatly.</p>
+
+<p>“Yes, exactly like Om Malik”, he said.</p>
+
+<p>A couple of years later the iPad had just launched, and I saw my
+friend again at another industry event. I asked him a question
+related to the unprecedented development effort we were already
+seeing around the new platform that didn’t yet have a single
+compelling use case.</p>
+
+<p>“You know who I bet would know about that? Om Malik”, he said, and
+gave me Om’s email address.</p>
+
+<p>I hesitated to bother Om, but eventually reached out with my
+question. “I don’t know if you remember me, but we met a couple of
+years ago, and…” blah blah blah.</p>
+
+<p>Naturally, there was no answer. Why would there be? He doesn’t
+know me from Adam, and he’s Om Fucking Malik.</p>
+
+<p>Except there <em>was</em> an answer about 4 days later. Om started off by
+apologizing for the delay in responding, but he had taken the time
+to research his answer before writing to me. And of course, his
+answer was thoughtful, insightful, and absolutely correct. I was
+gobsmacked at the generosity he had shown replying to someone he
+didn’t even know. He gave no indication that he even remembered me
+until his signature line:</p>
+
+<p>“Exactly Like Om Malik”</p>
+</blockquote>'''
