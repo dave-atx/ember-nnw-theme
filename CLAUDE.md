@@ -61,8 +61,41 @@ Capture new fixtures from a running NetNewsWire with the `nnwdump` lldb command
 - Additional footnote popovers depend on NetNewsWire's **Article JavaScript**
   setting (enabled by default). Keep the adapter inline in `template.html`, and
   test it against stock upstream NetNewsWire as well as any pending footnote PR.
-- Releases are tag-driven: pushing a `v*` tag builds the zip and publishes a
-  GitHub Release (`.github/workflows/release.yml`). Install links point at
-  `releases/latest`.
+- Releases are tag-driven — see **Releasing** below.
 - Both light and dark grounds are warm (not a naive inversion); the accent is
   vermilion in light, a lighter coral in dark.
+- Commit messages are Conventional Commits; `.github/cliff.toml` turns them into
+  the release notes, so the type prefix decides which section a change lands in
+  (and `chore(release):` / `ci:` are omitted entirely).
+
+## Releasing
+
+Two version numbers move together, and they are **not** the same number:
+
+| Where | Form | Example |
+|-------|------|---------|
+| Git tag | `vMAJOR.MINOR` | `v2.0` |
+| `Ember.nnwtheme/Info.plist` → `Version` | a plain monotonic **integer**, +1 every release | `7` |
+
+NetNewsWire compares that integer to decide whether an installed theme is
+out of date, so it must increase on every release regardless of how the tag
+moves. It is *not* derived from the tag — historically it ran one ahead of the
+minor (v1.0→1 … v1.5→6), but that was a coincidence of only ever bumping the
+minor, and `v2.0` breaks it. When in doubt: last integer + 1.
+
+Nothing else carries a version. `docs/index.html` reads the current release from
+the GitHub API at page load, so the site needs no edit.
+
+```sh
+# 1. Bump the integer in Ember.nnwtheme/Info.plist, then commit it alone:
+git commit -am 'chore(release): v2.0'
+
+# 2. Tag and push. The tag is what triggers the release.
+git tag v2.0
+git push origin main --tags
+```
+
+Pushing the tag runs `.github/workflows/release.yml`, which zips the bundle to
+`Ember.nnwtheme.zip`, generates notes from the commits since the last tag with
+git-cliff, and publishes a GitHub Release. Install links on the site and in the
+README point at `releases/latest`, so they pick it up with no further change.
