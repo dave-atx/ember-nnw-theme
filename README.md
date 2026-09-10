@@ -36,6 +36,8 @@ Then choose **Ember** as your article theme in NetNewsWire's settings.
 - **Flagged section headings** — a short accent bar marks each `<h2>`/`<h3>`.
 - **Prominent pull-quotes** with a tinted panel and accent rule.
 - **Full-bleed images** that span the column edge-to-edge, captions kept inset.
+- **Broader footnote support** with native-style popovers for common Markdown,
+  Substack, and WordPress footnote formats.
 - **Designed light and dark** — both grounds are warm, not a naive inversion.
 - **Platform-tuned** — Dynamic Type on iOS, a larger default size on iPad, and a
   desktop type scale on macOS.
@@ -45,6 +47,11 @@ Then choose **Ember** as your article theme in NetNewsWire's settings.
 A recent version of NetNewsWire (which supports custom `.nnwtheme` themes) on macOS,
 iOS, or iPadOS.
 
+Ember's additional footnote formats require NetNewsWire's **Article JavaScript**
+setting, which is enabled by default. If it is disabled, Ember still renders normally,
+but only the footnote formats recognized directly by that NetNewsWire version receive
+interactive popovers.
+
 ## Structure
 
 An `.nnwtheme` bundle is three files. NetNewsWire always loads its own `core.css`
@@ -53,7 +60,7 @@ first, then a theme's `stylesheet.css` (which fully replaces the default stylesh
 ```
 Ember.nnwtheme/
 ├── Info.plist       theme name, identifier, author, version
-├── template.html    the article scaffold NetNewsWire fills in
+├── template.html    the article scaffold, plus the inline footnote adapter
 └── stylesheet.css   the theme (self-contained; replaces the default)
 ```
 

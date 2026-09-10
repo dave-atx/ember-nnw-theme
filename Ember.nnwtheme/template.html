@@ -45,3 +45,176 @@ body: The body of the article.
 <div class="externalLink">[[external_link_label]] <a href="[[external_link]]">[[external_link_stripped]]</a></div>
 <div id="bodyContainer" class="articleBody [[text_size_class]]">[[body]]</div>
 </article>
+
+<!--
+	NetNewsWire themes cannot bundle a separate JavaScript file. This inline adapter
+	normalizes common footnote markup to the .footnote + local-target convention
+	understood by NetNewsWire's built-in newsfoot popover script.
+-->
+<script>
+(() => {
+	const article = document.querySelector(".articleBody");
+	if (!article) return;
+
+	const backlinkSelector = ".reversefootnote, .footnoteBackLink, .footnote-return, .footnote-backref, .footnote-back, .footnote-back-link, .easy-footnote-to-top, .modern-footnotes-scroll-to-footnote, .footnote_plugin_index a, [role='doc-backlink'], [data-footnote-backref]";
+	const normalizedNotes = document.createElement("div");
+	normalizedNotes.hidden = true;
+	normalizedNotes.dataset.emberFootnotes = "";
+	const backlinkDestinations = new Map();
+	let noteNumber = 0;
+
+	function localHashId(link) {
+		const href = link.getAttribute("href");
+		if (!href || !href.includes("#")) return;
+		try {
+			const url = new URL(href, document.baseURI);
+			const base = new URL(document.baseURI);
+			if (url.origin !== base.origin || !url.hash) return;
+			if ((url.pathname !== base.pathname || url.search !== base.search) && (url.pathname !== "/" || url.search)) return;
+			return decodeURIComponent(url.hash.slice(1));
+		} catch (_) {
+			return;
+		}
+	}
+
+	function isBacklink(link) {
+		return link.matches(backlinkSelector);
+	}
+
+	function looksLikeReference(link) {
+		return link.matches(".footnote, .footnote-ref, .footnoteRef, .jetpack-footnote, .footnote-identifier-link, [role='doc-noteref'], [data-footnote-ref], [id^='footnote-anchor-']") ||
+			link.matches("sup > a, sup > div > a, .easy-footnote > a, .footnote_referrer > a") ||
+			!!link.querySelector(":scope > sup");
+	}
+
+	function looksLikeNote(target) {
+		if (/^(fnref|user-content-fnref-|identifier_|footnote-anchor-)/.test(target.id)) return false;
+		return target.matches("[role='doc-endnote'], [id^='fn'], [id^='footnote'], [id^='easy-footnote-bottom-']") ||
+			!!target.closest(".footnotes, [data-footnotes], .wp-block-footnotes, .easy-footnotes-wrapper, .footnote-reference-container");
+	}
+
+	function noteContainer(target) {
+		if (target.matches(".easy-footnote-margin-adjust")) return target.closest("li") || target;
+		if (target.closest(".footnote-reference-container")) return target.closest("tr")?.querySelector("td.footnote_plugin_text") || target;
+		return target;
+	}
+
+	function substackNote(target) {
+		const wrapper = document.createElement("div");
+		for (let node = target.nextSibling; node; node = node.nextSibling) {
+			if (node instanceof HTMLAnchorElement && node.matches("a[id^='footnote-']")) break;
+			wrapper.appendChild(node.cloneNode(true));
+		}
+		return wrapper;
+	}
+
+	function noteFor(reference) {
+		const modern = reference.closest(".modern-footnotes-footnote");
+		if (modern) {
+			const id = reference.getAttribute("aria-describedby");
+			const target = id && document.getElementById(id);
+			if (target) return {content: target, hide: target};
+		}
+
+		const referrer = reference.closest(".footnote_referrer");
+		if (referrer?.querySelector(":scope > a") === reference) {
+			const marker = referrer.querySelector(".footnote_plugin_tooltip_text[id]");
+			const tooltip = referrer.querySelector(".footnote_tooltip[id]");
+			const targetId = marker?.id.replace("footnote_plugin_tooltip_", "footnote_plugin_reference_");
+			const target = targetId && document.getElementById(targetId);
+			const content = target ? noteContainer(target) : tooltip;
+			if (content) return {content, hide: tooltip};
+		}
+
+		if (!looksLikeReference(reference)) return;
+		const targetId = localHashId(reference);
+		const target = targetId && document.getElementById(targetId);
+		if (!target || target.contains(reference)) return;
+		const explicitlySemantic = reference.matches(".footnote, .footnote-ref, .footnoteRef, [role='doc-noteref'], [data-footnote-ref]");
+		if (!looksLikeNote(target) && !explicitlySemantic) return;
+		return {content: reference.matches("a[id^='footnote-anchor-']") ? substackNote(target) : noteContainer(target)};
+	}
+
+	function cleanContent(source, reference) {
+		const copy = source.cloneNode(true);
+		const referenceIds = new Set([reference.id, reference.closest("sup[id]")?.id].filter(Boolean));
+		for (const link of copy.querySelectorAll("a")) {
+			if (isBacklink(link) || referenceIds.has(localHashId(link))) link.remove();
+		}
+		return copy.innerHTML;
+	}
+
+	for (const reference of article.querySelectorAll("a")) {
+		if (isBacklink(reference)) continue;
+		const note = noteFor(reference);
+		if (!note) continue;
+		const content = cleanContent(note.content, reference);
+		if (!content.trim()) continue;
+
+		const referenceIds = [
+			reference.id,
+			reference.closest("sup[id]")?.id,
+			reference.querySelector("[id]")?.id
+		].filter(Boolean);
+		let returnTarget = reference.id ? reference : reference.closest("sup[id]") || reference.querySelector("[id]");
+
+		// The open Substack patch identifies references by this ID. Move it to a
+		// same-position landmark so either patched or stock NetNewsWire uses the
+		// normalized target below, while the article's return links still work.
+		if (reference.matches("a[id^='footnote-anchor-']")) {
+			const landmark = document.createElement("span");
+			landmark.id = reference.id;
+			landmark.setAttribute("aria-hidden", "true");
+			reference.before(landmark);
+			reference.removeAttribute("id");
+			returnTarget = landmark;
+		}
+		if (!returnTarget?.id) {
+			const landmark = document.createElement("span");
+			do {
+				landmark.id = `ember-footnote-reference-${++noteNumber}`;
+			} while (document.getElementById(landmark.id));
+			landmark.setAttribute("aria-hidden", "true");
+			reference.before(landmark);
+			returnTarget = landmark;
+		}
+		for (const id of referenceIds) backlinkDestinations.set(id, returnTarget.id);
+
+		const target = document.createElement("div");
+		do {
+			target.id = `ember-footnote-${++noteNumber}`;
+		} while (document.getElementById(target.id));
+		target.innerHTML = content;
+		normalizedNotes.appendChild(target);
+		reference.setAttribute("href", `#${target.id}`);
+		reference.classList.add("footnote");
+		if (note.hide) note.hide.hidden = true;
+	}
+
+	if (normalizedNotes.hasChildNodes()) article.appendChild(normalizedNotes);
+
+	// Feed authors often emit absolute backlinks to the original web article.
+	// Point recognized return links at the corresponding marker in this rendered
+	// document and handle the scroll here so NetNewsWire never opens the website.
+	for (const backlink of article.querySelectorAll("a[href*='#']")) {
+		const destination = backlinkDestinations.get(localHashId(backlink));
+		if (!destination || backlink.classList.contains("footnote")) continue;
+		backlink.setAttribute("href", `#${destination}`);
+		backlink.dataset.emberFootnoteBacklink = "";
+	}
+
+	article.addEventListener("click", event => {
+		if (!(event.target instanceof Element)) return;
+		const backlink = event.target.closest("a[data-ember-footnote-backlink]");
+		if (!backlink) return;
+		const targetId = localHashId(backlink);
+		const target = targetId && document.getElementById(targetId);
+		if (!target) return;
+		event.preventDefault();
+		event.stopPropagation();
+		target.scrollIntoView({block: "center"});
+		const marker = target.matches("a.footnote") ? target : target.querySelector("a.footnote") || target.closest("a.footnote") || target.nextElementSibling;
+		if (marker instanceof HTMLAnchorElement) marker.focus({preventScroll: true});
+	});
+})();
+</script>

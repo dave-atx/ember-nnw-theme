@@ -58,7 +58,7 @@ then run through the site-specific fixup below and handed to `loadHTMLString`.
 
 ## Scripts — main.js / newsfoot.js run on **both** platforms
 
-The scripts are **not** iOS-only, and are not driven by `page.html`'s `<script>`
+The app scripts are **not** iOS-only, and are not driven by `page.html`'s `<script>`
 tags. `WebViewConfiguration.articleScripts` builds
 `["main", "main_ios"|"main_mac", "newsfoot"]` (platform-selected via `#if os(iOS)`)
 and adds each as a `WKUserScript(injectionTime: .atDocumentStart, forMainFrameOnly: true)`
@@ -88,6 +88,13 @@ Only a few things are genuinely native-only and do nothing in a plain browser:
 `window.webkit.messageHandlers.*`, and iOS image-click-to-zoom. A theme author
 never needs to see those.
 
+Ember also includes an inline script at the end of `template.html` because the
+`.nnwtheme` format does not load a separate theme JavaScript file. It normalizes
+additional footnote-provider markup for the app's existing newsfoot handler. Like
+all page-authored scripts, this adapter requires NetNewsWire's **Article JavaScript**
+preference; the preference is enabled by default. App-injected `WKUserScript`s do
+not have that limitation.
+
 ## Other layers (not theme-controllable, but they shape the final DOM)
 
 - **Content blocking (two layers).** core.css carries CSS `display:none` ad/tracker
@@ -113,6 +120,8 @@ tiny `window.webkit.messageHandlers` Proxy shim so the native-only calls no-op
 instead of throwing. That reproduces the post-`processPage()` DOM (style stripping,
 table/iframe wrapping, footnote badges + popovers) on both platforms. Pass
 `--no-scripts` to skip injection and inspect the raw pass-2 macro output instead.
+Theme-authored inline scripts are preserved when app scripts are enabled and are
+stripped by `--no-scripts`.
 It does **not** reproduce the ContentRules network blocking or the Verge fixup
 (neither is theme-relevant).
 

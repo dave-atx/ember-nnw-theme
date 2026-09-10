@@ -28,6 +28,7 @@
 	--ember-rule:      rgba(27, 23, 20, 0.10);
 	--ember-rule-2:    rgba(27, 23, 20, 0.16);
 	--ember-quote-bg:  rgba(214, 66, 31, 0.05);
+	--ember-footnote-ink: #FFFFFF;
 	--ember-bleed:     0px; /* set to the body side padding per platform */
 
 	--header-table-border-color: var(--ember-rule);
@@ -54,6 +55,7 @@
 		--ember-rule:      rgba(236, 230, 223, 0.12);
 		--ember-rule-2:    rgba(236, 230, 223, 0.18);
 		--ember-quote-bg:  rgba(255, 122, 80, 0.08);
+		--ember-footnote-ink: #1A1613;
 
 		--header-color:              var(--ember-ink-mute);
 		--body-code-color:           var(--ember-ink);
@@ -514,10 +516,8 @@ body > .systemMessage { color: var(--system-message-color); }
 
 .newsfoot-footnote-popover-inner { background: var(--ember-bg); }
 
-/* Inline reference marker: a light accent superscript numeral, not a filled
-   badge. core.css styles a.footnote as a pill; we strip that back to a plain
-   editorial numeral. The theme's global `sup` raise (below) was tuned for the
-   badge, so restore normal superscript positioning for footnote sups only. */
+/* Inline reference marker: a compact, high-contrast capsule that reads as an
+   interactive footnote button and still sits naturally at superscript height. */
 .articleBody sup:has(> a.footnote) {
 	vertical-align: super;
 	position: static;
@@ -527,25 +527,37 @@ body > .systemMessage { color: var(--system-message-color); }
 .articleBody a.footnote,
 .articleBody a.footnote:link,
 .articleBody a.footnote:visited {
-	background: none;
-	color: var(--ember-accent);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	background: var(--ember-accent);
+	color: var(--ember-footnote-ink);
 	text-decoration: none;
 	border-bottom: none;
-	padding: 0;
-	min-width: 0;
-	border-radius: 0;
-	top: 0;
-	font-size: 0.72em;
+	padding: 0.28em 0.42em 0.25em;
+	margin: 0 0.08em;
+	min-width: 1.55em;
+	border-radius: 999px;
+	top: -0.08em;
+	font-size: 0.68em;
 	font-weight: 700;
 	line-height: 1;
-	transition: color 200ms ease-out;
+	font-variant-numeric: tabular-nums;
+	box-shadow: 0 1px 2px rgba(27, 23, 20, 0.18);
+	transition: background-color 120ms ease-out, box-shadow 120ms ease-out, transform 120ms ease-out;
 }
+
+/* Stock newsfoot listens for clicks whose target is the marker anchor itself. */
+.articleBody a.footnote > * { pointer-events: none; }
 
 .articleBody a.footnote:hover,
 .newsfoot-footnote-popover + a.footnote {
-	background: none;
+	background: var(--ember-accent-2);
 	border-bottom: none;
-	color: var(--ember-accent-2);
+	color: var(--ember-footnote-ink);
+	box-shadow: 0 2px 4px rgba(27, 23, 20, 0.24);
+	transform: translateY(-1px);
 }
 
 /* Footnote list at the foot of the article: a flagged "Notes" apparatus.
@@ -592,6 +604,8 @@ body > .systemMessage { color: var(--system-message-color); }
 .articleBody hr + ol > li p { margin: 0 0 0.5em; }
 
 /* The ↩︎ backlink: quiet, no underline/border, accent on hover. */
+.articleBody a[data-ember-footnote-backlink]:link,
+.articleBody a[data-ember-footnote-backlink]:visited,
 .articleBody hr + ol a[href^="#fnr"]:link,
 .articleBody hr + ol a[href^="#fnr"]:visited {
 	color: var(--ember-ink-mute);
@@ -599,7 +613,22 @@ body > .systemMessage { color: var(--system-message-color); }
 	border-bottom: none;
 	margin-left: 0.3em;
 }
-.articleBody hr + ol a[href^="#fnr"]:hover { color: var(--ember-accent); }
+.articleBody a[data-ember-footnote-backlink]:hover,
+.articleBody hr + ol a[href^="#fnr"]:hover {
+	background: var(--ember-surface);
+	color: var(--ember-accent);
+	border-bottom: none;
+	border-radius: 0.2em;
+	box-shadow: 0 0 0 0.18em var(--ember-surface);
+	text-decoration: none;
+}
+
+/* Platform hover rules color link descendants independently. Keep glyphs such
+   as Six Colors' wrapped return arrow in step with the backlink itself. */
+.articleBody a[data-ember-footnote-backlink]:hover *,
+.articleBody hr + ol a[href^="#fnr"]:hover * {
+	color: var(--ember-accent);
+}
 
 /* =====================================================================
    Platform specifics

@@ -160,6 +160,9 @@ smart quotes / em dashes.
   calls no-op instead of throwing. Pass `--no-scripts` to skip it and inspect the
   raw macro output (smaller, un-transformed HTML) — useful when a bug might live in
   the template itself rather than after the JS runs.
+- Inline scripts supplied by a theme are preserved in normal previews and removed
+  by `--no-scripts`. In NetNewsWire they require the user-facing **Article
+  JavaScript** setting, which is enabled by default.
 - render.py injects `<meta charset="utf-8">` (NNW's `loadHTMLString` defaults to
   UTF-8; a bare `file://` would otherwise mangle smart quotes).
 - Not reproduced (not theme-relevant): the `ContentRules.json` network blocking

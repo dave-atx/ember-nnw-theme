@@ -5,7 +5,7 @@ Ember is a **NetNewsWire article theme**. The shipped product is the bundle in
 
 | File | What it is |
 |------|-----------|
-| `Ember.nnwtheme/template.html` | The article scaffold. NNW fills `[[macro]]` placeholders (title, byline, dates, avatar, body). |
+| `Ember.nnwtheme/template.html` | The article scaffold. NNW fills `[[macro]]` placeholders (title, byline, dates, avatar, body). It also contains Ember's inline footnote-format adapter; themes cannot load a bundled `.js` file. |
 | `Ember.nnwtheme/stylesheet.css` | The whole theme. NNW loads its own `core.css` **first**, then this replaces the default stylesheet. |
 | `Ember.nnwtheme/Info.plist` | Theme name, identifier, author, version. |
 
@@ -58,6 +58,9 @@ Capture new fixtures from a running NetNewsWire with the `nnwdump` lldb command
   long title, pull-quotes, figures, footnotes, smart quotes.
 - `test/preview/`, `preview.html`, `section-heads.html`, and
   `Ember.nnwtheme.zip` are build artifacts — gitignored, never commit them.
+- Additional footnote popovers depend on NetNewsWire's **Article JavaScript**
+  setting (enabled by default). Keep the adapter inline in `template.html`, and
+  test it against stock upstream NetNewsWire as well as any pending footnote PR.
 - Releases are tag-driven: pushing a `v*` tag builds the zip and publishes a
   GitHub Release (`.github/workflows/release.yml`). Install links point at
   `releases/latest`.

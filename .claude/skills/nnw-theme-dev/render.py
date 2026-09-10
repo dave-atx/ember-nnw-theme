@@ -64,16 +64,15 @@ def _find_script(nnw_dir: Path, name: str):
 def inject_scripts(page: str, platform: str, nnw_dir: Path) -> str:
     """Inject and run NetNewsWire's real article JS in the preview.
 
-    NNW injects these as WKUserScripts (main + platform main + newsfoot), which
-    the iOS page skeleton *also* lists as <script src> tags but the macOS one
-    does not. So rather than rewrite existing refs, strip whatever scripts the
-    skeleton has and inject the real files ourselves for either platform. This
+    NNW injects these as WKUserScripts (main + platform main + newsfoot). The
+    platform skeleton's scripts are removed before template substitution, so
+    inline scripts supplied by the theme remain intact. Inject the real app
+    files here for either platform. This
     makes footnotes render as in-app: main.js's styleLocalFootnotes() adds the
     `.footnote` class to inline `<sup>` markers (the badges), and newsfoot.js
     turns them into click popovers. A webkit shim keeps message-handler calls
     harmless; main.js self-runs processPage() on DOMContentLoaded.
     """
-    page = SCRIPT_RE.sub("", page)
     platform_main = "main_ios.js" if platform in ("ios", "ipad") else "main_mac.js"
     blocks = ["<script>" + WEBKIT_SHIM + "</script>"]
     for name in ("main.js", platform_main, "newsfoot.js"):
@@ -215,6 +214,10 @@ def render_platform(platform: str, fixture: dict, theme_dir: Path, nnw_dir: Path
     stylesheet_css = (theme_dir / "stylesheet.css").read_text()
     template_html = (theme_dir / "template.html").read_text()
     skeleton_html = skeleton_path.read_text()
+    if scripts:
+        # Remove only app-owned skeleton scripts. Doing this before inserting the
+        # theme preserves inline scripts from template.html.
+        skeleton_html = SCRIPT_RE.sub("", skeleton_html)
 
     style_mapping = {}
     if is_ios:

@@ -1,0 +1,46 @@
+title = 'Footnote provider compatibility'
+preferred_link = 'https://example.com/articles/footnotes'
+feed_link_title = 'Footnote Test'
+feed_link = 'https://example.com/'
+byline = 'Theme fixture'
+datetime_medium = 'Sep 10, 2026 at 12:00 PM'
+
+# Renderer and provider references:
+# https://fletcher.github.io/MultiMarkdown-6/MMD_Users_Guide.html#footnotes
+# https://michelf.ca/projects/php-markdown/extra/#footnotes
+# https://kramdown.gettalong.org/syntax.html#footnotes
+# https://github.com/yuin/goldmark/blob/master/extension/footnote.go
+# https://python-markdown.github.io/extensions/footnotes/
+# https://pandoc.org/MANUAL.html#footnotes
+# https://github.com/remarkjs/remark-rehype#footnotes
+# https://github.blog/changelog/2021-09-30-footnotes-now-supported-in-markdown-fields/
+# https://github.com/Ranchero-Software/NetNewsWire/issues/5361
+# https://github.com/Automattic/jetpack/blob/trunk/projects/plugins/jetpack/modules/markdown/easy-markdown.php
+# https://wordpress.org/documentation/article/footnotes-block/
+# https://plugins.svn.wordpress.org/easy-footnotes/trunk/easy-footnotes.php
+# https://plugins.svn.wordpress.org/footnotes-made-easy/trunk/
+# https://plugins.svn.wordpress.org/awesome-footnotes/trunk/
+# https://plugins.svn.wordpress.org/wp-footnotes/trunk/
+# https://plugins.svn.wordpress.org/modern-footnotes/trunk/modern-footnotes.php
+# https://plugins.svn.wordpress.org/footnotes/trunk/templates/public/
+body = '''
+<p>MultiMarkdown<sup><a id="fnref1" href="#fn1">1</a></sup>, PHP Markdown/CommonMark<sup id="fnref:note"><a class="footnote-ref" role="doc-noteref" href="#fn:note">2</a></sup>, and Pandoc <a id="fnref3" class="footnote-ref" role="doc-noteref" href="#fn3"><sup>3</sup></a>.</p>
+<p>remark/rehype<sup><a id="user-content-fnref-4" href="#user-content-fn-4" data-footnote-ref>4</a></sup>, Substack <a id="footnote-anchor-5" href="#footnote-5">5</a>, and WordPress core<sup class="fn"><a id="wp-note-link" href="#wp-note">6</a></sup>.</p>
+<p>Easy Footnotes<sup class="easy-footnote"><a id="easy-footnote-7" href="#easy-footnote-bottom-7">[7]</a></sup>, Footnotes Made Easy <a id="identifier_8" class="footnote-link footnote-identifier-link" href="#footnote_8">8</a>, and Modern Footnotes <sup class="modern-footnotes-footnote"><a href="javascript:void(0)" role="button" aria-describedby="mfn-content-9">9</a></sup><span id="mfn-content-9" role="tooltip" class="modern-footnotes-footnote__note">Modern Footnotes note.</span></p>
+<p>A table-based plugin <span class="footnote_referrer"><a role="button" href="#footnote_plugin_reference_10"><sup id="footnote_plugin_tooltip_10" class="footnote_plugin_tooltip_text">10</sup></a><span id="footnote_plugin_tooltip_text_10" class="footnote_tooltip">Short tooltip.</span></span> and Jetpack<sup id="fnref-jetpack"><a class="jetpack-footnote" href="https://example.com/#fn-jetpack">11</a></sup>.</p>
+<p>Ordinary superscript links, such as <sup><a id="ordinary-sup-link" href="#chapter">this section link</a></sup>, must remain ordinary links.</p>
+
+<ol class="footnotes">
+	<li id="fn1">MultiMarkdown note. <a class="reversefootnote" href="#fnref1">↩</a></li>
+	<li id="fn:note" role="doc-endnote">CommonMark note. <a class="footnote-backref" role="doc-backlink" href="#fnref:note">↩</a></li>
+	<li id="fn3">Pandoc note. <a class="footnote-back" role="doc-backlink" href="#fnref3">↩</a></li>
+	<li id="fn-jetpack">Jetpack note. <a href="https://example.com/#fnref-jetpack">↩</a></li>
+</ol>
+<section data-footnotes><ol><li id="user-content-fn-4">remark note. <a data-footnote-backref href="#user-content-fnref-4">↩</a></li></ol></section>
+<div class="footnote"><a id="footnote-5" href="https://example.com/articles/footnotes#footnote-anchor-5">5</a><p>Substack note.</p><a id="footnote-6" href="#footnote-anchor-6">6</a><p>Another Substack note.</p></div>
+<ol class="wp-block-footnotes"><li id="wp-note">WordPress core note. <a href="#wp-note-link" aria-label="Jump to footnote reference 6">↩</a></li></ol>
+<ol class="easy-footnotes-wrapper"><li class="easy-footnote-single"><span id="easy-footnote-bottom-7" class="easy-footnote-margin-adjust"></span>Easy Footnotes note. <a class="easy-footnote-to-top" href="#easy-footnote-7">↩</a></li></ol>
+<ol class="footnotes"><li class="footnote" id="footnote_8">Footnotes Made Easy note. <a class="footnote-link footnote-back-link" href="#identifier_8">↩</a></li></ol>
+<table class="footnote-reference-container"><tbody><tr><th id="footnote_plugin_reference_10" class="footnote_plugin_index"><a href="#footnote_plugin_tooltip_10">↩10</a></th><td class="footnote_plugin_text">Complete table-plugin note.</td></tr></tbody></table>
+<h2 id="chapter">Ordinary section target</h2>
+'''
