@@ -29,6 +29,8 @@
 	--ember-rule-2:    rgba(27, 23, 20, 0.16);
 	--ember-quote-bg:  rgba(214, 66, 31, 0.05);
 	--ember-footnote-ink: #FFFFFF;
+	--ember-footnote-chip:      rgba(214, 66, 31, 0.14);
+	--ember-footnote-chip-edge: rgba(214, 66, 31, 0.28);
 	--ember-bleed:     0px; /* set to the body side padding per platform */
 
 	--header-table-border-color: var(--ember-rule);
@@ -56,6 +58,8 @@
 		--ember-rule-2:    rgba(236, 230, 223, 0.18);
 		--ember-quote-bg:  rgba(255, 122, 80, 0.08);
 		--ember-footnote-ink: #1A1613;
+		--ember-footnote-chip:      rgba(255, 122, 80, 0.18);
+		--ember-footnote-chip-edge: rgba(255, 122, 80, 0.36);
 
 		--header-color:              var(--ember-ink-mute);
 		--body-code-color:           var(--ember-ink);
@@ -516,10 +520,19 @@ body > .systemMessage { color: var(--system-message-color); }
 
 .newsfoot-footnote-popover-inner { background: var(--ember-bg); }
 
-/* Inline reference marker: a compact, high-contrast capsule that reads as an
-   interactive footnote button and still sits naturally at superscript height. */
-.articleBody sup:has(> a.footnote) {
-	vertical-align: super;
+/* Inline reference marker: one presentation no matter how the provider wrote it.
+   Whether a reference is wrapped in <sup> is arbitrary across formats, and while
+   the wrapper owned the sizing and the seat, two markers in the same sentence
+   could differ by 20% in size and 4px in height. Neutralize the wrapper; the
+   anchor below owns both.
+
+   Match the marker at any depth, not just as a direct child: on first click
+   newsfoot moves the anchor into a .newsfoot-footnote-container it inserts in
+   the anchor's place (newsfoot.js), so a `> a.footnote` test stops matching and
+   the wrapper's shrink comes back — the marker visibly shrinks when tapped. */
+.articleBody sup:has(a.footnote) {
+	font-size: inherit;
+	vertical-align: baseline;
 	position: static;
 	bottom: auto;
 }
@@ -531,21 +544,22 @@ body > .systemMessage { color: var(--system-message-color); }
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
-	background: var(--ember-accent);
-	color: var(--ember-footnote-ink);
+	background-color: var(--ember-footnote-chip);
+	color: var(--ember-accent);
+	box-shadow: inset 0 0 0 1px var(--ember-footnote-chip-edge);
 	text-decoration: none;
 	border-bottom: none;
-	padding: 0.28em 0.42em 0.25em;
-	margin: 0 0.08em;
-	min-width: 1.55em;
-	border-radius: 999px;
-	top: -0.08em;
-	font-size: 0.68em;
-	font-weight: 700;
+	padding: 0.18em 0.5em;
+	margin: 0 0.12em;
+	min-width: 2.1em;       /* a lone digit stays oblong rather than a circle */
+	border-radius: 0.45em;
+	vertical-align: 0.14em; /* seated just off the baseline, not superscripted */
+	top: auto;
+	font-size: 0.74em;
+	font-weight: 650;
 	line-height: 1;
 	font-variant-numeric: tabular-nums;
-	box-shadow: 0 1px 2px rgba(27, 23, 20, 0.18);
-	transition: background-color 120ms ease-out, box-shadow 120ms ease-out, transform 120ms ease-out;
+	transition: background-color 120ms ease-out, box-shadow 120ms ease-out, color 120ms ease-out;
 }
 
 /* Stock newsfoot listens for clicks whose target is the marker anchor itself. */
@@ -564,13 +578,13 @@ body > .systemMessage { color: var(--system-message-color); }
 	bottom: auto;
 }
 
+/* Touched or open, the chip fills in — the loud state is the transient one. */
 .articleBody a.footnote:hover,
 .newsfoot-footnote-popover + a.footnote {
-	background: var(--ember-accent-2);
+	background-color: var(--ember-accent);
 	border-bottom: none;
 	color: var(--ember-footnote-ink);
 	box-shadow: 0 2px 4px rgba(27, 23, 20, 0.24);
-	transform: translateY(-1px);
 }
 
 /* Footnote list at the foot of the article: a flagged "Notes" apparatus.

@@ -147,6 +147,33 @@ body: The body of the article.
 		return {content: reference.matches("a[id^='footnote-anchor-']") ? substackNote(target) : noteContainer(target)};
 	}
 
+	// Providers disagree about the marker itself: some bake the brackets into the
+	// text ("[7]"), some leave a space before the reference and some don't. The
+	// capsule supplies its own delimiter and its own gap, so strip both and every
+	// marker reads the same whatever wrote it.
+	function normalizeMarker(reference) {
+		const text = [];
+		(function collect(node) {
+			for (const child of node.childNodes) child.nodeType === Node.TEXT_NODE ? text.push(child) : collect(child);
+		})(reference);
+		if (text.length === 1) {
+			const bare = text[0].data.trim().match(/^[[(]\s*(.+?)\s*[\])]$/);
+			if (bare) text[0].data = bare[1];
+		}
+
+		// Climb to the outermost box that holds nothing but this marker — hidden
+		// tooltips and the landmarks inserted above don't count — then close up the
+		// space in front of it, the way a reference mark sits against its word.
+		let box = reference;
+		while (box.parentElement && box.parentElement !== article &&
+			[...box.parentElement.childNodes].every(node => node === box || node.hidden || !node.textContent.trim())) {
+			box = box.parentElement;
+		}
+		let before = box.previousSibling;
+		while (before && !before.textContent) before = before.previousSibling;
+		if (before?.nodeType === Node.TEXT_NODE) before.data = before.data.replace(/\s+$/, "");
+	}
+
 	// A detached copy of the note, with return links to this reference dropped and
 	// every id stripped — the copy is appended to the same document, so any id it
 	// carried over would collide with the one still on the original note.
@@ -206,6 +233,7 @@ body: The body of the article.
 		reference.setAttribute("href", `#${target.id}`);
 		reference.classList.add("footnote");
 		if (note.hide) note.hide.hidden = true;
+		normalizeMarker(reference);
 	}
 
 	if (normalizedNotes.hasChildNodes()) article.appendChild(normalizedNotes);
