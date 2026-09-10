@@ -91,6 +91,26 @@ they always apply (and light ones never do), leaving combined conditions and
 nesting intact — engine-independent, so the resulting file previews dark in any
 browser. Screenshot it exactly like the light files.
 
+### Checking the footnote adapter
+
+`test/footnote-providers.toml` exercises every footnote format the inline adapter
+in `template.html` normalizes. `check_footnotes.js` asserts the result instead of
+leaving it to the eye — each provider is recognized, its note resolves to the
+right text, the popover opens, no ids are duplicated, and every marker's numeral
+is legible inside its capsule (the check that catches a platform `body a *` rule
+repainting a nested `<sup>` accent-on-accent).
+
+```sh
+python3 .claude/skills/nnw-theme-dev/render.py test/footnote-providers.toml --platform all
+python3 .claude/skills/nnw-theme-dev/render.py test/footnote-providers.toml --platform all --dark
+```
+
+Then, for **each of the four renders**, evaluate the contents of
+`check_footnotes.js` in the page — agents via the Safari MCP's
+`evaluate_javascript`, humans by pasting into the browser console. It returns
+`{pass, failed, total, failures}`; all four must pass. Run all four: the
+legibility assertions can only fail in the scheme and platform they run in.
+
 ## Capturing new test cases from a running NetNewsWire
 
 Fixtures are just the substitution dictionary NNW builds per article, saved as
