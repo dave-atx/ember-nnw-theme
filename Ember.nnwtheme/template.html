@@ -57,20 +57,32 @@ body: The body of the article.
 	if (!article) return;
 
 	const backlinkSelector = ".reversefootnote, .footnoteBackLink, .footnote-return, .footnote-backref, .footnote-back, .footnote-back-link, .easy-footnote-to-top, .modern-footnotes-scroll-to-footnote, .footnote_plugin_index a, [role='doc-backlink'], [data-footnote-backref]";
+	// Markup that names itself a footnote reference. Such a link is trusted on its
+	// own; the looser shape-based guesses below additionally require a plausible note.
+	const semanticReferenceSelector = ".footnote, .footnote-ref, .footnoteRef, [role='doc-noteref'], [data-footnote-ref]";
+	// Descendants of a reference that a return link might legitimately target.
+	const innerLandmarkSelector = "sup[id], [id^='fn'], [id^='footnote'], [id^='identifier_'], [id^='easy-footnote-']";
 	const normalizedNotes = document.createElement("div");
 	normalizedNotes.hidden = true;
 	normalizedNotes.dataset.emberFootnotes = "";
 	const backlinkDestinations = new Map();
+	let referenceNumber = 0;
 	let noteNumber = 0;
+
+	let baseUrl;
+	try {
+		baseUrl = new URL(document.baseURI);
+	} catch (_) {
+		baseUrl = null;
+	}
 
 	function localHashId(link) {
 		const href = link.getAttribute("href");
-		if (!href || !href.includes("#")) return;
+		if (!href || !href.includes("#") || !baseUrl) return;
 		try {
-			const url = new URL(href, document.baseURI);
-			const base = new URL(document.baseURI);
-			if (url.origin !== base.origin || !url.hash) return;
-			if ((url.pathname !== base.pathname || url.search !== base.search) && (url.pathname !== "/" || url.search)) return;
+			const url = new URL(href, baseUrl);
+			if (url.origin !== baseUrl.origin || !url.hash) return;
+			if ((url.pathname !== baseUrl.pathname || url.search !== baseUrl.search) && (url.pathname !== "/" || url.search)) return;
 			return decodeURIComponent(url.hash.slice(1));
 		} catch (_) {
 			return;
@@ -82,7 +94,7 @@ body: The body of the article.
 	}
 
 	function looksLikeReference(link) {
-		return link.matches(".footnote, .footnote-ref, .footnoteRef, .jetpack-footnote, .footnote-identifier-link, [role='doc-noteref'], [data-footnote-ref], [id^='footnote-anchor-']") ||
+		return link.matches(`${semanticReferenceSelector}, .jetpack-footnote, .footnote-identifier-link, [id^='footnote-anchor-']`) ||
 			link.matches("sup > a, sup > div > a, .easy-footnote > a, .footnote_referrer > a") ||
 			!!link.querySelector(":scope > sup");
 	}
@@ -130,18 +142,22 @@ body: The body of the article.
 		const targetId = localHashId(reference);
 		const target = targetId && document.getElementById(targetId);
 		if (!target || target.contains(reference)) return;
-		const explicitlySemantic = reference.matches(".footnote, .footnote-ref, .footnoteRef, [role='doc-noteref'], [data-footnote-ref]");
+		const explicitlySemantic = reference.matches(semanticReferenceSelector);
 		if (!looksLikeNote(target) && !explicitlySemantic) return;
 		return {content: reference.matches("a[id^='footnote-anchor-']") ? substackNote(target) : noteContainer(target)};
 	}
 
+	// A detached copy of the note, with return links to this reference dropped and
+	// every id stripped — the copy is appended to the same document, so any id it
+	// carried over would collide with the one still on the original note.
 	function cleanContent(source, reference) {
 		const copy = source.cloneNode(true);
 		const referenceIds = new Set([reference.id, reference.closest("sup[id]")?.id].filter(Boolean));
 		for (const link of copy.querySelectorAll("a")) {
 			if (isBacklink(link) || referenceIds.has(localHashId(link))) link.remove();
 		}
-		return copy.innerHTML;
+		for (const element of copy.querySelectorAll("[id]")) element.removeAttribute("id");
+		return copy;
 	}
 
 	for (const reference of article.querySelectorAll("a")) {
@@ -149,14 +165,15 @@ body: The body of the article.
 		const note = noteFor(reference);
 		if (!note) continue;
 		const content = cleanContent(note.content, reference);
-		if (!content.trim()) continue;
+		if (!content.children.length && !content.textContent.trim()) continue;
 
+		const innerLandmark = reference.querySelector(innerLandmarkSelector);
 		const referenceIds = [
 			reference.id,
 			reference.closest("sup[id]")?.id,
-			reference.querySelector("[id]")?.id
+			innerLandmark?.id
 		].filter(Boolean);
-		let returnTarget = reference.id ? reference : reference.closest("sup[id]") || reference.querySelector("[id]");
+		let returnTarget = reference.id ? reference : reference.closest("sup[id]") || innerLandmark;
 
 		// The open Substack patch identifies references by this ID. Move it to a
 		// same-position landmark so either patched or stock NetNewsWire uses the
@@ -172,7 +189,7 @@ body: The body of the article.
 		if (!returnTarget?.id) {
 			const landmark = document.createElement("span");
 			do {
-				landmark.id = `ember-footnote-reference-${++noteNumber}`;
+				landmark.id = `ember-footnote-reference-${++referenceNumber}`;
 			} while (document.getElementById(landmark.id));
 			landmark.setAttribute("aria-hidden", "true");
 			reference.before(landmark);
@@ -184,7 +201,7 @@ body: The body of the article.
 		do {
 			target.id = `ember-footnote-${++noteNumber}`;
 		} while (document.getElementById(target.id));
-		target.innerHTML = content;
+		target.append(...content.childNodes);
 		normalizedNotes.appendChild(target);
 		reference.setAttribute("href", `#${target.id}`);
 		reference.classList.add("footnote");
