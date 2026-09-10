@@ -100,16 +100,45 @@ right text, the popover opens, no ids are duplicated, and every marker's numeral
 is legible inside its capsule (the check that catches a platform `body a *` rule
 repainting a nested `<sup>` accent-on-accent).
 
+It also asserts that every marker *presents identically* — same height, seat,
+font-size, an oblong rather than circular capsule, a bare numeral, and no space
+between the marker and the word it annotates. Providers disagree about whether a
+reference is wrapped in `<sup>`, and while that wrapper owned the sizing and the
+raise, two markers in one sentence could differ by 20% in size and 4px in height.
+Seat is measured against a probe glyph on the marker's own line, so it stays
+meaningful in real prose where markers land on different lines.
+
+The same geometry is re-measured *after* the popover opens. On first click
+newsfoot moves the anchor into a `.newsfoot-footnote-container` it inserts in the
+anchor's place, which silently takes the marker out from under any rule keyed on
+its original parent — that is how a `sup:has(> a.footnote)` rule let markers
+shrink the moment you tapped them.
+
+The check is **fixture-agnostic** — only the provider-by-provider expectations
+are specific to `footnote-providers.toml` (it detects that fixture by its
+negative control), so run it against real captured articles too.
+`test/sixcolors-footnotes.toml` is one: Six Colors wraps every marker in a
+`<sup>` and emits absolute `https://sixcolors.com#fn-…` hrefs with unclassed
+`↩` return links, which exercises the adapter's absolute-backlink rewriting on
+markup nobody wrote for us.
+
 ```sh
-python3 .claude/skills/nnw-theme-dev/render.py test/footnote-providers.toml --platform all
-python3 .claude/skills/nnw-theme-dev/render.py test/footnote-providers.toml --platform all --dark
+for f in footnote-providers sixcolors-footnotes; do
+  python3 .claude/skills/nnw-theme-dev/render.py test/$f.toml --platform all
+  python3 .claude/skills/nnw-theme-dev/render.py test/$f.toml --platform all --dark
+done
 ```
 
-Then, for **each of the four renders**, evaluate the contents of
+Then, for **each of the four renders** of each fixture, evaluate the contents of
 `check_footnotes.js` in the page — agents via the Safari MCP's
 `evaluate_javascript`, humans by pasting into the browser console. It returns
-`{pass, failed, total, failures}`; all four must pass. Run all four: the
-legibility assertions can only fail in the scheme and platform they run in.
+`{pass, failed, total, failures}`; all must pass. Run all four platform/scheme
+combinations: the legibility assertions can only fail in the scheme and platform
+they run in.
+
+**Keep the browser window frontmost while it runs.** The popover assertions wait
+on `setTimeout`, and a backgrounded tab throttles those hard enough (seconds per
+tick) that the run looks hung and the MCP call times out.
 
 ## Capturing new test cases from a running NetNewsWire
 
