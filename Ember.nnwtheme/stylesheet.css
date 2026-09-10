@@ -551,6 +551,19 @@ body > .systemMessage { color: var(--system-message-color); }
 /* Stock newsfoot listens for clicks whose target is the marker anchor itself. */
 .articleBody a.footnote > * { pointer-events: none; }
 
+/* Some providers (Pandoc, table-based plugins) put the numeral in a <sup> or
+   <span> *inside* the anchor. The platform `body a *` rules would paint that
+   descendant with the accent — invisible against the capsule — and the global
+   `sup` raise would lift it clear of the capsule. Let the capsule own both. */
+.articleBody a.footnote * {
+	color: inherit;
+	font-size: inherit;
+	vertical-align: baseline;
+	position: static;
+	top: auto;
+	bottom: auto;
+}
+
 .articleBody a.footnote:hover,
 .newsfoot-footnote-popover + a.footnote {
 	background: var(--ember-accent-2);
