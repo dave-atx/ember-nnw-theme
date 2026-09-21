@@ -767,8 +767,10 @@ body > .systemMessage { color: var(--system-message-color); }
 	.smallText  { font-size: 14px; }
 	.mediumText { font-size: 16px; }
 	.largeText  { font-size: 18px; }
-	.xlargeText { font-size: 20px; }
-	.xxlargeText{ font-size: 22px; }
+	/* NetNewsWire emits the capital-L names; its bundled themes select the
+	   lowercase ones, so match both. */
+	.xLargeText,  .xlargeText  { font-size: 20px; }
+	.xxLargeText, .xxlargeText { font-size: 22px; }
 
 	:root {
 		color-scheme: light dark;
