@@ -1,3 +1,4 @@
+<!-- nnw-theme-identity:start -->
 # Ember — a NetNewsWire theme
 
 A warm, editorial theme for [NetNewsWire](https://netnewswire.com) using Apple system
@@ -69,44 +70,42 @@ Pages.
 
 ## Developing & testing
 
-Theme changes are previewed by reproducing NetNewsWire's own rendering pipeline and
-screenshotting the result in WebKit — no need to launch the app for CSS/layout work.
-The tooling lives in [`.claude/skills/nnw-theme-dev/`](.claude/skills/nnw-theme-dev/)
-(a [Claude Code](https://claude.com/claude-code) skill, but the scripts are plain
-Python and usable on their own).
+Ember uses the tooling from
+[netnewswire-theme-template](https://github.com/dave-atx/netnewswire-theme-template):
+it renders each article through NetNewsWire's own pipeline (its pinned `core.css`,
+page skeletons, and scripts) and checks the result in WebKit, so layout work needs
+neither the app nor a NetNewsWire checkout.
 
-**Requirements (macOS):** Python 3.11+ (`xcode-select --install` or Homebrew) and
-a [NetNewsWire](https://github.com/Ranchero-Software/NetNewsWire) source checkout
-(for `core.css` + the page skeletons — no build needed). Open the rendered HTML in
-any browser. *Capturing* new fixtures from the running app additionally needs Xcode
-and a buildable NetNewsWire checkout. Full details and the agent screenshot loop
-are in the skill's [`SKILL.md`](.claude/skills/nnw-theme-dev/SKILL.md).
+**Requirements (macOS):** [`uv`](https://docs.astral.sh/uv/) and
+[`playwright-cli`](https://github.com/microsoft/playwright-cli)
+(`brew install uv playwright-cli`). Capturing new fixtures from the running app
+additionally needs Xcode and a NetNewsWire clone.
 
 ```sh
-# Requires a NetNewsWire checkout for core.css + page skeletons.
-export NNW_SRC=/path/to/NetNewsWire        # or clone as a sibling ../NetNewsWire
-
-python3 .claude/skills/nnw-theme-dev/render.py test/long-byline.toml           # light
-python3 .claude/skills/nnw-theme-dev/render.py test/long-byline.toml --dark    # dark
-# → open the files it writes under test/preview/ in any browser
+uv run nnw-theme setup      # once: download NetNewsWire's rendering files and WebKit
+uv run nnw-theme preview    # live gallery of every fixture; rebuilds on save
+uv run nnw-theme check      # release gate: every fixture in WebKit, light and dark
 ```
 
-Test cases are TOML fixtures in `test/` whose keys mirror the `[[variables]]` in
-`template.html`. Capture new ones from a running NetNewsWire with the bundled
-`nnwdump` lldb command (see the skill's `SKILL.md`). Contributor and agent
-orientation lives in [`CLAUDE.md`](CLAUDE.md).
+Test cases are TOML fixtures in `fixtures/` whose keys mirror the `[[variables]]` in
+`template.html`. `uv run nnw-theme capture` explains how to save a real article from
+NetNewsWire as a new one. `footnote-providers.toml` declares the note each footnote
+format must open, which `check` verifies. Contributor and agent orientation lives in
+[`CLAUDE.md`](CLAUDE.md).
+
+To pick up later tooling fixes, commit your work and run `uv run nnw-theme update`.
 
 ## Releasing
 
-Pushing a `v*` tag builds `Ember.nnwtheme.zip` and publishes a GitHub Release with the
-zip attached (see [`.github/workflows/release.yml`](.github/workflows/release.yml)). The
-install links always point at `releases/latest`, so they pick up the newest release
-automatically.
+1. Run `uv run nnw-theme bump` and commit the new `Info.plist` version.
+2. In GitHub, run **Actions → Publish theme** with the new tag (for example, `v2.2`).
 
-```sh
-git tag v1.0 && git push origin v1.0
-```
+The workflow checks the theme, refuses a reused tag or a version that did not
+increase, attaches `Ember.nnwtheme.zip`, and writes the release notes from the commits
+since the last tag with [git-cliff](https://git-cliff.org). The install links always
+point at `releases/latest`, so they pick up the newest release automatically.
 
 ## License
 
 [Apache License 2.0](LICENSE) © 2026 Dave Marquard.
+<!-- nnw-theme-identity:end -->
