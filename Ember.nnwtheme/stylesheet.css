@@ -659,12 +659,23 @@ body > .systemMessage { color: var(--system-message-color); }
 
 /* =====================================================================
    Platform specifics
+
+   NetNewsWire marks the platform itself: on macOS it gives .articleBody a
+   text-size class (smallText … xxLargeText); on iOS and iPadOS it never
+   does. Each block below keys on that, so it needs no script and holds with
+   Article JavaScript off. :where() adds no specificity, so every rule keeps
+   the weight it would have unwrapped, and each nested selector starts with
+   an explicit & so it parses on iOS 17.0, before relaxed nesting.
+
+   Not @supports (-webkit-touch-callout: none), the usual iOS test: no
+   desktop WebKit implements it, so previews and checks would only ever see
+   the macOS branch.
    ===================================================================== */
 
 /* iOS / iPadOS */
-@supports (-webkit-touch-callout: none) {
+:where(:root:not(:has(.articleBody:is(.smallText, .mediumText, .largeText, .xLargeText, .xxLargeText, .xlargeText, .xxlargeText)))) {
 
-	body {
+	& body {
 		margin-top: 3px;
 		margin-bottom: 20px;
 		padding-left: 20px;
@@ -674,7 +685,7 @@ body > .systemMessage { color: var(--system-message-color); }
 		-webkit-text-size-adjust: none;
 	}
 
-	:root {
+	&:root {
 		color-scheme: light dark;
 		font: -apple-system-body;
 		/* The font-size is replaced at runtime by the dynamic type size */
@@ -692,12 +703,12 @@ body > .systemMessage { color: var(--system-message-color); }
 	   while still honoring the user's Dynamic Type setting. Narrow iPad
 	   split views fall below the breakpoint and stay phone-sized. */
 	@media (min-width: 500px) {
-		:root { font-size: calc([[font-size]]px * 1.2); }
-		body .header { font-size: calc([[font-size]]px * 1.2); }
+		&:root { font-size: calc([[font-size]]px * 1.2); }
+		& body .header { font-size: calc([[font-size]]px * 1.2); }
 	}
 
 	@media (prefers-color-scheme: dark) {
-		:root {
+		&:root {
 			--primary-accent-color: var(--ember-accent);
 			--secondary-accent-color: var(--ember-accent);
 			--block-quote-border-color: var(--ember-accent);
@@ -706,15 +717,15 @@ body > .systemMessage { color: var(--system-message-color); }
 		}
 	}
 
-	body a, body a:visited, body a * {
+	& body a, & body a:visited, & body a * {
 		color: var(--secondary-accent-color);
 	}
 
-	a :is(i, em) { color: inherit; }
+	& a :is(i, em) { color: inherit; }
 
-	.externalLink a { font-size: inherit; }
+	& .externalLink a { font-size: inherit; }
 
-	.articleBody a:link, .articleBody a:visited {
+	& .articleBody a:link, & .articleBody a:visited {
 		text-decoration: underline;
 		text-decoration-color: var(--primary-accent-color);
 		text-decoration-thickness: 1.5px;
@@ -722,12 +733,12 @@ body > .systemMessage { color: var(--system-message-color); }
 		color: var(--secondary-accent-color);
 	}
 
-	.articleBody sup a:link, .articleBody sup a:visited {
+	& .articleBody sup a:link, & .articleBody sup a:visited {
 		text-decoration: none;
 		color: var(--sup-link-color);
 	}
 
-	sup .newsfoot-footnote-popover a:link, sup .newsfoot-footnote-popover a:visited {
+	& sup .newsfoot-footnote-popover a:link, & sup .newsfoot-footnote-popover a:visited {
 		text-decoration: underline;
 		text-decoration-color: var(--primary-accent-color);
 		text-decoration-thickness: 1px;
@@ -735,28 +746,28 @@ body > .systemMessage { color: var(--system-message-color); }
 		color: var(--secondary-accent-color);
 	}
 
-	body .header {
+	& body .header {
 		font: -apple-system-body;
 		font-size: [[font-size]]px;
 	}
 
-	body .header a:link, body .header a:visited {
+	& body .header a:link, & body .header a:visited {
 		color: var(--secondary-accent-color);
 	}
 
-	.feedlink a:link, .feedlink a:visited {
+	& .feedlink a:link, & .feedlink a:visited {
 		color: var(--ember-accent);
 	}
 
-	.articleBody a:hover { background: var(--ios-hover-color); }
+	& .articleBody a:hover { background: var(--ios-hover-color); }
 
-	pre { padding: 8px; }
+	& pre { padding: 8px; }
 }
 
 /* macOS */
-@supports not (-webkit-touch-callout: none) {
+:where(:root:has(.articleBody:is(.smallText, .mediumText, .largeText, .xLargeText, .xxLargeText, .xlargeText, .xxlargeText))) {
 
-	body {
+	& body {
 		margin-top: 20px;
 		margin-bottom: 64px;
 		padding-left: 48px;
@@ -764,15 +775,15 @@ body > .systemMessage { color: var(--system-message-color); }
 		font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
 	}
 
-	.smallText  { font-size: 14px; }
-	.mediumText { font-size: 16px; }
-	.largeText  { font-size: 18px; }
+	& .smallText  { font-size: 14px; }
+	& .mediumText { font-size: 16px; }
+	& .largeText  { font-size: 18px; }
 	/* NetNewsWire emits the capital-L names; its bundled themes select the
 	   lowercase ones, so match both. */
-	.xLargeText,  .xlargeText  { font-size: 20px; }
-	.xxLargeText, .xxlargeText { font-size: 22px; }
+	& .xLargeText,  & .xlargeText  { font-size: 20px; }
+	& .xxLargeText, & .xxlargeText { font-size: 22px; }
 
-	:root {
+	&:root {
 		color-scheme: light dark;
 		--accent-color: var(--ember-accent);
 		--block-quote-border-color: var(--ember-accent);
@@ -782,7 +793,7 @@ body > .systemMessage { color: var(--system-message-color); }
 	}
 
 	@media (prefers-color-scheme: dark) {
-		:root {
+		&:root {
 			--accent-color: var(--ember-accent);
 			--block-quote-border-color: var(--ember-accent);
 			--header-table-border-color: var(--ember-rule);
@@ -791,27 +802,27 @@ body > .systemMessage { color: var(--system-message-color); }
 		}
 	}
 
-	body a, body a:visited, body a * {
+	& body a, & body a:visited, & body a * {
 		color: var(--accent-color);
 	}
 
-	a :is(i, em) { color: inherit; }
-	a u { text-decoration: none; }
+	& a :is(i, em) { color: inherit; }
+	& a u { text-decoration: none; }
 
-	.articleTitle h1 { font-size: 2.35rem; }
-	.articleBody h2 { font-size: 1.6em; }
+	& .articleTitle h1 { font-size: 2.35rem; }
+	& .articleBody h2 { font-size: 1.6em; }
 
-	.articleBody a:link, .articleBody a:visited {
+	& .articleBody a:link, & .articleBody a:visited {
 		border-bottom: 1px solid var(--accent-color);
 	}
 
-	.articleBody a:has(img),
-	.articleBody a:has(img):link,
-	.articleBody a:has(img):visited {
+	& .articleBody a:has(img),
+	& .articleBody a:has(img):link,
+	& .articleBody a:has(img):visited {
 		border-bottom: none;
 	}
 
-	.articleBody a:hover {
+	& .articleBody a:hover {
 		border-radius: 2px;
 		background: linear-gradient(0deg, var(--hover-gradient-color-start) 0%, var(--hover-gradient-color-end) 100%);
 		border-bottom: 1px solid var(--hover-gradient-color-end);
@@ -819,14 +830,14 @@ body > .systemMessage { color: var(--system-message-color); }
 		text-decoration: none;
 	}
 
-	.articleBody a:has(img):hover {
+	& .articleBody a:has(img):hover {
 		background: none;
 		border-bottom: none;
 		color: inherit;
 		border-radius: 0;
 	}
 
-	.articleBody a:hover u { color: white; }
+	& .articleBody a:hover u { color: white; }
 
-	pre { padding: 12px; }
+	& pre { padding: 12px; }
 }
