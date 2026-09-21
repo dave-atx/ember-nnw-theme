@@ -1,0 +1,36 @@
+title = "A Deliberately Long Headline for Testing How a Theme Handles Narrow Screens and Patient Readers"
+preferred_link = "https://example.org/guides/kitchen-sink"
+external_link = "https://example.org/guides/kitchen-sink"
+external_link_label = "Continue reading on Example Journal"
+external_link_stripped = "example.org"
+feed_link = "https://example.org/"
+feed_link_title = "Example Journal With a Long Publication Name"
+byline = "Alexandra Example and the Editorial Systems Working Group"
+date_long = "September 17, 2026"
+date_medium = "Sep 17, 2026"
+date_short = "9/17/26"
+datetime_long = "2026-09-17T08:30:00-07:00"
+datetime_medium = "Sep 17, 2026 at 8:30 AM"
+datetime_short = "9/17/26, 8:30 AM"
+time_long = "8:30:00 AM PDT"
+time_medium = "8:30:00 AM"
+time_short = "8:30 AM"
+avatar_src = ""
+body = """
+<p>This synthetic article checks <strong>strong text</strong>, <em>emphasis</em>, <del>deletions</del>, <mark>highlights</mark>, <a href="https://example.org/reference">ordinary links</a>, and inline <code>code()</code>.</p>
+<h2>Lists and quotations</h2>
+<ul><li>A short item</li><li>A nested list<ul><li>with another level</li></ul></li><li>An item containing aSuperLongUnbrokenIdentifierDesignedToRevealHorizontalOverflowProblemsImmediately</li></ul>
+<ol><li>Measure the readable column.</li><li>Check the rhythm.</li><li>Try large text.</li></ol>
+<blockquote><p>Good defaults should remain calm when the content is not.</p><footer>— A synthetic quotation</footer></blockquote>
+<h2>Code and tabular data</h2>
+<pre><code>def greet(reader: str) -&gt; str:
+    return f"Welcome, {reader}. This line is intentionally wider than a phone viewport."
+</code></pre>
+<table><thead><tr><th>Viewport</th><th>Purpose</th><th>Expected behavior</th></tr></thead><tbody><tr><td>macOS</td><td>Reading</td><td>Comfortable measure</td></tr><tr><td>iPhone</td><td>Small screen</td><td>No document overflow</td></tr><tr><td>iPad</td><td>Large text</td><td>Stable hierarchy</td></tr></tbody></table>
+<h2>Media and footnotes</h2>
+<figure><img alt="Abstract green and cream test pattern" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='675' viewBox='0 0 1200 675'%3E%3Crect width='1200' height='675' fill='%23d8d2c6'/%3E%3Ccircle cx='380' cy='337' r='240' fill='%232f6655'/%3E%3Cpath d='M0 560L1200 180V675H0Z' fill='%23f7f5f0'/%3E%3C/svg%3E"><figcaption>A synthetic image checks wide-media scaling.</figcaption></figure>
+<p>The note marker uses common generated markup.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+<div class="footnotes"><ol><li id="fn:1"><p>Footnote content should remain readable in place and in NetNewsWire’s popover. <a href="#fnref:1" class="reversefootnote">↩</a></p></li></ol></div>
+<h3>Final heading</h3>
+<p>End of the fixture.</p>
+"""

@@ -1,0 +1,24 @@
+title = "A Walk Through the Quiet City"
+preferred_link = "https://example.org/articles/quiet-city"
+external_link = "https://example.org/articles/quiet-city"
+external_link_label = "Read on Example Journal"
+external_link_stripped = "example.org"
+feed_link = "https://example.org/"
+feed_link_title = "Example Journal"
+byline = "Mara Bell"
+date_long = "September 17, 2026"
+date_medium = "Sep 17, 2026"
+date_short = "9/17/26"
+datetime_long = "2026-09-17T08:30:00-07:00"
+datetime_medium = "Sep 17, 2026 at 8:30 AM"
+datetime_short = "9/17/26, 8:30 AM"
+time_long = "8:30:00 AM PDT"
+time_medium = "8:30:00 AM"
+time_short = "8:30 AM"
+avatar_src = ""
+body = """
+<p class="standfirst">Before the doors opened, the city belonged to bakers, bus drivers, and the first warm light on the brickwork.</p>
+<p>I took the long route toward the river. A row of plane trees made a shifting pattern on the pavement, and every open window seemed to hold a different morning.</p>
+<blockquote><p>A familiar street becomes new when you give it enough time.</p></blockquote>
+<p>By nine, the cafés had filled and the spell had softened. I wrote down three small details so I would remember: green tiles, the sound of a broom, and a paper boat turning under the bridge.</p>
+"""

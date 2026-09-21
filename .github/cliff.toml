@@ -1,5 +1,6 @@
 # git-cliff configuration — generates release notes from Conventional Commits.
-# Notes are attached to GitHub Releases by .github/workflows/release.yml; the
+# The Publish workflow (.github/workflows/release.yml, from the theme template)
+# generates each release's notes with this file when its notes are left empty; the
 # changelog is not committed back to the repo.
 
 [changelog]

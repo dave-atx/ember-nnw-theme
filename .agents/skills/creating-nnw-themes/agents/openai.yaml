@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create NetNewsWire Themes"
+  short_description: "Design, preview, check, and publish a theme"
+  default_prompt: "Use $creating-nnw-themes to help me design a readable NetNewsWire theme."
