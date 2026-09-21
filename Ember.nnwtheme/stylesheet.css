@@ -440,6 +440,9 @@ figure {
 	margin-right: calc(-1 * var(--ember-bleed));
 	width: calc(100% + 2 * var(--ember-bleed));
 	max-width: none;
+	/* The width already spans edge to edge; a link's inline padding (see
+	   .articleBody a) would push it past the viewport on iPhone. */
+	padding: 0;
 	border-radius: 0;
 }
 
