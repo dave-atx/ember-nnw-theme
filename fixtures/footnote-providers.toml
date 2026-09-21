@@ -44,3 +44,21 @@ body = '''
 <table class="footnote-reference-container"><tbody><tr><th id="footnote_plugin_reference_10" class="footnote_plugin_index"><a href="#footnote_plugin_tooltip_10">↩10</a></th><td class="footnote_plugin_text">Complete table-plugin note.</td></tr></tbody></table>
 <h2 id="chapter">Ordinary section target</h2>
 '''
+
+[expect.footnotes]
+# The negative control: a superscript link that must stay an ordinary link.
+plain_links = ["#ordinary-sup-link"]
+
+# Each marker, as rendered, and the note its popover must show.
+[expect.footnotes.notes]
+"1" = "MultiMarkdown note."
+"2" = "CommonMark note."
+"3" = "Pandoc note."
+"4" = "remark note."
+"5" = "Substack note."
+"6" = "WordPress core note."
+"7" = "Easy Footnotes note."
+"8" = "Footnotes Made Easy note."
+"9" = "Modern Footnotes note."
+"10" = "Complete table-plugin note."
+"11" = "Jetpack note."
