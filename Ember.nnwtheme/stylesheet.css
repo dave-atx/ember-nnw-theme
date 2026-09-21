@@ -565,6 +565,12 @@ body > .systemMessage { color: var(--system-message-color); }
 	transition: background-color 120ms ease-out, box-shadow 120ms ease-out, color 120ms ease-out;
 }
 
+/* The template's adapter holds each marker to the word before it, so a line
+   never starts with a marker. newsfoot opens the popover inside that span, and
+   the note must wrap normally there. */
+.articleBody .ember-footnote-joined { white-space: nowrap; }
+.articleBody .ember-footnote-joined .newsfoot-footnote-popover { white-space: normal; }
+
 /* Stock newsfoot listens for clicks whose target is the marker anchor itself. */
 .articleBody a.footnote > * { pointer-events: none; }
 

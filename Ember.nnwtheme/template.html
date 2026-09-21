@@ -171,7 +171,23 @@ body: The body of the article.
 		}
 		let before = box.previousSibling;
 		while (before && !before.textContent) before = before.previousSibling;
-		if (before?.nodeType === Node.TEXT_NODE) before.data = before.data.replace(/\s+$/, "");
+		if (before?.nodeType !== Node.TEXT_NODE) return;
+		before.data = before.data.replace(/\s+$/, "");
+
+		// The capsule is an inline-flex box, and a line may break on either side of
+		// one, so a marker could land alone at the start of the next line. Hold it
+		// to the word it annotates. A very long "word" (a URL) is left to wrap.
+		const word = before.data.match(/\S{1,30}$/);
+		if (!word || (word.index > 0 && !/\s/.test(before.data[word.index - 1]))) return;
+		const tail = word.index ? before.splitText(word.index) : before;
+		const joined = document.createElement("span");
+		joined.className = "ember-footnote-joined";
+		tail.before(joined);
+		for (let node = tail; node; ) {
+			const next = node === box ? null : node.nextSibling;
+			joined.appendChild(node);
+			node = next;
+		}
 	}
 
 	// A detached copy of the note, with return links to this reference dropped and
