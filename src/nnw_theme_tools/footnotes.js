@@ -101,13 +101,33 @@ async ({notes = null, plain_links = []} = {}) => {
 		}
 	}
 
+	// A marker written against its word, with no space between, stays on that
+	// word's line: a line that starts with a marker has lost what it annotates.
+	for (const marker of markers) {
+		let box = marker;
+		while (box.parentElement && box.parentElement !== article &&
+			box.parentElement.childNodes.length === 1) box = box.parentElement;
+		// Empty elements, such as an anchor landmark for return links, don't count.
+		let before = box.previousSibling;
+		while (before && !before.textContent) before = before.previousSibling;
+		if (before?.nodeType !== Node.TEXT_NODE || !before.data || /\s$/.test(before.data)) continue;
+		const range = document.createRange();
+		range.setStart(before, before.data.length - 1);
+		range.setEnd(before, before.data.length);
+		if (marker.getBoundingClientRect().top >= range.getBoundingClientRect().bottom - 1) {
+			fail(`footnote ${label(marker)}: wraps onto a new line, apart from its word`);
+		}
+	}
+
 	// Every marker presents alike, whatever markup the source used. Seat is measured
-	// against a probe glyph on the marker's own line, so it holds across lines.
+	// against a probe on the marker's own line, so it holds across lines. The probe
+	// is a zero-width word joiner: it always fits, so it never wraps to the next line
+	// or pushes an unbreakable group there, and the marker is measured beside it.
 	const geometry = markers.map(marker => {
-		const box = marker.getBoundingClientRect();
 		const probe = document.createElement("span");
-		probe.textContent = "x";
+		probe.textContent = "\u2060";
 		marker.after(probe);
+		const box = marker.getBoundingClientRect();
 		const seat = box.bottom - probe.getBoundingClientRect().bottom;
 		probe.remove();
 		return {marker, height: box.height, seat, size: parseFloat(getComputedStyle(marker).fontSize)};

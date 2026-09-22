@@ -133,6 +133,14 @@ class UpdateTests(unittest.TestCase):
         _git(root, "-c", "user.name=T", "-c", "user.email=t@t", "commit", "-m", "update")
         self.assertIn("already matches", self._update())
 
+    def test_readme_without_template_docs_is_kept(self) -> None:
+        readme = "<!-- nnw-theme-identity:start -->\n# Mine\n\nAll mine.\n"
+        readme += "<!-- nnw-theme-identity:end -->\n"
+        (self.root / "README.md").write_text(readme)
+        _git(self.root, "commit", "-qam", "own readme", "--author=T <t@t>")
+        self._update()
+        self.assertEqual((self.root / "README.md").read_text(), readme)
+
     def test_dry_run_writes_nothing(self) -> None:
         output = self._update(dry_run=True)
         self.assertIn("Would update", output)

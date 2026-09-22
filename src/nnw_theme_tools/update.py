@@ -128,11 +128,17 @@ def _local(path: Path) -> Entry | None:
 
 
 def _merge_readme(local: str, upstream: str) -> str:
-    """Upstream documentation around this theme's own identity block."""
+    """Upstream documentation around this theme's own identity block.
+
+    A README that ends with its identity block has dropped the template's
+    documentation on purpose, so it is kept as it is.
+    """
     start, end = local.find(IDENTITY_START), local.find(IDENTITY_END)
     upstream_start, upstream_end = upstream.find(IDENTITY_START), upstream.find(IDENTITY_END)
     if min(start, end, upstream_start, upstream_end) < 0:
         raise ThemeError("README identity markers are missing")
+    if not local[end + len(IDENTITY_END) :].strip():
+        return local
     identity = local[start : end + len(IDENTITY_END)]
     return upstream[:upstream_start] + identity + upstream[upstream_end + len(IDENTITY_END) :]
 
