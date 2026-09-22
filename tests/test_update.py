@@ -137,7 +137,16 @@ class UpdateTests(unittest.TestCase):
         readme = "<!-- nnw-theme-identity:start -->\n# Mine\n\nAll mine.\n"
         readme += "<!-- nnw-theme-identity:end -->\n"
         (self.root / "README.md").write_text(readme)
-        _git(self.root, "commit", "-qam", "own readme", "--author=T <t@t>")
+        _git(
+            self.root,
+            "-c",
+            "user.name=T",
+            "-c",
+            "user.email=t@t",
+            "commit",
+            "-qam",
+            "own readme",
+        )
         self._update()
         self.assertEqual((self.root / "README.md").read_text(), readme)
 
