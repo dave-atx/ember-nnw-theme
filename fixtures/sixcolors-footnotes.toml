@@ -147,3 +147,7 @@ You can also pay $2.99 a month, which seems silly, or $124.99 for a lifetime lic
 </ol>
 
 '''
+
+[expect.footnotes]
+# Every marker stays on the line of the word it annotates.
+keep_with_word = true

@@ -49,7 +49,8 @@ uv run nnw-theme check                  # release gate; finish every change with
 Ember fixture on Mac and iPhone, all in light and dark. It fails on overflow, broken
 images, page errors, and footnotes that don't resolve, stay legible, match each
 other, or open their popover. `fixtures/footnote-providers.toml` pins the note every
-footnote format must open through its `[expect.footnotes]` table. Real-article
+footnote format must open through its `[expect.footnotes]` table, and every footnote
+fixture sets `keep_with_word = true` so no marker wraps apart from its word. Real-article
 fixtures are captured from NetNewsWire with `uv run nnw-theme capture`.
 
 ## Conventions

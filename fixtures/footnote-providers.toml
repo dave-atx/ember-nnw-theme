@@ -48,6 +48,8 @@ body = '''
 [expect.footnotes]
 # The negative control: a superscript link that must stay an ordinary link.
 plain_links = ["#ordinary-sup-link"]
+# Every marker stays on the line of the word it annotates.
+keep_with_word = true
 
 # Each marker, as rendered, and the note its popover must show.
 [expect.footnotes.notes]
