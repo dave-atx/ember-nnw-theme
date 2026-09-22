@@ -21,17 +21,21 @@ Its `main.js` adds that class to local `sup > a[href*='#fn']` links; a theme scr
 may add it to other formats. `check` requires every visible marker to resolve to a
 non-empty note with a unique id, stay legible on its background, match the other
 markers' height, font size, and baseline offset, and open a popover with its note
-without resizing. A marker written against its word, with no space, must not wrap
-onto a new line apart from it; an `inline-block` or `inline-flex` capsule allows that
-break, so hold the pair together, for example in a `white-space: nowrap` span. A fixture may declare exact expectations after its other keys:
+without resizing. A fixture may declare exact expectations after its other keys:
 
 ```toml
 [expect.footnotes]
 plain_links = ["#ordinary-sup-link"]   # CSS selectors that must not become markers
+keep_with_word = true                  # markers must not wrap apart from their word
 
 [expect.footnotes.notes]
 "1" = "First note."                    # marker text as rendered = note text
 ```
 
-With `notes`, every listed marker must exist and any other marker fails. Expectations
-describe the theme's own scripts, so they are skipped with Article JavaScript off.
+With `notes`, every listed marker must exist and any other marker fails. With
+`keep_with_word`, a marker written against its word, with no space, must not wrap
+onto a new line apart from it. NetNewsWire's `core.css` makes `a.footnote`
+`inline-block`, which allows that break, and CSS alone cannot remove it: a theme
+script must hold the pair together, for example in a `white-space: nowrap` span.
+Expectations describe the theme's own scripts, so they are skipped with Article
+JavaScript off.

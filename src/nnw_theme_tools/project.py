@@ -82,13 +82,14 @@ def footnote_expectations(fixture: dict[str, Any], name: str) -> dict[str, Any]:
     """A fixture's optional [expect.footnotes] table, validated for the browser check.
 
     notes maps each footnote marker's rendered text to the note text its popover must
-    show; plain_links lists CSS selectors for links that must not become footnotes.
+    show; plain_links lists CSS selectors for links that must not become footnotes;
+    keep_with_word requires markers written against a word to stay on its line.
     """
     expect = fixture.get("expect", {})
     footnotes = expect.get("footnotes", {}) if isinstance(expect, dict) else None
     if not isinstance(footnotes, dict) or set(expect) - {"footnotes"}:
         raise ThemeError(f"{name}: [expect] may contain only a [expect.footnotes] table")
-    if unknown := set(footnotes) - {"notes", "plain_links"}:
+    if unknown := set(footnotes) - {"notes", "plain_links", "keep_with_word"}:
         raise ThemeError(
             f"{name}: unknown [expect.footnotes] key(s): {', '.join(sorted(unknown))}"
         )
@@ -105,4 +106,8 @@ def footnote_expectations(fixture: dict[str, Any], name: str) -> dict[str, Any]:
         if not isinstance(links, list) or not all(isinstance(link, str) for link in links):
             raise ThemeError(f"{name}: expect.footnotes.plain_links must be CSS selectors")
         result["plain_links"] = links
+    if "keep_with_word" in footnotes:
+        if not isinstance(footnotes["keep_with_word"], bool):
+            raise ThemeError(f"{name}: expect.footnotes.keep_with_word must be true or false")
+        result["keep_with_word"] = footnotes["keep_with_word"]
     return result

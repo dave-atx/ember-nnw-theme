@@ -4,8 +4,9 @@
 // sup > a[href*='#fn'] links, and a theme script may add it to other formats.
 //
 // expect is the fixture's [expect.footnotes] table: notes maps each marker's text to
-// its note text, and plain_links lists selectors for links that are not footnotes.
-async ({notes = null, plain_links = []} = {}) => {
+// its note text, plain_links lists selectors for links that are not footnotes, and
+// keep_with_word requires a marker written against its word to stay on its line.
+async ({notes = null, plain_links = [], keep_with_word = false} = {}) => {
 	const failures = [];
 	const fail = message => failures.push(message);
 	const article = document.querySelector(".articleBody");
@@ -103,7 +104,9 @@ async ({notes = null, plain_links = []} = {}) => {
 
 	// A marker written against its word, with no space between, stays on that
 	// word's line: a line that starts with a marker has lost what it annotates.
-	for (const marker of markers) {
+	// Opt-in: core.css makes a.footnote inline-block, so a line may break before any
+	// marker, and only a theme script can hold the pair together.
+	for (const marker of keep_with_word ? markers : []) {
 		let box = marker;
 		while (box.parentElement && box.parentElement !== article &&
 			box.parentElement.childNodes.length === 1) box = box.parentElement;
