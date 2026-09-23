@@ -1,3 +1,4 @@
+# nnw-theme-stub: release v1
 name: Publish theme
 
 on:
@@ -17,74 +18,7 @@ permissions:
 
 jobs:
   release:
-    runs-on: ubuntu-26.04
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          ref: ${{ github.event.repository.default_branch }}
-          fetch-depth: 0
-      - name: Validate tag and default-branch commit
-        env:
-          TAG: ${{ inputs.tag }}
-        run: |
-          case "$TAG" in v*) ;; *) echo "Tag must begin with v." >&2; exit 1;; esac
-          git check-ref-format "refs/tags/$TAG"
-          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
-            echo "Tag $TAG already exists." >&2
-            exit 1
-          fi
-          echo "Releasing default-branch commit $(git rev-parse HEAD)" | tee -a "$GITHUB_STEP_SUMMARY"
-      - uses: ./.github/actions/setup
-      - name: Lint, test, validate, and package
-        run: |
-          uv run ruff check .
-          uv run ruff format --check .
-          uv run python -m unittest discover -s tests -v
-          uv run nnw-theme check
-      - name: Compare with previous stable release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          previous=$(gh release list --exclude-drafts --exclude-pre-releases \
-            --limit 1 --json tagName --jq '.[0].tagName // ""')
-          if [ -n "$previous" ]; then
-            mkdir -p build/previous
-            gh release download "$previous" --pattern '*.nnwtheme.zip' --dir build/previous
-            previous_asset=$(find build/previous -maxdepth 1 -name '*.nnwtheme.zip' -print -quit)
-            test -n "$previous_asset"
-            uv run nnw-theme release-check --previous-asset "$previous_asset"
-          else
-            echo "First release: no earlier identity to compare."
-          fi
-      - name: Report optional marketplace warnings
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          visibility=$(gh api "repos/$GITHUB_REPOSITORY" --jq .visibility)
-          description=$(gh api "repos/$GITHUB_REPOSITORY" --jq '.description // ""')
-          topics=$(gh api "repos/$GITHUB_REPOSITORY/topics" --jq '.names | join(" ")')
-          test "$visibility" = public || echo "Warning: private repositories are not discoverable." | tee -a "$GITHUB_STEP_SUMMARY"
-          test -n "$description" || echo "Warning: add a useful repository description." | tee -a "$GITHUB_STEP_SUMMARY"
-          case " $topics " in *" netnewswire-theme "*|*" netnewswire "*) ;; *) echo "Warning: marketplace topic is absent." | tee -a "$GITHUB_STEP_SUMMARY";; esac
-          test -f screenshots/theme-preview.png || echo "Warning: screenshots/theme-preview.png is absent." | tee -a "$GITHUB_STEP_SUMMARY"
-      - name: Create exact tag and stable release
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ inputs.tag }}
-          NOTES: ${{ inputs.notes }}
-        run: |
-          asset=$(find build/release -maxdepth 1 -name '*.nnwtheme.zip' -print -quit)
-          test -n "$asset"
-          sha=$(git rev-parse HEAD)
-          # Typed notes win. Otherwise a theme with a git-cliff configuration gets notes
-          # generated from its commits since the previous tag.
-          if [ -z "$NOTES" ] && [ -f .github/cliff.toml ]; then
-            NOTES=$(uvx git-cliff@2.14.2 --config .github/cliff.toml \
-              --unreleased --tag "$TAG" --strip header)
-          fi
-          if [ -z "$NOTES" ]; then
-            NOTES="Theme release $TAG."
-          fi
-          gh release create "$TAG" "$asset" --target "$sha" --title "$TAG" --notes "$NOTES"
-          echo "Published $TAG from $sha with $(basename "$asset")." | tee -a "$GITHUB_STEP_SUMMARY"
-          echo "Marketplace listing guide: https://dave-atx.github.io/nnw-theme-marketplace/get-listed/" | tee -a "$GITHUB_STEP_SUMMARY"
+    uses: dave-atx/nnw-theme/.github/workflows/theme-release.yml@v1
+    with:
+      tag: ${{ inputs.tag }}
+      notes: ${{ inputs.notes }}

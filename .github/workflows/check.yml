@@ -1,3 +1,5 @@
+# nnw-theme-stub: check v1
+# Runs the nnw-theme release gate: https://github.com/dave-atx/nnw-theme
 name: Theme checks
 
 on:
@@ -9,35 +11,4 @@ permissions:
 
 jobs:
   check:
-    runs-on: ubuntu-26.04
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: ./.github/actions/setup
-      - name: Initialize the untouched template for its own check
-        if: ${{ hashFiles('.nnw-theme-uninitialized') != '' }}
-        run: >-
-          uv run nnw-theme init
-          --name "Neutral Reader"
-          --creator "Template Maintainer"
-          --homepage "https://github.com/dave-atx/netnewswire-theme-template"
-          --identifier "io.github.dave-atx.neutral-reader"
-          --confirm-identifier "io.github.dave-atx.neutral-reader"
-          --marketplace no
-          --no-install-browser
-      - name: Lint and test tooling
-        run: |
-          uv run ruff check .
-          uv run ruff format --check .
-          uv run python -m unittest discover -s tests -v
-      - name: Run the release gate
-        run: uv run nnw-theme check
-      - name: Upload the preview gallery
-        # Pages deploys this instead of rebuilding; also the failure diagnostic.
-        if: ${{ always() }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
-        with:
-          name: theme-preview-${{ github.sha }}
-          path: |
-            build/preview/
-            build/check-report.txt
-          if-no-files-found: warn
+    uses: dave-atx/nnw-theme/.github/workflows/theme-check.yml@v1

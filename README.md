@@ -70,35 +70,35 @@ Pages.
 
 ## Developing & testing
 
-Ember uses the tooling from
+Ember uses [nnw-theme](https://github.com/dave-atx/nnw-theme), the tooling behind
 [netnewswire-theme-template](https://github.com/dave-atx/netnewswire-theme-template):
 it renders each article through NetNewsWire's own pipeline (its pinned `core.css`,
 page skeletons, and scripts) and checks the result in WebKit, so layout work needs
 neither the app nor a NetNewsWire checkout.
 
-**Requirements (macOS):** [`uv`](https://docs.astral.sh/uv/) and
-[`playwright-cli`](https://github.com/microsoft/playwright-cli)
-(`brew install uv playwright-cli`). Capturing new fixtures from the running app
-additionally needs Xcode and a NetNewsWire clone.
+**Requirements:** Node.js 24 or later (`brew install node` on macOS). Capturing new
+fixtures from the running app additionally needs Xcode and a NetNewsWire clone.
 
 ```sh
-uv run nnw-theme setup      # once: download NetNewsWire's rendering files and WebKit
-uv run nnw-theme preview    # live gallery of every fixture; rebuilds on save
-uv run nnw-theme check      # release gate: every fixture in WebKit, light and dark
+npx nnw-theme@1 setup      # once: install WebKit
+npx nnw-theme@1 preview    # live gallery of every fixture; rebuilds on save
+npx nnw-theme@1 check      # release gate: every fixture in WebKit, light and dark
 ```
 
 Test cases are TOML fixtures in `fixtures/` whose keys mirror the `[[variables]]` in
-`template.html`. `uv run nnw-theme capture` explains how to save a real article from
+`template.html`; the tool's built-in `article` and `kitchen-sink` fixtures render
+alongside them. `npx nnw-theme@1 capture` explains how to save a real article from
 NetNewsWire as a new one. `footnote-providers.toml` declares the note each footnote
 format must open, which `check` verifies. Contributor and agent orientation lives in
-[`CLAUDE.md`](CLAUDE.md).
+[`AGENTS.md`](AGENTS.md).
 
-To pick up later tooling fixes, commit your work and run `uv run nnw-theme update`.
+`npx nnw-theme@1` picks up new 1.x tooling releases on its own; there is nothing to
+update in this repository.
 
 ## Releasing
 
-1. Run `uv run nnw-theme bump` and commit the new `Info.plist` version.
-2. In GitHub, run **Actions → Publish theme** with the new tag (for example, `v2.2`).
+1. Run `npx nnw-theme@1 bump` and commit the new `Info.plist` version.
+2. In GitHub, run **Actions → Publish theme** with the new tag (for example, `v2.3`).
 
 The workflow checks the theme, refuses a reused tag or a version that did not
 increase, attaches `Ember.nnwtheme.zip`, and writes the release notes from the commits

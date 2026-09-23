@@ -1,3 +1,4 @@
+# nnw-theme-stub: screenshot v1
 name: Refresh marketplace screenshot
 
 on:
@@ -20,37 +21,7 @@ permissions:
 
 jobs:
   screenshot:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          ref: ${{ github.event.repository.default_branch }}
-      - uses: ./.github/actions/setup
-        with:
-          webkit-deps: "false"
-      - name: Capture and promote the deliberate 16:10 image
-        run: >-
-          uv run nnw-theme screenshot
-          --fixture "${{ inputs.fixture }}"
-          --platform mac
-          --appearance "${{ inputs.appearance }}"
-          --promote
-      - name: Open a review pull request
-        env:
-          GH_TOKEN: ${{ github.token }}
-          BRANCH: theme-preview-${{ github.run_id }}
-        run: |
-          git switch -c "$BRANCH"
-          git add screenshots/theme-preview.png
-          if git diff --cached --quiet; then
-            echo "The promoted screenshot is unchanged."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Refresh theme preview screenshot"
-          git push --set-upstream origin "$BRANCH"
-          gh pr create --base "${{ github.event.repository.default_branch }}" \
-            --head "$BRANCH" --title "Refresh theme preview screenshot" \
-            --body "Generated on macOS WebKit for deliberate visual review."
-
+    uses: dave-atx/nnw-theme/.github/workflows/theme-screenshot.yml@v1
+    with:
+      fixture: ${{ inputs.fixture }}
+      appearance: ${{ inputs.appearance }}
