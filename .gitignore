@@ -5,13 +5,7 @@
 preview.html
 section-heads.html
 
-# Template tooling: previews, checks, release ZIPs, caches
+# nnw-theme output: previews, checks, release ZIPs
 build/
 dist/
-.cache/
-.venv/
-.ruff_cache/
-__pycache__/
-*.pyc
-.playwright-cli/
 *.nnwtheme.zip
