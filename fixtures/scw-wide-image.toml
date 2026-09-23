@@ -1,0 +1,31 @@
+# Space City Weather: WordPress writes an inline pixel width on a resized image
+# (issue #2). Preview with: uv run nnw-theme render scw-wide-image
+
+byline = 'Eric Berger'
+date_long = 'August 25, 2026'
+date_medium = 'Aug 25, 2026'
+date_short = '8/25/26'
+dateline_style = 'articleDateline'
+datetime_long = 'August 25, 2026 at 6:45:00 AM'
+datetime_medium = 'Aug 25, 2026 at 6:45 AM'
+datetime_short = '8/25/26, 6:45 AM'
+feed_link = 'https://spacecityweather.com/'
+feed_link_title = 'Space City Weather'
+preferred_link = 'https://spacecityweather.com/peak-summer-lasts-a-few-more-days-before-we-have-some-modest-hope-on-the-horizon/'
+title = 'Peak summer lasts a few more days before we have some modest hope on the horizon'
+body = '''
+<p>Good morning. We are now in the heart of what is, climatologically, the hottest time of the year in Houston, and the weather is duly obliging. Expect a few more days of highs in the upper 90s before a modest front offers a bit of relief this weekend.</p>
+
+<figure class="wp-block-image size-full is-resized"><img fetchpriority="high" decoding="async" width="830" height="342" src="https://spacecityweather.com/wp-content/uploads/2026/08/image-24.png" alt="" class="wp-image-59086" style="width:869px;height:auto" srcset="https://spacecityweather.com/wp-content/uploads/2026/08/image-24.png 830w, https://spacecityweather.com/wp-content/uploads/2026/08/image-24-300x124.png 300w, https://spacecityweather.com/wp-content/uploads/2026/08/image-24-767x316.png 767w" sizes="(max-width: 830px) 100vw, 830px" /><figcaption class="wp-element-caption">The middle of this week will be hot and mostly rain-free. (Weather Bell)</figcaption></figure>
+
+<h2>Tuesday</h2>
+
+<p>Expect another hot and mostly sunny day, with highs generally in the range of 97 to 100 degrees. Rain chances are near zero. Winds will be light, out of the southwest, which is a bad sign for temperatures.</p>
+
+<figure class="wp-block-image size-large"><img decoding="async" width="1024" height="696" src="https://spacecityweather.com/wp-content/uploads/2026/08/image-23-1024x696.png" alt="" class="wp-image-59085" srcset="https://spacecityweather.com/wp-content/uploads/2026/08/image-23-1024x696.png 1024w, https://spacecityweather.com/wp-content/uploads/2026/08/image-23-300x204.png 300w, https://spacecityweather.com/wp-content/uploads/2026/08/image-23.png 1211w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">Rain chances return late this weekend. (Pivotal Weather)</figcaption></figure>
+
+<p>The good news is that the pattern does look to break down a bit by Sunday, with a weak front pushing into the region and bringing rain chances back up to about 30 percent.</p>
+
+<figure class="wp-block-image size-full"><a href="https://qualitytx.com/residential-backup-power-generators/"><img decoding="async" width="951" height="150" src="https://spacecityweather.com/wp-content/uploads/2026/08/4134772-REL-Quality-Generators-Space-City-Weather-Ad-950x150-2.jpg" alt="" class="wp-image-58895" srcset="https://spacecityweather.com/wp-content/uploads/2026/08/4134772-REL-Quality-Generators-Space-City-Weather-Ad-950x150-2.jpg 951w, https://spacecityweather.com/wp-content/uploads/2026/08/4134772-REL-Quality-Generators-Space-City-Weather-Ad-950x150-2-300x47.jpg 300w" sizes="(max-width: 951px) 100vw, 951px" /></a></figure>
+
+<p>In sum: a few more days of peak summer, and then the first hint that fall is somewhere out there beyond the horizon.</p>'''

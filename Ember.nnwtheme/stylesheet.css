@@ -429,26 +429,50 @@ figure {
 /* Full-bleed media: images span the full width of the article column,
    corners flush. Standalone images bleed directly; inside a <figure> only
    the image bleeds, so the caption (and any loose caption text the feed
-   dropped inside the figure) stays inset with the body copy. */
+   dropped inside the figure) stays inset with the body copy.
+
+   A figure the feed floated for itself is excluded: it is a thumbnail set
+   beside the copy, not a lede, and a float is sized to fit its contents, so
+   a percentage width inside it is circular — WebKit resolves it to zero and
+   the image vanishes. See .articleBody figure[style*="float"] below. */
 .articleBody > img,
 .articleBody > a:only-child > img,
 .articleBody > p > img:only-child,
-.articleBody figure > img,
-.articleBody figure > a {
+.articleBody figure:not([style*="float"]) > img,
+.articleBody figure:not([style*="float"]) > a {
 	display: block;
 	margin-left: calc(-1 * var(--ember-bleed));
 	margin-right: calc(-1 * var(--ember-bleed));
 	width: calc(100% + 2 * var(--ember-bleed));
-	max-width: none;
+	/* Clamp rather than lifting the cap: a feed that writes its own inline
+	   pixel width (WordPress does on a resized image) overrides the width
+	   above, and with no max-width it would run past the viewport. Edge to
+	   edge is as wide as anything here is allowed to be. */
+	max-width: calc(100% + 2 * var(--ember-bleed));
 	/* The width already spans edge to edge; a link's inline padding (see
 	   .articleBody a) would push it past the viewport on iPhone. */
 	padding: 0;
 	border-radius: 0;
 }
 
-.articleBody figure > a > img {
+.articleBody figure:not([style*="float"]) > a > img {
 	width: 100%;
 	border-radius: 0;
+}
+
+/* A figure the feed floated itself (TidBITS's Watchlist icons): let it keep
+   its own size and sit beside the copy. Cap it at a third of the column so a
+   large one can never squeeze the text into a ribbon, and let its own inline
+   margins do the spacing. */
+.articleBody figure[style*="float"] {
+	max-width: 33%;
+	margin-top: 0;
+	margin-bottom: 0.7em;
+}
+
+.articleBody figure[style*="float"] :is(img, a > img) {
+	width: auto;
+	max-width: 100%;
 }
 
 .articleBody figure > a,

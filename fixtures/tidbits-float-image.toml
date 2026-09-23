@@ -1,0 +1,17 @@
+# TidBITS Watchlist item: the feed floats a small icon in a <figure> beside the
+# copy (issue #1). Preview with: uv run nnw-theme render tidbits-float-image
+
+byline = 'Adam Engst'
+date_long = 'September 11, 2026'
+date_medium = 'Sep 11, 2026'
+date_short = '9/11/26'
+dateline_style = 'articleDateline'
+datetime_long = 'September 11, 2026 at 8:41:00 PM'
+datetime_medium = 'Sep 11, 2026 at 8:41 PM'
+datetime_short = '9/11/26, 8:41 PM'
+feed_link = 'https://tidbits.com/'
+feed_link_title = 'TidBITS'
+preferred_link = 'https://tidbits.com/watchlist/tinderbox-11-8/'
+title = 'Tinderbox 11.8'
+body = '''
+<figure style="float:left; margin: 0 1.5em 1em 0;"><img width="96" height="96" src="https://tidbits.com/uploads/2023/03/tinderbox-9-icon-128x128-c-default.png" class="type:primaryImage wp-post-image" alt="Tinderbox 11 icon" decoding="async" /></figure>Eastgate Systems has issued <a href="https://www.eastgate.com/Tinderbox/">Tinderbox 11.8</a> with AI updates for the note-taking assistant, which now uses a new agent to summarize the notes it gathers. The release also improves the speed of large-attribute searches, fixes a crash when closing a document while an agent was running, and corrects the display of dates in the timeline view. ($299 new with a 1-year upgrade plan, $98 annual renewal, free update, 154 MB, macOS 12+)<p style="margin-top: 3em"><a href="https://tidbits.com/2016/07/11/os-x-hidden-treasures-typing-exotic-characters/"><picture><source srcset="https://tidbits.com/uploads/2018/05/TB-Quick-Look-ad-640x200.png" media="(max-width: 600px)" type="image/png"><img src="https://tidbits.com/uploads/2018/05/TB-Quick-Look-ad-1456x180.png" srcset="https://tidbits.com/uploads/2018/05/TB-Quick-Look-ad-1456x180.png 1456w, https://tidbits.com/uploads/2018/05/TB-Quick-Look-ad-1456x180-640x79.png 640w" alt="macOS Hidden Treasures: Quick Look"></picture></a></p>'''
