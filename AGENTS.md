@@ -6,15 +6,7 @@ its `fixtures/`, and `screenshots/`. The tooling is the `nnw-theme` npm package;
 run it as `npx nnw-theme@1 <command>`. Never install it globally and never add
 it to this repository. Read `npx nnw-theme@1 guide` before theme work.
 
-If this repository is `dave-atx/netnewswire-theme-template` itself (check
-`git remote -v`), it is the GitHub template, not a theme: do not initialize,
-fork, or design in it. Help the user create their own repository from it with
-**Use this template** or `gh repo create NAME --template
-dave-atx/netnewswire-theme-template --clone`, confirming before you create it,
-then work in that copy.
-
-If `.nnw-theme-uninitialized` exists, run `npx nnw-theme@1 init` first and let
-the user confirm the permanent theme identifier. Prefer CSS changes; change
+Prefer CSS changes; change
 `template.html` only when the requested structure or behavior requires it.
 Finish theme work with `npx nnw-theme@1 check` and report the preview path.
 
@@ -50,7 +42,9 @@ The four workflows, the `creating-nnw-themes` skill, and the guidance above this
 section are stubs from
 [netnewswire-theme-template](https://github.com/dave-atx/netnewswire-theme-template).
 **Fix tooling in [nnw-theme](https://github.com/dave-atx/nnw-theme), never here**, and
-keep Ember's own guidance in this section.
+keep Ember's own guidance in this section. The skill repeats this file, and
+`pages.yml` skips its deploy because Pages serves `docs/` from a branch; both stay
+only because `check` warns when a stub is missing.
 
 ### How NetNewsWire renders a theme (know this before touching CSS)
 
@@ -68,9 +62,10 @@ A rendered article = a platform **page skeleton** with three macros filled:
 
 ### Developing & testing
 
-**Do not eyeball CSS changes.** Load the `creating-nnw-themes` skill for theme work.
-It reproduces NNW's pipeline from pinned NetNewsWire files and checks every fixture
-in WebKit, the engine NNW uses:
+**Do not eyeball CSS changes.** `npx nnw-theme@1` reproduces NNW's pipeline from
+pinned NetNewsWire files and checks every fixture in WebKit, the engine NNW uses.
+After `render`, look at `build/preview/` in light and dark on each device and show
+the user the change before moving on:
 
 ```sh
 npx nnw-theme@1 render [fixture ...]   # write build/preview/ once
