@@ -1,17 +1,17 @@
-<!-- nnw-theme-stub: agents v1 -->
+<!-- nnw-theme-stub: agents v2 -->
 # Repository guidance
 
 This repository is one NetNewsWire theme: the single root `*.nnwtheme` bundle,
 its `fixtures/`, and `screenshots/`. The tooling is the `nnw-theme` npm package;
-run it as `npx nnw-theme@1 <command>`. Never install it globally and never add
-it to this repository. Read `npx nnw-theme@1 guide` before theme work.
+run it as `npx nnw-theme@2 <command>`. Never install it globally and never add
+it to this repository. Read `npx nnw-theme@2 guide` before theme work.
 
 Prefer CSS changes; change
 `template.html` only when the requested structure or behavior requires it.
-Finish theme work with `npx nnw-theme@1 check` and report the preview path.
+Finish theme work with `npx nnw-theme@2 check` and report the preview path.
 
 Do not change `ThemeIdentifier` or the `.nnwtheme` bundle name after the first
-release. Increase the plist `Version` (`npx nnw-theme@1 bump`) before every
+release. Increase the plist `Version` (`npx nnw-theme@2 bump`) before every
 release.
 
 If the tooling misbehaves, do not work around it here: report it at
@@ -37,7 +37,7 @@ Everything else is supporting material: `docs/` is the GitHub Pages site
 ([ember.marquard.org](https://ember.marquard.org), served from the `docs/` folder on
 `main`); `fixtures/` holds the test articles.
 
-The tooling is the `nnw-theme` npm package, run as `npx nnw-theme@1 <command>`.
+The tooling is the `nnw-theme` npm package, run as `npx nnw-theme@2 <command>`.
 The four workflows, the `creating-nnw-themes` skill, and the guidance above this
 section are stubs from
 [netnewswire-theme-template](https://github.com/dave-atx/netnewswire-theme-template).
@@ -58,18 +58,18 @@ A rendered article = a platform **page skeleton** with three macros filled:
   Dynamic Type drives sizing; on **macOS** `[[font-size]]` is left literal and a
   `text_size_class` is set instead. Dark mode is `@media (prefers-color-scheme: dark)`.
 
-`npx nnw-theme@1 guide theme-format` has the details.
+`npx nnw-theme@2 guide theme-format` has the details.
 
 ### Developing & testing
 
-**Do not eyeball CSS changes.** `npx nnw-theme@1` reproduces NNW's pipeline from
+**Do not eyeball CSS changes.** `npx nnw-theme@2` reproduces NNW's pipeline from
 pinned NetNewsWire files and checks every fixture in WebKit, the engine NNW uses.
 After `render`, look at `build/preview/` in light and dark on each device and show
 the user the change before moving on:
 
 ```sh
-npx nnw-theme@1 render [fixture ...]   # write build/preview/ once
-npx nnw-theme@1 check                  # release gate; finish every change with it
+npx nnw-theme@2 render [fixture ...]   # write build/preview/ once
+npx nnw-theme@2 check                  # release gate; finish every change with it
 ```
 
 `check` renders the package's two built-in fixtures across Mac, iPhone, and iPad, and each
@@ -78,7 +78,7 @@ images, page errors, and footnotes that don't resolve, stay legible, match each
 other, or open their popover. `fixtures/footnote-providers.toml` pins the note every
 footnote format must open through its `[expect.footnotes]` table, and every footnote
 fixture sets `keep_with_word = true` so no marker wraps apart from its word. Real-article
-fixtures are captured from NetNewsWire with `npx nnw-theme@1 capture`.
+fixtures are captured from NetNewsWire with `npx nnw-theme@2 capture`.
 
 ### Conventions
 
@@ -109,7 +109,7 @@ out of date, so it must increase on every release regardless of how the tag
 moves. It is *not* derived from the tag.
 
 ```sh
-npx nnw-theme@1 bump                 # Version +1
+npx nnw-theme@2 bump                 # Version +1
 git commit -am 'chore(release): v2.2'
 git push
 ```

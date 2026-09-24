@@ -1,4 +1,4 @@
-# nnw-theme-stub: screenshot v1
+# nnw-theme-stub: screenshot v2
 name: Refresh marketplace screenshot
 
 on:
@@ -21,7 +21,7 @@ permissions:
 
 jobs:
   screenshot:
-    uses: dave-atx/nnw-theme/.github/workflows/theme-screenshot.yml@v1
+    uses: dave-atx/nnw-theme/.github/workflows/theme-screenshot.yml@v2
     with:
       fixture: ${{ inputs.fixture }}
       appearance: ${{ inputs.appearance }}
