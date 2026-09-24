@@ -80,24 +80,24 @@ neither the app nor a NetNewsWire checkout.
 fixtures from the running app additionally needs Xcode and a NetNewsWire clone.
 
 ```sh
-npx nnw-theme@1 setup      # once: install WebKit
-npx nnw-theme@1 preview    # live gallery of every fixture; rebuilds on save
-npx nnw-theme@1 check      # release gate: every fixture in WebKit, light and dark
+npx nnw-theme@2 setup      # once: install WebKit
+npx nnw-theme@2 preview    # live gallery of every fixture; rebuilds on save
+npx nnw-theme@2 check      # release gate: every fixture in WebKit, light and dark
 ```
 
 Test cases are TOML fixtures in `fixtures/` whose keys mirror the `[[variables]]` in
 `template.html`; the tool's built-in `article` and `kitchen-sink` fixtures render
-alongside them. `npx nnw-theme@1 capture` explains how to save a real article from
+alongside them. `npx nnw-theme@2 capture` explains how to save a real article from
 NetNewsWire as a new one. `footnote-providers.toml` declares the note each footnote
 format must open, which `check` verifies. Contributor and agent orientation lives in
 [`AGENTS.md`](AGENTS.md).
 
-`npx nnw-theme@1` picks up new 1.x tooling releases on its own; there is nothing to
+`npx nnw-theme@2` picks up new 2.x tooling releases on its own; there is nothing to
 update in this repository.
 
 ## Releasing
 
-1. Run `npx nnw-theme@1 bump` and commit the new `Info.plist` version.
+1. Run `npx nnw-theme@2 bump` and commit the new `Info.plist` version.
 2. In GitHub, run **Actions → Publish theme** with the new tag (for example, `v2.3`).
 
 The workflow checks the theme, refuses a reused tag or a version that did not

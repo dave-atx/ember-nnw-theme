@@ -2,7 +2,7 @@
 # real <p>, so the opening paragraph must wrap under the icon rather than run down
 # beside it as a narrow column (issue #1). Rebuilt from the reporter's screenshot;
 # the public feed carries only the excerpt (see tidbits-float-image).
-# Preview with: npx nnw-theme@1 render tidbits-float-paragraph
+# Preview with: npx nnw-theme@2 render tidbits-float-paragraph
 
 byline = 'Agen Schmitz'
 date_long = 'June 26, 2026'

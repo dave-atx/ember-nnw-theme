@@ -1,4 +1,4 @@
-# nnw-theme-stub: pages v1
+# nnw-theme-stub: pages v2
 # Publishes the checked preview gallery when Pages builds from GitHub Actions.
 name: Publish preview pages
 
@@ -21,4 +21,4 @@ concurrency:
 
 jobs:
   pages:
-    uses: dave-atx/nnw-theme/.github/workflows/theme-pages.yml@v1
+    uses: dave-atx/nnw-theme/.github/workflows/theme-pages.yml@v2
