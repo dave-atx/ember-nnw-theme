@@ -1,0 +1,21 @@
+# TidBITS Watchlist item from the subscriber feed: the floated icon is followed by a
+# real <p>, so the opening paragraph must wrap under the icon rather than run down
+# beside it as a narrow column (issue #1). Rebuilt from the reporter's screenshot;
+# the public feed carries only the excerpt (see tidbits-float-image).
+# Preview with: npx nnw-theme@1 render tidbits-float-paragraph
+
+byline = 'Agen Schmitz'
+date_long = 'June 26, 2026'
+date_medium = 'Jun 26, 2026'
+date_short = '6/26/26'
+dateline_style = 'articleDateline'
+datetime_long = 'June 26, 2026 at 7:26:00 AM'
+datetime_medium = 'Jun 26, 2026 at 7:26 AM'
+datetime_short = '6/26/26, 7:26 AM'
+feed_link = 'https://tidbits.com/'
+feed_link_title = 'TidBITS'
+preferred_link = 'https://tidbits.com/watchlist/little-snitch-6-4-1/'
+title = 'Little Snitch 6.4.1'
+body = '''
+<figure style="float:left; margin: 0 1.5em 1em 0;"><img width="96" height="96" src="https://tidbits.com/uploads/2025/09/Little-Snitch-6-icon.png" class="type:primaryImage wp-post-image" alt="Little Snitch 6 icon" decoding="async" /></figure><p>Objective Development has issued <a href="https://www.obdev.at/products/littlesnitch/">Little Snitch 6.4</a> with updated menu icons for macOS 26 Tahoe. The network traffic management utility now displays Tahoe menu icons throughout the app, slightly enlarged from the smaller standard size on macOS Tahoe. (Those who prefer the smaller icons can turn them off with a Terminal command.) The release also improves the reliability of the connection alert and fixes a bug that could leave rules unapplied after waking from sleep.</p>
+<p>The subsequent 6.4.1 update fixes a crash that could occur when editing a rule group. ($59 new, free update, 38.4 MB, macOS 14+)</p><p style="margin-top: 3em"><a href="https://tidbits.com/2016/07/11/os-x-hidden-treasures-typing-exotic-characters/"><picture><source srcset="https://tidbits.com/uploads/2018/05/TB-Quick-Look-ad-640x200.png" media="(max-width: 600px)" type="image/png"><img src="https://tidbits.com/uploads/2018/05/TB-Quick-Look-ad-1456x180.png" srcset="https://tidbits.com/uploads/2018/05/TB-Quick-Look-ad-1456x180.png 1456w, https://tidbits.com/uploads/2018/05/TB-Quick-Look-ad-1456x180-640x79.png 640w" alt="macOS Hidden Treasures: Quick Look"></picture></a></p>'''

@@ -244,8 +244,13 @@ body .header a:link, .header a:visited {
 /* Drop cap on the opening paragraph. flow-root contains the floated cap within
    the paragraph so a short opener (one line of text + a 3.5em cap) doesn't leak
    the float onto the next block — otherwise a following pre, which is its own
-   BFC, dodges the cap and gets shoved right/narrowed or overlapped. */
-.articleBody > p:first-of-type { display: flow-root; }
+   BFC, dodges the cap and gets shoved right/narrowed or overlapped.
+
+   Not after a figure the feed floated itself (TidBITS's app icons): a flow-root
+   paragraph sits beside that float as a narrow column instead of wrapping under
+   it. There the paragraph stays a plain block, so the cap floats in beside the
+   icon and the text wraps under both. */
+.articleBody > p:first-of-type:not(figure[style*="float"] ~ p) { display: flow-root; }
 
 .articleBody > p:first-of-type::first-letter {
 	float: left;
