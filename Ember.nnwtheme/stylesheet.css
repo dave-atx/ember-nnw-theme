@@ -270,12 +270,12 @@ body .header a:link, .header a:visited {
    icon and the text wraps under both.
 
    The opening paragraph is the first one that is neither empty nor a
-   caption: an article can open on a captioned photo, and through Miniflux a
-   MacStories image is followed by its caption as a bare paragraph (or an
-   empty one), which must not take the cap. */
-.articleBody > p:not(:is(:empty, .ember-caption, .wp-caption-text, img[src*="cdn.macstories.net/"] + p)):not(p:not(:is(:empty, .ember-caption, .wp-caption-text, img[src*="cdn.macstories.net/"] + p)) ~ p):not(figure[style*="float"] ~ p) { display: flow-root; }
+   caption: an article can open on a captioned photo, which must not take the
+   cap. The template marks a loose caption .ember-caption, so with Article
+   JavaScript off a caption only it recognizes can take the cap. */
+.articleBody > p:not(:is(:empty, .ember-caption, .wp-caption-text)):not(p:not(:is(:empty, .ember-caption, .wp-caption-text)) ~ p):not(figure[style*="float"] ~ p) { display: flow-root; }
 
-.articleBody > p:not(:is(:empty, .ember-caption, .wp-caption-text, img[src*="cdn.macstories.net/"] + p)):not(p:not(:is(:empty, .ember-caption, .wp-caption-text, img[src*="cdn.macstories.net/"] + p)) ~ p)::first-letter {
+.articleBody > p:not(:is(:empty, .ember-caption, .wp-caption-text)):not(p:not(:is(:empty, .ember-caption, .wp-caption-text)) ~ p)::first-letter {
 	float: left;
 	font-size: 3.5em;
 	line-height: 0.78;
@@ -477,22 +477,22 @@ figure {
    percentage is the image's own width, so it is the one property that can
    weigh that against the column's.
 
-   A figure the feed floated for itself is excluded: it is a thumbnail set
-   beside the copy, not a lede, and a float is sized to fit its contents, so
-   a percentage width inside it is circular — WebKit resolves it to zero and
-   the image vanishes. See .articleBody figure[style*="float"] below. So is an
-   image the feed floated itself (ZEIT ONLINE's thumbnails): the bleed margin
-   would move its float area into the margin while the translate drew it back
-   over the text. See .articleBody img[style*="float"] below. WordPress's
-   alignleft and alignright classes float the same way; see .alignleft
-   below. :where keeps the
-   exclusion from raising these selectors' specificity. A Ghost bookmark card
-   is a figure wrapping a link too; see below. */
-.articleBody > img:not(:where([style*="float"], [align="left" i], [align="right" i], .alignleft, .alignright)),
-.articleBody > a:only-child > img:not(:where([style*="float"], [align="left" i], [align="right" i], .alignleft, .alignright)),
-.articleBody > p > img:only-child:not(:where([style*="float"], [align="left" i], [align="right" i], .alignleft, .alignright)),
-.articleBody figure:not([style*="float"], .alignleft, .alignright, .kg-bookmark-card) > img:not(:where([style*="float"], [align="left" i], [align="right" i], .alignleft, .alignright)),
-.articleBody figure:not([style*="float"], .alignleft, .alignright, .kg-bookmark-card) > a img:not(:where([style*="float"], [align="left" i], [align="right" i], .alignleft, .alignright)) {
+   A float is excluded, here and only here: an image floated by inline style,
+   the old align attribute or WordPress's alignleft and alignright classes,
+   and any image inside a floated figure. A float is a thumbnail set beside
+   the copy, not a lede. A floated image would have its float area moved into
+   the margin while the translate drew it back over the text (ZEIT ONLINE's
+   thumbnails); a float is sized to fit its contents, so a percentage width
+   inside one is circular — WebKit resolves it to zero and the image vanishes
+   (TidBITS's icons). See the floated figure and image rules below. :where
+   keeps the exclusion from raising the specificity. */
+:is(
+	.articleBody > img,
+	.articleBody > a:only-child > img,
+	.articleBody > p > img:only-child,
+	.articleBody figure > img,
+	.articleBody figure > a img
+):not(:where([style*="float"], [align="left" i], [align="right" i], .alignleft, .alignright, :is([style*="float"], .alignleft, .alignright) *)) {
 	display: block;
 	margin-left: calc(-1 * var(--ember-bleed));
 	margin-right: auto;
@@ -507,14 +507,10 @@ figure {
 	border-radius: 0;
 }
 
-.articleBody figure:not([style*="float"], .alignleft, .alignright, .kg-bookmark-card) > a {
+.articleBody figure:not([style*="float"], .alignleft, .alignright) > a {
 	display: block;
 	padding: 0;
 }
-
-/* Substack's restack and expand buttons under each image only work on
-   Substack. */
-.articleBody .image-link-expand { display: none; }
 
 /* A figure the feed floated itself (TidBITS's Watchlist icons): let it keep
    its own size and sit beside the copy. Cap it at a third of the column so a
@@ -541,93 +537,6 @@ figure {
 	margin-bottom: 0.4em;
 }
 
-/* WordPress floats by class, which its theme CSS styles and the feed leaves
-   behind: a classic-editor image inside a paragraph, a block image's figure,
-   or a classic captioned image's div (whose inline width the cap overrides).
-   The same third-of-the-column cap; the gap goes on the side facing the text. */
-.articleBody :is(img, figure, .wp-caption):is(.alignleft, .alignright) {
-	max-width: 33%;
-	margin-top: 0.3em;
-	margin-bottom: 0.7em;
-}
-
-/* Each clears an earlier float on its side, so a short paragraph's float
-   cannot hold the next one beside it and squeeze the copy between them. */
-.articleBody .alignleft {
-	float: left;
-	clear: left;
-	margin-right: 1.25em;
-}
-
-.articleBody .alignright {
-	float: right;
-	clear: right;
-	margin-left: 1.25em;
-}
-
-/* A short paragraph whose float runs past its text, followed straight away
-   by another float, would let the next block start beside the first float,
-   above its own image. Contain the float when another one follows; a float
-   followed by text is left to wrap. */
-.articleBody > p:has(> :is(.alignleft, .alignright)):has(+ :is(figure[style*="float"], .alignleft, .alignright, p:has(> :is(.alignleft, .alignright)))) {
-	display: flow-root;
-}
-
-.articleBody figure:is(.alignleft, .alignright) img {
-	width: auto;
-	max-width: 100%;
-}
-
-/* MacStories app icons: each app in a roundup opens with its icon in a
-   .media-wrapper right before the app's heading. The site floats it beside
-   the heading once its own script tags it .media-wrapper-icon, but the feed
-   carries neither the class (unless Article JavaScript runs that script) nor
-   the CSS, so the 512px icon stood column-wide. Float it here, keyed on the
-   structure; the heading becomes its own formatting context so its accent bar
-   starts beside the icon instead of under it. */
-.articleBody .media-wrapper:has(> img:only-of-type):has(+ h3) {
-	float: left;
-	clear: left;
-	width: 5.5em;
-	margin: 0 1em 0.5em 0;
-}
-
-.articleBody .media-wrapper:has(> img:only-of-type):has(+ h3) > img {
-	display: block;
-	width: 100%;
-	border-radius: 22%;
-}
-
-.articleBody .media-wrapper:has(> img:only-of-type) + h3 {
-	display: flow-root;
-}
-
-/* The empty caption paragraph MacStories leaves after every image would
-   lengthen the float; elsewhere its margin is what parts an image from the
-   text below, so it stays. */
-.articleBody .media-wrapper:has(+ h3) > p.image-caption:empty { display: none; }
-
-/* The same roundup through Miniflux, whose sanitizer drops the wrapper and
-   the caption's class: each icon is a bare image, an empty paragraph, then
-   the heading. A screenshot leaves the same pair before a paragraph instead.
-   That bare shape is common enough elsewhere that the rule also asks for
-   MacStories's image host. It undoes the bleed placement, which outranks the
-   float otherwise. */
-.articleBody > img[src*="cdn.macstories.net/"]:has(+ p:empty + h3) {
-	float: left;
-	clear: left;
-	width: 5.5em;
-	margin: 0 1em 0.5em 0;
-	translate: none;
-	border-radius: 22%;
-}
-
-.articleBody > img[src*="cdn.macstories.net/"]:has(+ p:empty + h3) + p:empty { display: none; }
-
-.articleBody > img[src*="cdn.macstories.net/"] + p:empty + h3 {
-	display: flow-root;
-}
-
 .articleBody figure > a,
 .articleBody figure > img {
 	margin-bottom: 0.7em;
@@ -637,18 +546,17 @@ figure {
    - figcaption (WordPress blocks, Ghost, Medium, Substack, Six Colors, Ars);
    - p.wp-caption-text, WordPress's classic-editor caption;
    - p.image-caption, MacStories's caption paragraph when it has text;
-   - p.ember-caption, the template's wrap of loose caption text after an image;
-   - the bare paragraph after a MacStories image through Miniflux, which
-     strips p.image-caption's class (the template also marks it .ember-caption,
-     for the credit; this keeps the look with Article JavaScript off).
+   - p.ember-caption, the template's wrap of loose caption text after an
+     image, and its mark on a caption a feed reader stripped of its class
+     (MacStories through Miniflux), so with Article JavaScript off that one
+     reads as copy.
    Set in the serif italic against the sans body, so a caption never reads as
    copy; the template sets a trailing credit apart in muted small caps.
    Only the caption shrinks: a figure also holds tables, embeds and cards,
    which keep the body size. A caption paragraph sits outside any figure, so
    it also sets its gap: snug under its image, a figure's margin after. */
 figcaption,
-.articleBody :is(.wp-caption-text, p.image-caption, .ember-caption),
-.articleBody > img[src*="cdn.macstories.net/"] + p:not(:empty) {
+.articleBody :is(.wp-caption-text, p.image-caption, .ember-caption) {
 	margin-top: 0.7em;
 	font-family: ui-serif, "New York", Georgia, serif;
 	font-style: italic;
@@ -657,8 +565,7 @@ figcaption,
 	color: var(--ember-ink-soft);
 }
 
-.articleBody :is(.wp-caption-text, p.image-caption, .ember-caption),
-.articleBody > img[src*="cdn.macstories.net/"] + p:not(:empty) {
+.articleBody :is(.wp-caption-text, p.image-caption, .ember-caption) {
 	margin-bottom: calc(1.6em / 0.86);
 }
 
@@ -671,246 +578,7 @@ figcaption,
 	color: var(--ember-ink-mute);
 }
 
-.articleBody .wp-caption-text { margin-bottom: 0; }
-
-.articleBody .wp-caption {
-	margin-top: 1.6em;
-	margin-bottom: 1.6em;
-}
-
-.articleBody > img:has(+ .ember-caption),
-.articleBody > img[src*="cdn.macstories.net/"]:has(+ p:not(:empty)) { margin-bottom: 0; }
-
-/* ---------- Ghost cards --------------------------------------------- */
-
-/* Ghost's editor (Koenig) writes each rich block as a .kg-card, and Ghost's
-   feed carries that markup but not the CSS that lays it out. Without it the
-   non-figure cards (callout, CTA, button, toggle) are bare divs with no
-   margin, so space every card like a figure. */
-.articleBody > .kg-card {
-	margin-top: 1.6em;
-	margin-bottom: 1.6em;
-}
-
-/* Bookmark card: a link preview whose feed copy has no thumbnail or icon.
-   It is a figure wrapping a link, which the bleeding-media rule above leaves
-   out; keep it in the column as a bordered card. */
-.articleBody figure.kg-bookmark-card > a.kg-bookmark-container {
-	display: block;
-	margin: 0;
-	width: auto;
-	max-width: none;
-	padding: 0.85em 1.1em;
-	border: 1px solid var(--ember-rule-2);
-	border-bottom: 1px solid var(--ember-rule-2);
-	border-radius: 8px;
-	text-decoration: none;
-	background: none;
-}
-
-.articleBody figure.kg-bookmark-card > a.kg-bookmark-container:hover {
-	background: var(--ember-quote-bg);
-	border-color: var(--ember-accent);
-}
-
-.articleBody .kg-bookmark-title {
-	font-size: 0.95em;
-	font-weight: 650;
-	line-height: 1.35;
-	color: var(--ember-ink);
-}
-
-.articleBody .kg-bookmark-card small { font-size: inherit; }
-
-.articleBody .kg-bookmark-description {
-	margin-top: 0.3em;
-	font-size: 0.82em;
-	line-height: 1.4;
-	color: var(--ember-ink-mute);
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
-	overflow: hidden;
-}
-
-/* Video embeds: Ghost's oEmbed markup sizes every YouTube player at 200×113,
-   and NetNewsWire keeps an attribute-sized iframe at that size. Fill the
-   column at 16:9 instead. NetNewsWire's script sets the attributes' own ratio
-   inline; the aspect-ratio here holds with Article JavaScript off. Only known
-   video hosts: another embed's height may not follow its width. */
-.articleBody .kg-embed-card iframe:is([src*="youtube.com/"], [src*="youtube-nocookie.com/"], [src*="vimeo.com/"], [src*="ted.com/"]) {
-	display: block;
-	width: 100%;
-	height: auto !important;
-	aspect-ratio: 16 / 9;
-}
-
-/* Toggle card: Ghost's script collapses it; without that the content shows
-   open, and the icon-only expand button is an empty pill. */
-.articleBody .kg-toggle-card-icon { display: none; }
-
-.articleBody .kg-toggle-heading-text {
-	margin: 0 0 0.5em;
-	font-size: 1em;
-}
-
-/* Callout and call-to-action cards: a tinted panel, like a quiet aside. */
-.articleBody :is(.kg-callout-card, .kg-cta-card) {
-	padding: 0.85em 1.1em;
-	background: var(--ember-surface);
-	border-radius: 8px;
-}
-
-.articleBody .kg-callout-card {
-	display: flex;
-	gap: 0.6em;
-}
-
-.articleBody .kg-callout-emoji { flex: none; }
-
-.articleBody .kg-cta-card p:last-child { margin-bottom: 0; }
-
-.articleBody .kg-cta-sponsor-label {
-	margin-bottom: 0.6em;
-	font-size: 0.72em;
-	letter-spacing: 0.06em;
-	text-transform: uppercase;
-	color: var(--ember-ink-mute);
-}
-
-.articleBody .kg-cta-sponsor-label :is(b, strong) { font-weight: 700; }
-
-.articleBody .kg-cta-image-container img {
-	width: 6em;
-	margin: 0 0 0.8em;
-	border-radius: 6px;
-}
-
-/* Button and CTA links: Ghost colors them inline, and NetNewsWire strips
-   those colors, so draw an accent outline pill. */
-.articleBody :is(.kg-btn, .kg-cta-button):is(:link, :visited) {
-	display: inline-block;
-	margin-top: 0.4em;
-	padding: 0.4em 1em;
-	border: 1.5px solid var(--ember-accent);
-	border-radius: 999px;
-	font-size: 0.9em;
-	font-weight: 650;
-	line-height: 1.3;
-	text-decoration: none;
-}
-
-/* Gallery card: rows of images that Ghost's script sizes by aspect ratio.
-   Without it each image would stack at full width. Lay each row out side by
-   side, bled like a single image, and crop to the row's tallest image. */
-.articleBody .kg-gallery-container {
-	display: flex;
-	flex-direction: column;
-	gap: 6px;
-	margin-left: calc(-1 * var(--ember-bleed));
-	margin-right: calc(-1 * var(--ember-bleed));
-	max-width: none;
-}
-
-.articleBody .kg-gallery-row {
-	display: grid;
-	grid-auto-flow: column;
-	grid-auto-columns: minmax(0, 1fr);
-	gap: 6px;
-	margin: 0;
-	max-width: none;
-}
-
-/* Each cell is a flex column so its image grows to the row height; a
-   percentage height would resolve against the viewport here. */
-.articleBody .kg-gallery-image {
-	display: flex;
-	flex-direction: column;
-	margin: 0;
-}
-
-.articleBody .kg-gallery-image img {
-	flex: 1 1 auto;
-	min-height: 0;
-	width: 100%;
-	object-fit: cover;
-	margin: 0;
-	border-radius: 0;
-}
-
-/* WordPress gallery block: nested image figures that WordPress's block CSS
-   wraps into columns. Without it each stacked at full width. Lay them out like
-   a Ghost gallery: bled like a single image, three to a row (two when there
-   are only two, or the count a columns-N class asks for), the last row
-   filling its width, and each row cropped to its tallest image. The caption
-   stays inset with the body copy. The nested images opt out of the
-   single-image bleed, which this selector outranks. */
-.articleBody figure.wp-block-gallery.has-nested-images {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 6px;
-	margin-left: calc(-1 * var(--ember-bleed));
-	margin-right: calc(-1 * var(--ember-bleed));
-	max-width: none;
-	--ember-gallery-columns: 3;
-}
-
-.articleBody figure.wp-block-gallery.has-nested-images:not(:has(> figure:nth-of-type(3))) { --ember-gallery-columns: 2; }
-.articleBody figure.wp-block-gallery.columns-1 { --ember-gallery-columns: 1; }
-.articleBody figure.wp-block-gallery.columns-2 { --ember-gallery-columns: 2; }
-.articleBody figure.wp-block-gallery.columns-3 { --ember-gallery-columns: 3; }
-.articleBody figure.wp-block-gallery.columns-4 { --ember-gallery-columns: 4; }
-.articleBody figure.wp-block-gallery.columns-5 { --ember-gallery-columns: 5; }
-.articleBody figure.wp-block-gallery.columns-6 { --ember-gallery-columns: 6; }
-
-.articleBody figure.wp-block-gallery.has-nested-images > figure {
-	display: flex;
-	flex-direction: column;
-	flex: 1 1 calc((100% - (var(--ember-gallery-columns) - 1) * 6px) / var(--ember-gallery-columns));
-	min-width: 0;
-	margin: 0;
-}
-
-.articleBody figure.wp-block-gallery.has-nested-images > figure > :is(img, a) {
-	flex: 1 1 auto;
-	min-height: 0;
-	width: 100%;
-	max-width: 100%;
-	margin: 0;
-	translate: none;
-	padding: 0;
-	object-fit: cover;
-}
-
-/* A gallery linked to its media files nests each image in a link. */
-.articleBody figure.wp-block-gallery.has-nested-images > figure > a {
-	display: flex;
-}
-
-.articleBody figure.wp-block-gallery.has-nested-images > figure > a > img {
-	width: 100%;
-	max-width: 100%;
-	margin: 0;
-	translate: none;
-	object-fit: cover;
-}
-
-.articleBody figure.wp-block-gallery.has-nested-images > figcaption {
-	flex: 1 0 100%;
-	box-sizing: border-box;
-	padding-left: var(--ember-bleed);
-	padding-right: var(--ember-bleed);
-}
-
-/* Video card: keep a portrait clip (404 Media's are 1080×1920) from running
-   several screens tall at full column width. The width stays 100% so the
-   width/height attributes size the box before metadata loads; the video
-   letterboxes itself inside the clamped height. */
-.articleBody .kg-video-card video {
-	display: block;
-	width: 100%;
-	max-height: 80vh;
-}
+.articleBody > img:has(+ .ember-caption) { margin-bottom: 0; }
 
 /* ---------- Rules, sup/sub ------------------------------------------ */
 
@@ -940,11 +608,6 @@ sub { vertical-align: bottom; position: relative; top: 0.2rem; }
 }
 
 body > .systemMessage { color: var(--system-message-color); }
-
-/* Feed Specific */
-.feedbin--article-wrap {
-	border-top: 1px solid var(--header-table-border-color);
-}
 
 /* ---------- Newsfoot footnotes -------------------------------------- */
 
@@ -1103,6 +766,372 @@ body > .systemMessage { color: var(--system-message-color); }
 .articleBody a[data-ember-footnote-backlink]:hover *,
 .articleBody hr + ol a[href^="#fnr"]:hover * {
 	color: var(--ember-accent);
+}
+
+/* =====================================================================
+   Feed quirks
+
+   Fixes for one publisher's or platform's markup, grouped by source, each
+   with fixtures named after it. A quirk overrides the generic rules above
+   instead of the generic rules excluding it, so retiring one means deleting
+   its rules here. They come after the body rules, so a tie in specificity
+   goes to the quirk.
+
+   Two generic lists still name feed classes, because an override cannot
+   stand in for them: the floats the bleeding-media rule leaves out
+   (WordPress's alignleft and alignright), and the caption classes that get
+   the caption look and never take the drop cap.
+   ===================================================================== */
+
+/* ---------- WordPress ----------------------------------------------- */
+
+/* WordPress floats by class, which its theme CSS styles and the feed leaves
+   behind: a classic-editor image inside a paragraph, a block image's figure,
+   or a classic captioned image's div (whose inline width the cap overrides).
+   The same third-of-the-column cap; the gap goes on the side facing the text. */
+.articleBody :is(img, figure, .wp-caption):is(.alignleft, .alignright) {
+	max-width: 33%;
+	margin-top: 0.3em;
+	margin-bottom: 0.7em;
+}
+
+/* Each clears an earlier float on its side, so a short paragraph's float
+   cannot hold the next one beside it and squeeze the copy between them. */
+.articleBody .alignleft {
+	float: left;
+	clear: left;
+	margin-right: 1.25em;
+}
+
+.articleBody .alignright {
+	float: right;
+	clear: right;
+	margin-left: 1.25em;
+}
+
+/* A short paragraph whose float runs past its text, followed straight away
+   by another float, would let the next block start beside the first float,
+   above its own image. Contain the float when another one follows; a float
+   followed by text is left to wrap. */
+.articleBody > p:has(> :is(.alignleft, .alignright)):has(+ :is(figure[style*="float"], .alignleft, .alignright, p:has(> :is(.alignleft, .alignright)))) {
+	display: flow-root;
+}
+
+.articleBody figure:is(.alignleft, .alignright) img {
+	width: auto;
+	max-width: 100%;
+}
+
+.articleBody .wp-caption-text { margin-bottom: 0; }
+
+.articleBody .wp-caption {
+	margin-top: 1.6em;
+	margin-bottom: 1.6em;
+}
+
+/* WordPress gallery block: nested image figures that WordPress's block CSS
+   wraps into columns. Without it each stacked at full width. Lay them out like
+   a Ghost gallery: bled like a single image, three to a row (two when there
+   are only two, or the count a columns-N class asks for), the last row
+   filling its width, and each row cropped to its tallest image. The caption
+   stays inset with the body copy. The nested images opt out of the
+   single-image bleed, which this selector outranks. */
+.articleBody figure.wp-block-gallery.has-nested-images {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-left: calc(-1 * var(--ember-bleed));
+	margin-right: calc(-1 * var(--ember-bleed));
+	max-width: none;
+	--ember-gallery-columns: 3;
+}
+
+.articleBody figure.wp-block-gallery.has-nested-images:not(:has(> figure:nth-of-type(3))) { --ember-gallery-columns: 2; }
+.articleBody figure.wp-block-gallery.columns-1 { --ember-gallery-columns: 1; }
+.articleBody figure.wp-block-gallery.columns-2 { --ember-gallery-columns: 2; }
+.articleBody figure.wp-block-gallery.columns-3 { --ember-gallery-columns: 3; }
+.articleBody figure.wp-block-gallery.columns-4 { --ember-gallery-columns: 4; }
+.articleBody figure.wp-block-gallery.columns-5 { --ember-gallery-columns: 5; }
+.articleBody figure.wp-block-gallery.columns-6 { --ember-gallery-columns: 6; }
+
+.articleBody figure.wp-block-gallery.has-nested-images > figure {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 calc((100% - (var(--ember-gallery-columns) - 1) * 6px) / var(--ember-gallery-columns));
+	min-width: 0;
+	margin: 0;
+}
+
+.articleBody figure.wp-block-gallery.has-nested-images > figure > :is(img, a) {
+	flex: 1 1 auto;
+	min-height: 0;
+	width: 100%;
+	max-width: 100%;
+	margin: 0;
+	translate: none;
+	padding: 0;
+	object-fit: cover;
+}
+
+/* A gallery linked to its media files nests each image in a link. */
+.articleBody figure.wp-block-gallery.has-nested-images > figure > a {
+	display: flex;
+}
+
+.articleBody figure.wp-block-gallery.has-nested-images > figure > a > img {
+	width: 100%;
+	max-width: 100%;
+	margin: 0;
+	translate: none;
+	object-fit: cover;
+}
+
+.articleBody figure.wp-block-gallery.has-nested-images > figcaption {
+	flex: 1 0 100%;
+	box-sizing: border-box;
+	padding-left: var(--ember-bleed);
+	padding-right: var(--ember-bleed);
+}
+
+/* ---------- Ghost cards --------------------------------------------- */
+
+/* Ghost's editor (Koenig) writes each rich block as a .kg-card, and Ghost's
+   feed carries that markup but not the CSS that lays it out. Without it the
+   non-figure cards (callout, CTA, button, toggle) are bare divs with no
+   margin, so space every card like a figure. */
+.articleBody > .kg-card {
+	margin-top: 1.6em;
+	margin-bottom: 1.6em;
+}
+
+/* Bookmark card: a link preview whose feed copy has no thumbnail or icon.
+   It is a figure wrapping a link, which the bleeding-media rule above leaves
+   out; keep it in the column as a bordered card. */
+.articleBody figure.kg-bookmark-card > a.kg-bookmark-container {
+	display: block;
+	margin: 0;
+	width: auto;
+	max-width: none;
+	padding: 0.85em 1.1em;
+	border: 1px solid var(--ember-rule-2);
+	border-bottom: 1px solid var(--ember-rule-2);
+	border-radius: 8px;
+	text-decoration: none;
+	background: none;
+}
+
+.articleBody figure.kg-bookmark-card > a.kg-bookmark-container:hover {
+	background: var(--ember-quote-bg);
+	border-color: var(--ember-accent);
+}
+
+.articleBody .kg-bookmark-title {
+	font-size: 0.95em;
+	font-weight: 650;
+	line-height: 1.35;
+	color: var(--ember-ink);
+}
+
+.articleBody .kg-bookmark-card small { font-size: inherit; }
+
+.articleBody .kg-bookmark-description {
+	margin-top: 0.3em;
+	font-size: 0.82em;
+	line-height: 1.4;
+	color: var(--ember-ink-mute);
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+
+/* The bleeding-media rule matches the figure's link through to any image, so
+   keep a thumbnail, should a feed carry one, inside the card. */
+.articleBody figure.kg-bookmark-card img {
+	margin: 0;
+	max-width: 100%;
+	translate: none;
+}
+
+/* Video embeds: Ghost's oEmbed markup sizes every YouTube player at 200×113,
+   and NetNewsWire keeps an attribute-sized iframe at that size. Fill the
+   column at 16:9 instead. NetNewsWire's script sets the attributes' own ratio
+   inline; the aspect-ratio here holds with Article JavaScript off. Only known
+   video hosts: another embed's height may not follow its width. */
+.articleBody .kg-embed-card iframe:is([src*="youtube.com/"], [src*="youtube-nocookie.com/"], [src*="vimeo.com/"], [src*="ted.com/"]) {
+	display: block;
+	width: 100%;
+	height: auto !important;
+	aspect-ratio: 16 / 9;
+}
+
+/* Toggle card: Ghost's script collapses it; without that the content shows
+   open, and the icon-only expand button is an empty pill. */
+.articleBody .kg-toggle-card-icon { display: none; }
+
+.articleBody .kg-toggle-heading-text {
+	margin: 0 0 0.5em;
+	font-size: 1em;
+}
+
+/* Callout and call-to-action cards: a tinted panel, like a quiet aside. */
+.articleBody :is(.kg-callout-card, .kg-cta-card) {
+	padding: 0.85em 1.1em;
+	background: var(--ember-surface);
+	border-radius: 8px;
+}
+
+.articleBody .kg-callout-card {
+	display: flex;
+	gap: 0.6em;
+}
+
+.articleBody .kg-callout-emoji { flex: none; }
+
+.articleBody .kg-cta-card p:last-child { margin-bottom: 0; }
+
+.articleBody .kg-cta-sponsor-label {
+	margin-bottom: 0.6em;
+	font-size: 0.72em;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--ember-ink-mute);
+}
+
+.articleBody .kg-cta-sponsor-label :is(b, strong) { font-weight: 700; }
+
+.articleBody .kg-cta-image-container img {
+	width: 6em;
+	margin: 0 0 0.8em;
+	border-radius: 6px;
+}
+
+/* Button and CTA links: Ghost colors them inline, and NetNewsWire strips
+   those colors, so draw an accent outline pill. */
+.articleBody :is(.kg-btn, .kg-cta-button):is(:link, :visited) {
+	display: inline-block;
+	margin-top: 0.4em;
+	padding: 0.4em 1em;
+	border: 1.5px solid var(--ember-accent);
+	border-radius: 999px;
+	font-size: 0.9em;
+	font-weight: 650;
+	line-height: 1.3;
+	text-decoration: none;
+}
+
+/* Gallery card: rows of images that Ghost's script sizes by aspect ratio.
+   Without it each image would stack at full width. Lay each row out side by
+   side, bled like a single image, and crop to the row's tallest image. */
+.articleBody .kg-gallery-container {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-left: calc(-1 * var(--ember-bleed));
+	margin-right: calc(-1 * var(--ember-bleed));
+	max-width: none;
+}
+
+.articleBody .kg-gallery-row {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: minmax(0, 1fr);
+	gap: 6px;
+	margin: 0;
+	max-width: none;
+}
+
+/* Each cell is a flex column so its image grows to the row height; a
+   percentage height would resolve against the viewport here. */
+.articleBody .kg-gallery-image {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+}
+
+.articleBody .kg-gallery-image img {
+	flex: 1 1 auto;
+	min-height: 0;
+	width: 100%;
+	object-fit: cover;
+	margin: 0;
+	border-radius: 0;
+}
+
+/* Video card: keep a portrait clip (404 Media's are 1080×1920) from running
+   several screens tall at full column width. The width stays 100% so the
+   width/height attributes size the box before metadata loads; the video
+   letterboxes itself inside the clamped height. */
+.articleBody .kg-video-card video {
+	display: block;
+	width: 100%;
+	max-height: 80vh;
+}
+
+/* ---------- Substack ------------------------------------------------ */
+
+/* Substack's restack and expand buttons under each image only work on
+   Substack. */
+.articleBody .image-link-expand { display: none; }
+
+/* ---------- MacStories ---------------------------------------------- */
+
+/* MacStories app icons: each app in a roundup opens with its icon in a
+   .media-wrapper right before the app's heading. The site floats it beside
+   the heading once its own script tags it .media-wrapper-icon, but the feed
+   carries neither the class (unless Article JavaScript runs that script) nor
+   the CSS, so the 512px icon stood column-wide. Float it here, keyed on the
+   structure; the heading becomes its own formatting context so its accent bar
+   starts beside the icon instead of under it. */
+.articleBody .media-wrapper:has(> img:only-of-type):has(+ h3) {
+	float: left;
+	clear: left;
+	width: 5.5em;
+	margin: 0 1em 0.5em 0;
+}
+
+.articleBody .media-wrapper:has(> img:only-of-type):has(+ h3) > img {
+	display: block;
+	width: 100%;
+	border-radius: 22%;
+}
+
+.articleBody .media-wrapper:has(> img:only-of-type) + h3 {
+	display: flow-root;
+}
+
+/* The empty caption paragraph MacStories leaves after every image would
+   lengthen the float; elsewhere its margin is what parts an image from the
+   text below, so it stays. */
+.articleBody .media-wrapper:has(+ h3) > p.image-caption:empty { display: none; }
+
+/* The same roundup through Miniflux, whose sanitizer drops the wrapper and
+   the caption's class: each icon is a bare image, an empty paragraph, then
+   the heading. A screenshot leaves the same pair before a paragraph instead.
+   That bare shape is common enough elsewhere that the rule also asks for
+   MacStories's image host. It undoes the bleed placement, which outranks the
+   float otherwise. The template marks the caption that Miniflux leaves as a
+   bare paragraph .ember-caption, which styles it with the rest. */
+.articleBody > img[src*="cdn.macstories.net/"]:has(+ p:empty + h3) {
+	float: left;
+	clear: left;
+	width: 5.5em;
+	margin: 0 1em 0.5em 0;
+	translate: none;
+	border-radius: 22%;
+}
+
+.articleBody > img[src*="cdn.macstories.net/"]:has(+ p:empty + h3) + p:empty { display: none; }
+
+.articleBody > img[src*="cdn.macstories.net/"] + p:empty + h3 {
+	display: flow-root;
+}
+
+/* ---------- Feedbin ------------------------------------------------- */
+
+/* Carried over from NetNewsWire's default stylesheet. */
+.feedbin--article-wrap {
+	border-top: 1px solid var(--header-table-border-color);
 }
 
 /* =====================================================================
