@@ -1,0 +1,25 @@
+# A text post whose only picture is the article image a sync service supplies
+# (Feedbin's and Feedly's "image" field, or a feed's media:thumbnail), not in the
+# body. NetNewsWire shows it as an image enclosure because nothing else is visual;
+# Ember lifts it above the body as lead art, bleeding like a body image, and the
+# drop cap still opens the first paragraph. Hand-built; replace with a capture.
+# Preview with: npx nnw-theme@2 render enclosure-lead-image
+
+byline = 'Jason Snell'
+date_long = 'October 27, 2026'
+date_medium = 'Oct 27, 2026'
+date_short = '10/27/26'
+dateline_style = 'articleDateline'
+datetime_long = 'October 27, 2026 at 11:12:40 AM'
+datetime_medium = 'Oct 27, 2026 at 11:12 AM'
+datetime_short = '10/27/26, 11:12 AM'
+feed_link = 'https://sixcolors.com/'
+feed_link_title = 'Six Colors'
+preferred_link = 'https://sixcolors.com/post/2026/10/the-quiet-mac-update/'
+title = 'The quiet Mac update that fixed the thing I complained about'
+image_url = 'https://sixcolors.com/wp-content/uploads/2026/10/mac-update-hero.jpg'
+body = '''
+<p>Every year I write a list of small annoyances, and every year most of them survive the next release. This time one of them didn’t, and I want to give credit where it’s due before I forget what it was like.</p>
+<p>The fix is not dramatic. Windows that used to forget their size after a restart now remember it, and the setting that controlled this, which nobody could find, is gone because it no longer needs to exist.</p>
+<p>That’s the best kind of fix: the one that removes a preference instead of adding one.</p>
+'''

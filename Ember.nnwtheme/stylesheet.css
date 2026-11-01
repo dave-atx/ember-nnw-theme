@@ -549,14 +549,17 @@ figure {
    - p.ember-caption, the template's wrap of loose caption text after an
      image, and its mark on a caption a feed reader stripped of its class
      (MacStories through Miniflux), so with Article JavaScript off that one
-     reads as copy.
+     reads as copy;
+   - div.nnw-enclosure-caption, NetNewsWire's caption under an enclosure image
+     or video (an audio caption heads its card instead; see Enclosures).
    Set in the serif italic against the sans body, so a caption never reads as
    copy; the template sets a trailing credit apart in muted small caps.
    Only the caption shrinks: a figure also holds tables, embeds and cards,
    which keep the body size. A caption paragraph sits outside any figure, so
    it also sets its gap: snug under its image, a figure's margin after. */
 figcaption,
-.articleBody :is(.wp-caption-text, p.image-caption, .ember-caption) {
+.articleBody :is(.wp-caption-text, p.image-caption, .ember-caption),
+.ember-enclosures .nnw-enclosure-caption {
 	margin-top: 0.7em;
 	font-family: ui-serif, "New York", Georgia, serif;
 	font-style: italic;
@@ -579,6 +582,134 @@ figcaption,
 }
 
 .articleBody > img:has(+ .ember-caption) { margin-bottom: 0; }
+
+/* ---------- Enclosures --------------------------------------------- */
+
+/* NetNewsWire shows an article's enclosures (a podcast's audio, a video file,
+   a YouTube channel's player, Media RSS images) as div.nnw-enclosure blocks
+   in one div.nnw-enclosures, which the template places in .ember-enclosures
+   after the body. Its script lifts what leads the article (players, and a
+   lone image such as a podcast episode's artwork) into .ember-enclosures-lead
+   above the body; more than one image stays below as a gallery. The wrapper
+   carries the macOS text-size class, so it scales with the body.
+
+   An article without enclosures leaves the wrapper empty, and a NetNewsWire
+   too old for enclosures leaves the macro in it as text: either way it holds
+   no .nnw-enclosures, so it doesn't show. */
+.ember-enclosures:not(:has(.nnw-enclosures)) { display: none; }
+
+.ember-enclosures {
+	margin-top: 2.4em;
+	line-height: 1.66;
+	color: var(--ember-ink);
+}
+
+.ember-enclosures .nnw-enclosures { margin: 0; }
+
+.ember-enclosures .nnw-enclosure { margin: 0 0 1.6em; }
+
+.ember-enclosures .nnw-enclosure:last-child { margin-bottom: 0; }
+
+/* Leading enclosures open the article below the dateline, so they take the
+   rule the body would draw there, and the body follows without one. */
+.ember-enclosures-lead {
+	margin-top: 24px;
+	padding-top: 24px;
+	border-top: 1px solid var(--ember-rule);
+}
+
+.ember-enclosures-lead + .articleBody {
+	margin-top: 1.6em;
+	padding-top: 0;
+	border-top: none;
+}
+
+/* An enclosure image bleeds as a body image does (see Bleeding media): its
+   own size, never upscaled, spreading into the margins up to edge to edge. */
+.ember-enclosures .nnw-enclosure-image > img {
+	display: block;
+	margin-left: calc(-1 * var(--ember-bleed));
+	margin-right: auto;
+	max-width: calc(100% + 2 * var(--ember-bleed));
+	translate: clamp(0px, (var(--ember-column) + 2 * var(--ember-bleed) - 100%) / 2, var(--ember-bleed));
+	border-radius: 0;
+}
+
+/* Leading art is often square (podcast artwork runs 3000px), which edge to
+   edge would fill the window before a word of the article. Cap its height;
+   with both dimensions auto, the cap keeps its shape. width: auto overrides
+   the feed's width attribute, which would otherwise hold the width. */
+.ember-enclosures-lead .nnw-enclosure-image > img {
+	width: auto;
+	max-height: min(70vh, 36em);
+}
+
+/* Players span the column and both margins, like the widest image. The
+   YouTube frame is 16:9 until NetNewsWire's script sizes it from its own
+   width and height. */
+.ember-enclosures .nnw-enclosure-video > :is(video, iframe) {
+	display: block;
+	width: calc(100% + 2 * var(--ember-bleed));
+	max-width: none;
+	margin-left: calc(-1 * var(--ember-bleed));
+	border: 0;
+	border-radius: 0;
+	background: #000;
+}
+
+.ember-enclosures .nnw-enclosure-video > iframe {
+	aspect-ratio: 16 / 9;
+	height: auto;
+}
+
+.ember-enclosures :is(.nnw-enclosure-image, .nnw-enclosure-video) > .nnw-enclosure-caption {
+	margin-bottom: 0;
+}
+
+/* Audio is a card: the episode's title in the headline face, its duration
+   and size in the dateline's small caps, and the system player beneath. The
+   script splits NetNewsWire's one-line caption into those two; without it,
+   the whole caption heads the card. color-scheme (see Platform specifics)
+   gives the player its dark controls. */
+.ember-enclosures .nnw-enclosure-audio {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75em;
+	padding: 1em 1.1em 1.1em;
+	background: var(--ember-surface);
+	border: 1px solid var(--ember-rule);
+	border-radius: 12px;
+}
+
+.ember-enclosures .nnw-enclosure-audio > audio {
+	display: block;
+	width: 100%;
+	accent-color: var(--ember-accent);
+}
+
+.ember-enclosures .nnw-enclosure-audio > .nnw-enclosure-caption {
+	order: -1;
+	margin: 0;
+	font-family: inherit;
+	font-style: normal;
+	font-size: 1.05em;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: -0.012em;
+	color: var(--ember-ink);
+}
+
+.ember-enclosure-title { display: block; }
+
+.ember-enclosure-meta {
+	display: block;
+	margin-top: 0.3em;
+	font-size: 0.82em;
+	font-variant-caps: all-small-caps;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.06em;
+	color: var(--ember-accent);
+}
 
 /* ---------- Rules, sup/sub ------------------------------------------ */
 

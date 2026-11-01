@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1400" viewBox="0 0 1400 1400">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b211c"/><stop offset="1" stop-color="#7a2a14"/></linearGradient></defs>
+<rect width="1400" height="1400" fill="url(#g)"/>
+<circle cx="700" cy="640" r="300" fill="none" stroke="#ff7a50" stroke-width="36"/>
+<circle cx="700" cy="640" r="170" fill="none" stroke="#ff7a50" stroke-width="22" opacity=".7"/>
+<circle cx="700" cy="640" r="60" fill="#ff7a50"/>
+<text x="700" y="1150" text-anchor="middle" font-family="system-ui, sans-serif" font-size="120" font-weight="800" fill="#fdfcfa" letter-spacing="-2">THREE DESKS</text>
+</svg>

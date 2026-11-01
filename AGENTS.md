@@ -89,6 +89,13 @@ fixtures are captured from NetNewsWire with `npx nnw-theme@2 capture`.
 - Additional footnote popovers depend on NetNewsWire's **Article JavaScript**
   setting (enabled by default). Keep the adapter inline in `template.html`; `check`
   also renders with theme scripts removed to prove the article still reads well.
+- Enclosures go through the `enclosures` macro in `template.html`, never NNW's
+  append-after-body fallback, which wraps the body in a `<div>` and breaks every
+  `.articleBody > …` rule. Its wrapper must stay hidden when it holds no
+  `.nnw-enclosures` (older NNW leaves the macro as text; `check` renders that case).
+  Never write the macro in double brackets in a comment: NNW tests for the literal
+  text anywhere in the template. `fixtures/enclosure-*.toml` cover each kind and are
+  hand-built; replace them with `capture`s when real articles are available.
 - Both light and dark grounds are warm (not a naive inversion); the accent is
   vermilion in light, a lighter coral in dark.
 - Commit messages are Conventional Commits; `.github/cliff.toml` turns them into

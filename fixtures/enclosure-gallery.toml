@@ -1,0 +1,54 @@
+# A photo post whose feed attaches its pictures as Media RSS media:content items,
+# as Pixelfed and Flickr feeds do: two landscape and one portrait image, two with
+# captions, after a short body. More than one image stays below the body as a
+# stacked gallery, each bleeding like a body image. The first is also in the body,
+# so NetNewsWire skips it. Hand-built from the feed's shape; replace with a capture.
+# Preview with: npx nnw-theme@2 render enclosure-gallery
+
+byline = 'Ines Calloway'
+date_long = 'October 19, 2026'
+date_medium = 'Oct 19, 2026'
+date_short = '10/19/26'
+dateline_style = 'articleDateline'
+datetime_long = 'October 19, 2026 at 7:40:00 AM'
+datetime_medium = 'Oct 19, 2026 at 7:40 AM'
+datetime_short = '10/19/26, 7:40 AM'
+feed_link = 'https://pixelfed.social/users/ines'
+feed_link_title = 'Ines Calloway'
+preferred_link = 'https://pixelfed.social/p/ines/918273645'
+title = 'The ridge at first light'
+body = '''
+<p>Up at four for this one. The cloud lid burned off about ten minutes after sunrise, all at once, like someone pulled a sheet off the valley.</p>
+<p><img src="https://pxscdn.com/public/m/_v2/918273645/ridge-wide.jpg" width="2000" height="1000" alt="The ridge from the saddle, under cloud"></p>
+<p>#landscape #mountains #firstlight</p>
+'''
+
+[[attachments]]
+url = 'https://pxscdn.com/public/m/_v2/918273645/ridge-wide.jpg'
+mime_type = 'image/jpeg'
+width = 2000
+height = 1000
+medium = 'image'
+
+[[attachments]]
+url = 'https://pxscdn.com/public/m/_v2/918273645/cairn.jpg'
+mime_type = 'image/jpeg'
+title = 'The cairn at the false summit, with the real one behind it.'
+width = 1600
+height = 1067
+medium = 'image'
+
+[[attachments]]
+url = 'https://pxscdn.com/public/m/_v2/918273645/larch.jpg'
+mime_type = 'image/jpeg'
+title = 'Larches turning on the north slope.'
+width = 1000
+height = 1500
+medium = 'image'
+
+[[attachments]]
+url = 'https://pxscdn.com/public/m/_v2/918273645/valley.jpg'
+mime_type = 'image/jpeg'
+width = 1600
+height = 900
+medium = 'image'

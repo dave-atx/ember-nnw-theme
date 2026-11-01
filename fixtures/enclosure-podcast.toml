@@ -1,0 +1,43 @@
+# A podcast episode as NetNewsWire renders it with enclosure support: show notes in
+# the body, an untitled audio <enclosure> (so the caption falls back to the file
+# name), and the episode's itunes:image, which NetNewsWire shows as an enclosure
+# because nothing else is visual. Ember lifts both above the body: the artwork as
+# lead art, capped in height because it's square, then the audio card. Modeled on
+# ATP 311, the case in NetNewsWire's EnclosuresHTMLTests; replace with a capture.
+# Preview with: npx nnw-theme@2 render enclosure-podcast
+
+byline = 'Marco Arment, Casey Liss, John Siracusa'
+date_long = 'January 31, 2019'
+date_medium = 'Jan 31, 2019'
+date_short = '1/31/19'
+dateline_style = 'articleDateline'
+datetime_long = 'January 31, 2019 at 5:28:00 PM'
+datetime_medium = 'Jan 31, 2019 at 5:28 PM'
+datetime_short = '1/31/19, 5:28 PM'
+feed_link = 'https://atp.fm/'
+feed_link_title = 'Accidental Tech Podcast'
+preferred_link = 'https://atp.fm/311'
+title = '311: Like a Little Bit of Barnacle'
+image_url = 'media/podcast-artwork.svg'
+body = '''
+<ul>
+<li>Follow-up:<ul>
+<li>Facebook’s <a href="https://example.com/onavo">Onavo</a> scam</li>
+<li>Apple’s <a href="https://example.com/facetime-bug">FaceTime bug</a> and the bounty that followed</li>
+</ul></li>
+<li><a href="https://example.com/enterprise-certificates">Enterprise certificates</a>, revoked and restored</li>
+<li>Post-show: Casey’s <a href="https://example.com/espresso">espresso machine</a></li>
+</ul>
+<p>Sponsored by:</p>
+<ul>
+<li><a href="https://example.com/sponsor-a">Squarespace</a>: Make your next move. Use code <strong>ATP</strong> for 10% off your first order.</li>
+<li><a href="https://example.com/sponsor-b">Linode</a>: High performance SSD Linux servers for all of your infrastructure needs.</li>
+</ul>
+'''
+
+[[attachments]]
+url = 'http://traffic.libsyn.com/atpfm/atp311.mp3'
+mime_type = 'audio/mpeg'
+size_in_bytes = 54919661
+duration_in_seconds = 6849
+medium = 'audio'

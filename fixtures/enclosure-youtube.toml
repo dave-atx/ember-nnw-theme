@@ -1,0 +1,30 @@
+# A YouTube channel feed item. The channel's Atom feed lists each video as a
+# media:content Flash URL (youtube.com/v/ID, 640×390), which NetNewsWire turns into
+# its privacy-enhanced iframe player; the feed's thumbnail is suppressed because the
+# player is visual. Ember lifts the player above the body. Previews replace it with
+# a same-size placeholder. Hand-built from the feed's shape; replace with a capture.
+# Preview with: npx nnw-theme@2 render enclosure-youtube
+
+byline = 'Practical Engineering'
+date_long = 'October 21, 2026'
+date_medium = 'Oct 21, 2026'
+date_short = '10/21/26'
+dateline_style = 'articleDateline'
+datetime_long = 'October 21, 2026 at 8:00:12 AM'
+datetime_medium = 'Oct 21, 2026 at 8:00 AM'
+datetime_short = '10/21/26, 8:00 AM'
+feed_link = 'https://www.youtube.com/channel/UCMOqf8ab-42UUQIdVoKwjlQ'
+feed_link_title = 'Practical Engineering'
+preferred_link = 'https://www.youtube.com/watch?v=Xr2kTq9mZ4c'
+title = 'Why Do Some Dams Have Holes in Them?'
+thumbnail_url = 'https://i1.ytimg.com/vi/Xr2kTq9mZ4c/hqdefault.jpg'
+body = '''
+<p>Spillways aren’t the only way water gets past a dam. Outlet works, sluice gates, and the occasional mystery hole all have a job, and some of them are more interesting than the dam itself.</p>
+<p>Signed copies of my book are available at the link below. Thanks to everyone who supports the channel.</p>
+'''
+
+[[attachments]]
+url = 'https://www.youtube.com/v/Xr2kTq9mZ4c?version=3'
+mime_type = 'application/x-shockwave-flash'
+width = 640
+height = 390

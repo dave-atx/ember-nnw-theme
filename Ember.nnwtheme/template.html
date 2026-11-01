@@ -27,6 +27,7 @@ time_short: Long version of the publish time.
 
 text_size_class: The size class that the user has selected in Preferences for article text.
 body: The body of the article.
+enclosures: Audio and video players and images from the article's enclosures.
 
 -->
 
@@ -44,7 +45,59 @@ body: The body of the article.
 <div class="[[dateline_style]]"><a href="[[preferred_link]]">[[datetime_medium]]</a></div>
 <div class="externalLink">[[external_link_label]] <a href="[[external_link]]">[[external_link_stripped]]</a></div>
 <div id="bodyContainer" class="articleBody [[text_size_class]]">[[body]]</div>
+<div class="ember-enclosures [[text_size_class]]">[[enclosures]]</div>
 </article>
+
+<!--
+	Enclosure adapter. NetNewsWire writes every enclosure into one block after the
+	body. Lift what leads the article above it: audio and video players, and a lone
+	image, which is the article's own image when nothing else is visual (a podcast
+	episode's artwork). More than one image stays below, as a gallery. Then split an
+	audio caption, "Title · 1:54:09 · 54.9 MB", into the card's title and its
+	duration and size. With Article JavaScript off, everything stays below the body.
+	A NetNewsWire too old for enclosures leaves the macro as text; CSS hides the
+	wrapper whenever it holds no .nnw-enclosures.
+-->
+<script>
+(() => {
+	const below = document.querySelector(".ember-enclosures > .nnw-enclosures");
+	const body = document.querySelector(".articleBody");
+	if (!below || !body) return;
+	const all = [...below.children];
+	const images = all.filter(item => item.matches(".nnw-enclosure-image"));
+	const leading = all.filter(item => item.matches(".nnw-enclosure-audio, .nnw-enclosure-video") ||
+		(images.length === 1 && item === images[0] &&
+			!all.some(other => other.matches(".nnw-enclosure-video"))));
+	if (leading.length) {
+		const lead = document.createElement("div");
+		lead.className = `${below.parentElement.className} ember-enclosures-lead`;
+		const list = lead.appendChild(document.createElement("div"));
+		list.className = "nnw-enclosures";
+		list.append(...leading);
+		body.before(lead);
+		if (!below.children.length) below.remove();
+	}
+
+	const duration = /^\d+:\d\d(:\d\d)?$/;
+	const size = /^(Zero KB|[\d.,\u00a0\u202f]+\s?\p{L}{1,5})$/u;
+	for (const caption of document.querySelectorAll(".nnw-enclosure-audio > .nnw-enclosure-caption")) {
+		const parts = caption.textContent.split(" · ");
+		const meta = [];
+		while (parts.length > 1 && (duration.test(parts.at(-1)) || size.test(parts.at(-1)))) {
+			meta.unshift(parts.pop());
+		}
+		const title = document.createElement("span");
+		title.className = "ember-enclosure-title";
+		title.textContent = parts.join(" · ");
+		caption.replaceChildren(title);
+		if (meta.length) {
+			const details = caption.appendChild(document.createElement("span"));
+			details.className = "ember-enclosure-meta";
+			details.textContent = meta.join(" · ");
+		}
+	}
+})();
+</script>
 
 <!--
 	Caption adapter. Ars Technica's feed reaches NetNewsWire in two broken shapes:

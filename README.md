@@ -37,6 +37,9 @@ Then choose **Ember** as your article theme in NetNewsWire's settings.
 - **Prominent pull-quotes** with a tinted panel and accent rule.
 - **Full-bleed images** that span the column edge-to-edge, captions kept inset.
 - **Captions set apart** in serif italic, with photo credits in muted small caps.
+- **Podcasts, video, and photos** — an article's enclosures get a design of their own:
+  audio as a card with the episode's title, length, and size; video players and
+  episode artwork leading the article; attached photos as a gallery after it.
 - **Broader footnote support** with native-style popovers for common Markdown,
   Substack, and WordPress footnote formats.
 - **Designed light and dark** — both grounds are warm, not a naive inversion.
@@ -47,6 +50,12 @@ Then choose **Ember** as your article theme in NetNewsWire's settings.
 
 A recent version of NetNewsWire (which supports custom `.nnwtheme` themes) on macOS,
 iOS, or iPadOS.
+
+Enclosures (podcast audio, video, and attached images) need a NetNewsWire release
+with enclosure support, which is on NetNewsWire's development branch as of October
+2026. Earlier releases don't show enclosures at all, and Ember reads as before there.
+Placing players and artwork above the article, and splitting the audio card's title
+from its details, also take Article JavaScript; without it, enclosures follow the article.
 
 Ember's additional footnote formats require NetNewsWire's **Article JavaScript**
 setting, which is enabled by default. If it is disabled, Ember still renders normally,

@@ -1,0 +1,38 @@
+# A post with a video file enclosure and a PDF. NetNewsWire plays the video with
+# the article image as its poster, and never shows the PDF. Ember lifts the player
+# above the body, edge to edge; its caption is the enclosure's title. Previews
+# drop the video's source and show the poster as a placeholder. Hand-built from
+# a Media RSS feed's shape; replace with a capture.
+# Preview with: npx nnw-theme@2 render enclosure-video
+
+byline = 'NASA Jet Propulsion Laboratory'
+date_long = 'October 16, 2026'
+date_medium = 'Oct 16, 2026'
+date_short = '10/16/26'
+dateline_style = 'articleDateline'
+datetime_long = 'October 16, 2026 at 1:05:00 PM'
+datetime_medium = 'Oct 16, 2026 at 1:05 PM'
+datetime_short = '10/16/26, 1:05 PM'
+feed_link = 'https://www.jpl.nasa.gov/'
+feed_link_title = 'NASA JPL Videos'
+preferred_link = 'https://www.jpl.nasa.gov/videos/europa-flyby-animation'
+title = 'Animation: Europa Clipper’s closest flyby'
+image_url = 'https://www.jpl.nasa.gov/assets/images/europa-flyby-poster.jpg'
+body = '''
+<p>This animation shows the spacecraft’s closest pass over Europa, about 25 kilometers above the ice, with the instrument fields of view traced on the surface as it goes.</p>
+<p>The mission’s flyby schedule and the data each pass returned are in the fact sheet attached to this post.</p>
+'''
+
+[[attachments]]
+url = 'https://www.jpl.nasa.gov/videos/europa-flyby-animation.mp4'
+mime_type = 'video/mp4'
+title = 'Europa Clipper’s closest flyby, animated. Credit: NASA/JPL-Caltech'
+size_in_bytes = 73400320
+duration_in_seconds = 94
+width = 1920
+height = 1080
+
+[[attachments]]
+url = 'https://www.jpl.nasa.gov/documents/europa-flyby-fact-sheet.pdf'
+mime_type = 'application/pdf'
+size_in_bytes = 1048576

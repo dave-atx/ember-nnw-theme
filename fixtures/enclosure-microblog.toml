@@ -1,0 +1,29 @@
+# A Micro.blog episode post. Its body embeds the audio in an <audio> tag it never
+# closes, and the feed's enclosure points at the same episode on the CDN, a URL
+# the body doesn't contain, so NetNewsWire shows it too. The template's own
+# wrapper keeps the enclosure out of the unclosed tag. A title-less post with a
+# plain-text style body. Hand-built from the feed's shape; replace with a capture.
+# Preview with: npx nnw-theme@2 render enclosure-microblog
+
+byline = 'Manton Reece'
+date_long = 'October 24, 2026'
+date_medium = 'Oct 24, 2026'
+date_short = '10/24/26'
+dateline_style = 'articleDatelineTitle'
+datetime_long = 'October 24, 2026 at 9:31:00 AM'
+datetime_medium = 'Oct 24, 2026 at 9:31 AM'
+datetime_short = '10/24/26, 9:31 AM'
+feed_link = 'https://www.manton.org/'
+feed_link_title = 'Manton Reece'
+preferred_link = 'https://www.manton.org/2026/10/24/timetable-episode.html'
+body = '''
+<p>New episode of Timetable: thinking about what “small” means for a web app now that the tools are so capable. About 9 minutes.</p>
+<p><audio controls="controls" src="https://www.manton.org/uploads/2026/timetable-212.mp3" preload="none">
+'''
+
+[[attachments]]
+url = 'https://cdn.uploads.micro.blog/10/2026/timetable-212.mp3'
+mime_type = 'audio/mpeg'
+title = 'Timetable 212: Small'
+size_in_bytes = 8650752
+duration_in_seconds = 541
