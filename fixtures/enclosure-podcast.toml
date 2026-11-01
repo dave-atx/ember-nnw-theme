@@ -1,43 +1,57 @@
 # A podcast episode as NetNewsWire renders it with enclosure support: show notes in
-# the body, an untitled audio <enclosure> (so the caption falls back to the file
+# the body, an audio <enclosure> with no title (so the card's caption is the file
 # name), and the episode's itunes:image, which NetNewsWire shows as an enclosure
 # because nothing else is visual. Ember lifts both above the body: the artwork as
-# lead art, capped in height because it's square, then the audio card. Modeled on
-# ATP 311, the case in NetNewsWire's EnclosuresHTMLTests; replace with a capture.
+# lead art, capped in height because it's square, then the audio card. Captured
+# from The Talk Show (daringfireball.net/thetalkshow/rss); its artwork has no
+# dimensions, so image_url points at a square stand-in in media/ instead of
+# https://daringfireball.net/thetalkshow/graphics/df-the-talk-show-album-art.png
+# to keep the height cap in the previews.
 # Preview with: npx nnw-theme@2 render enclosure-podcast
 
-byline = 'Marco Arment, Casey Liss, John Siracusa'
-date_long = 'January 31, 2019'
-date_medium = 'Jan 31, 2019'
-date_short = '1/31/19'
+avatar_src = 'data:image/png;base64,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'
+date_long = 'October 25, 2026'
+date_medium = 'Oct 25, 2026'
+date_short = '10/25/26'
 dateline_style = 'articleDateline'
-datetime_long = 'January 31, 2019 at 5:28:00 PM'
-datetime_medium = 'Jan 31, 2019 at 5:28 PM'
-datetime_short = '1/31/19, 5:28 PM'
-feed_link = 'https://atp.fm/'
-feed_link_title = 'Accidental Tech Podcast'
-preferred_link = 'https://atp.fm/311'
-title = '311: Like a Little Bit of Barnacle'
+datetime_long = 'October 25, 2026 at 11:55:04 AM'
+datetime_medium = 'Oct 25, 2026 at 11:55 AM'
+datetime_short = '10/25/26, 11:55 AM'
+feed_link = 'https://daringfireball.net/thetalkshow'
+feed_link_title = 'The Talk Show With John Gruber'
 image_url = 'media/podcast-artwork.svg'
+preferred_link = 'https://daringfireball.net/thetalkshow/2026/10/25/ep-456'
+text_size_class = 'largeText'
+time_long = '11:55:04 AM PDT'
+time_medium = '11:55:04 AM'
+time_short = '11:55 AM'
+title = '456: ‘Lubricate the Inside of the Hinge’, With Joanna Stern'
 body = '''
+<p>Special guest: Joanna Stern. <br />
+Special topic: The iPhone Duo.</p>
+
+<p><strong>Sponsored by:</strong></p>
+
 <ul>
-<li>Follow-up:<ul>
-<li>Facebook’s <a href="https://example.com/onavo">Onavo</a> scam</li>
-<li>Apple’s <a href="https://example.com/facetime-bug">FaceTime bug</a> and the bounty that followed</li>
-</ul></li>
-<li><a href="https://example.com/enterprise-certificates">Enterprise certificates</a>, revoked and restored</li>
-<li>Post-show: Casey’s <a href="https://example.com/espresso">espresso machine</a></li>
+<li><a href="https://factormeals.com/talkshow50off">Factor</a>: Healthy eating, made easy. Get 50% off and one free breakfast item per box for one year, while supplies last, with code <strong>talkshow50off</strong>.</li>
+<li><a href="https://notion.com/talkshow">Notion</a>: The collaborative AI workspace where teams and agents work side by side, with a developer platform teams can build on.</li>
 </ul>
-<p>Sponsored by:</p>
+
+<p><strong>Transcripts:</strong> <a href="http://podsearch.david-smith.org/shows/11">Unofficial but surprisingly good</a>.</p>
+
+<p><strong>Links:</strong></p>
+
 <ul>
-<li><a href="https://example.com/sponsor-a">Squarespace</a>: Make your next move. Use code <strong>ATP</strong> for 10% off your first order.</li>
-<li><a href="https://example.com/sponsor-b">Linode</a>: High performance SSD Linux servers for all of your infrastructure needs.</li>
+<li><a href="https://www.youtube.com/watch?v=bxDTWuL9GxY">Joanna's Duo review on YouTube</a> and <a href="https://thenewthings.com/p/iphone-duo-review-the-good-bad-and-buggy">at The New Things</a>.</li>
+<li>You should <a href="https://thenewthings.com/upgrade">subscribe to The New Things</a> if you haven't already.</li>
+<li>Joanna's <a href="https://www.youtube.com/shorts/d1N-V5Y80ts">bonus video</a> and <a href="https://thenewthings.com/p/best-iphone-duo-apps">article</a> on the spate of fun Duo-specific apps and games, with clever gimmicks for the fold.</li>
+<li><a href="https://daringfireball.net/2026/10/the_iphone_duo">My Duo review</a>.</li>
 </ul>
-'''
+
+<p><em>This episode of The Talk Show was edited by Caleb Sexton.</em></p>'''
 
 [[attachments]]
-url = 'http://traffic.libsyn.com/atpfm/atp311.mp3'
+url = 'https://traffic.libsyn.com/secure/daringfireball/thetalkshow-456-joanna-stern.mp3'
 mime_type = 'audio/mpeg'
-size_in_bytes = 54919661
-duration_in_seconds = 6849
-medium = 'audio'
+size_in_bytes = 57440366
+duration_in_seconds = 7147

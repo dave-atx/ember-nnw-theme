@@ -1,30 +1,73 @@
-# A YouTube channel feed item. The channel's Atom feed lists each video as a
+# A YouTube channel feed item. The channel's Atom feed lists the video as a
 # media:content Flash URL (youtube.com/v/ID, 640×390), which NetNewsWire turns into
-# its privacy-enhanced iframe player; the feed's thumbnail is suppressed because the
-# player is visual. Ember lifts the player above the body. Previews replace it with
-# a same-size placeholder. Hand-built from the feed's shape; replace with a capture.
+# its privacy-enhanced iframe player; the media:thumbnail is suppressed because the
+# player is visual. The body is the video description from media:description, all
+# <br> lines and bare URLs. Ember lifts the player above the body. Previews replace
+# it with a same-size placeholder. Captured from Practical Engineering's channel
+# feed (youtube.com/feeds/videos.xml?channel_id=UCMOqf8ab-42UUQIdVoKwjlQ).
 # Preview with: npx nnw-theme@2 render enclosure-youtube
 
-byline = 'Practical Engineering'
-date_long = 'October 21, 2026'
-date_medium = 'Oct 21, 2026'
-date_short = '10/21/26'
+avatar_src = 'data:image/png;base64,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'
+date_long = 'October 20, 2026'
+date_medium = 'Oct 20, 2026'
+date_short = '10/20/26'
 dateline_style = 'articleDateline'
-datetime_long = 'October 21, 2026 at 8:00:12 AM'
-datetime_medium = 'Oct 21, 2026 at 8:00 AM'
-datetime_short = '10/21/26, 8:00 AM'
+datetime_long = 'October 20, 2026 at 6:00:19 AM'
+datetime_medium = 'Oct 20, 2026 at 6:00 AM'
+datetime_short = '10/20/26, 6:00 AM'
 feed_link = 'https://www.youtube.com/channel/UCMOqf8ab-42UUQIdVoKwjlQ'
 feed_link_title = 'Practical Engineering'
-preferred_link = 'https://www.youtube.com/watch?v=Xr2kTq9mZ4c'
-title = 'Why Do Some Dams Have Holes in Them?'
-thumbnail_url = 'https://i1.ytimg.com/vi/Xr2kTq9mZ4c/hqdefault.jpg'
+preferred_link = 'https://www.youtube.com/watch?v=awV7FP9sAHE'
+text_size_class = 'largeText'
+thumbnail_url = 'https://i2.ytimg.com/vi/awV7FP9sAHE/hqdefault.jpg'
+time_long = '6:00:19 AM PDT'
+time_medium = '6:00:19 AM'
+time_short = '6:00 AM'
+title = 'Whatever Happened to Fire Escapes?'
 body = '''
-<p>Spillways aren’t the only way water gets past a dam. Outlet works, sluice gates, and the occasional mystery hole all have a job, and some of them are more interesting than the dam itself.</p>
-<p>Signed copies of my book are available at the link below. Thanks to everyone who supports the channel.</p>
-'''
+<p>External fire escapes are becoming a thing of the past<br>
+📰 Go to <a href="https://ground.news/practicalengineering">https://ground.news/practicalengineering</a> to get 40% off unlimited access to the news tool I use. It helps you cut through the noise and understand how stories are being reported across the spectrum.</p>
+<p>Writing building regulations is a messy process, and there really is rarely a single “right” answer. There are just tradeoffs that affect every building differently and ripple through space, time, and the economy.</p>
+<p>📖My new book, Disasters By Design: How Engineering Failures Shaped the Modern World is coming March 2, 2027 and available for preorder now.<br>
+US: <a href="https://www.penguinrandomhouse.com/books/786143/disasters-by-design-by-grady-hillhouse/">https://www.penguinrandomhouse.com/books/786143/disasters-by-design-by-grady-hillhouse/</a><br>
+UK: <a href="https://www.penguin.co.uk/books/476190/disasters-by-design-by-hillhouse-grady/9780241798508">https://www.penguin.co.uk/books/476190/disasters-by-design-by-hillhouse-grady/9780241798508</a><br>
+More About the Book: <a href="https://practical.engineering/books">https://practical.engineering/books</a> </p>
+<p>Watch this video ad-free on Nebula: <a href="https://nebula.tv/videos/practical-engineering-whatever-happened-to-fire-escapes">https://nebula.tv/videos/practical-engineering-whatever-happened-to-fire-escapes</a></p>
+<p>Signed copies of my book (plus other cool stuff) are available here: <a href="https://store.practical.engineering/">https://store.practical.engineering/</a></p>
+<p>Practical Engineering is a YouTube channel about infrastructure and the human-made world around us. It is hosted, written, and produced by Grady Hillhouse. We have new videos posted regularly, so please subscribe for updates. If you enjoyed the video, hit that ‘like’ button, give us a comment, or watch another of our videos!</p>
+<p>CONNECT WITH ME<br>
+____________________________________<br>
+Website:         <a href="http://practical.engineering">http://practical.engineering</a><br>
+Twitter:           <a href="https://twitter.com/HillhouseGrady">https://twitter.com/HillhouseGrady</a><br>
+Instagram:     <a href="https://www.instagram.com/practicalengineering">https://www.instagram.com/practicalengineering</a><br>
+Reddit:            <a href="https://www.reddit.com/r/PracticalEngineering">https://www.reddit.com/r/PracticalEngineering</a><br>
+Facebook:      <a href="https://www.facebook.com/PracticalEngineerGrady">https://www.facebook.com/PracticalEngineerGrady</a>​<br>
+Patreon:         <a href="http://patreon.com/PracticalEngineering">http://patreon.com/PracticalEngineering</a></p>
+<p>SPONSORSHIP INQUIRIES<br>
+____________________________________<br>
+Please email my agent at <a href="mailto:practicalengineering@standard.tv">practicalengineering@standard.tv</a></p>
+<p>DISCLAIMER<br>
+____________________________________<br>
+This is not engineering advice. Everything here is for informational and entertainment purposes only. Contact an engineer licensed to practice in your area if you need professional advice or services. All non-licensed clips used for fair use commentary, criticism, and educational purposes.</p>
+<p>SPECIAL THANKS<br>
+____________________________________<br>
+This video is sponsored by Ground News.<br>
+Stock video and imagery provided by Getty Images, Shutterstock, Pond5, and Videoblocks.<br>
+Video by Grady Hillhouse<br>
+Edited by Wesley Crump<br>
+Produced by Ralph Crewe<br>
+Graphics by Nebula Studios</p>
+<p>MUSIC CREDITS<br>
+____________________________________<br>
+Edge of a Knife composed by Caleb Winters (<a href="https://beacons.ai/calebwinters">https://beacons.ai/calebwinters</a>)<br>
+Woodland Expedition composed by Caleb Winters<br>
+Aural Imprints from Epidemic Sound<br>
+Heart Beam from Epidemic Sound<br>
+Tonic and Energy by Elexive is licensed under a Creative Commons Attribution License<br>
+Source: <a href="https://www.youtube.com/watch?v=U6fBPdu8w9U">https://www.youtube.com/watch?v=U6fBPdu8w9U</a></p>'''
 
 [[attachments]]
-url = 'https://www.youtube.com/v/Xr2kTq9mZ4c?version=3'
+url = 'https://www.youtube.com/v/awV7FP9sAHE?version=3'
 mime_type = 'application/x-shockwave-flash'
 width = 640
 height = 390

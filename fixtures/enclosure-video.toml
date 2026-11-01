@@ -1,38 +1,55 @@
-# A post with a video file enclosure and a PDF. NetNewsWire plays the video with
-# the article image as its poster, and never shows the PDF. Ember lifts the player
-# above the body, edge to edge; its caption is the enclosure's title. Previews
-# drop the video's source and show the poster as a placeholder. Hand-built from
-# a Media RSS feed's shape; replace with a capture.
+# A video podcast episode: an mp4 <enclosure> with no width or height, show notes
+# in the body, and a per-episode itunes:image that NetNewsWire uses as the video's
+# poster. Ember lifts the player above the body, edge to edge; RSS enclosures have
+# no title, so there's no caption. Previews drop the video's source and show the
+# poster as a placeholder. Captured from This Week in Tech's video feed
+# (feeds.twit.tv/twit_video_hd.xml).
 # Preview with: npx nnw-theme@2 render enclosure-video
 
-byline = 'NASA Jet Propulsion Laboratory'
-date_long = 'October 16, 2026'
-date_medium = 'Oct 16, 2026'
-date_short = '10/16/26'
+avatar_src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAYKADAAQAAAABAAAAYAAAAACpM19OAAAbs0lEQVR4Ae2dB5QURfPAd2bDBY5wpAMB4VABQRABMYAJn34mjCh+Rsxi/JvzUzGnz5wwiwhiDpgwoyiYs2JCVBRBkHRxd+f/66m7unZ2di+h8pTVN9dTXV1dXV1dXVXdu0Qiqz//AAk40XzHcTMHUlRUlAn8d0GcWGFh3+NbbTmp1bDxiY6b6uB79OgxZcqUr7766plnnll//fUVvkoUervxHm60mawUOK6qhOM4ti7k5+cnEgmhX7ju2LY7v1284/S2O81o859noi17AI/H49OmTfNqP5988kmbNm2AB+jEIk6+pXctWrRw6/oU8nVPaBYUFNS915aUyVpAJLLVVls9/fTTDz300BNPPDF16tSbbrqpQ4cOd9xxx8iRI/fff/8LLrlkdNobnSi6Yfz4xx577OGHHwZ58ODBde2tEtTh0gLUFAsdd2J+m21iefK+wQYbvPfee6WlpfI6ceLE8847z5SdWKz9UC9dGfGSPJ1Ecby4P+A11lhj4403Ngj+p1+/fn369KG40UYbvfvuu926dRP4fxOFt+S1lplkCLNmzWJoUpX5PO2001BJRByoClGE4uLitdde+4ADDpgzZ86vv/663377vf3225deeuny5cs32WSTosLCd6JO2bq9q5LJLbbYYsiQIc8+++xbb73122+/BUjz2s2N9XNjc71UoCodiSxyvE/SyWWeR1VlZeWPP/6IjKqrq3n9/fff33///Xnz5kUiXqLTMLeoFAEhrYjjVn3/aGrFjyjCmDFjWrduLWRXrFhx1VVXLV68uKKi4ocffoBOMgl+pMyLfOul5qRNOZVKMZZ33nmHUUirwHPZsmWff/45azYAD39F2RYsWLD33nujeD///PPdd99Nl2+++eZnn3125JFHPj9t2uQpU2iJ1D788MNwEj6U6QhR0RwNMqpixeu1HvFQ8cg3WWVFA85w3LigHHjggciRRVZeXn7GGWdktFtpgFgoJZYrylZYWMiUfv3113vsscdzzz3Xv3//tm3bIhHWWnVlJQ0R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'
+date_long = 'October 25, 2026'
+date_medium = 'Oct 25, 2026'
+date_short = '10/25/26'
 dateline_style = 'articleDateline'
-datetime_long = 'October 16, 2026 at 1:05:00 PM'
-datetime_medium = 'Oct 16, 2026 at 1:05 PM'
-datetime_short = '10/16/26, 1:05 PM'
-feed_link = 'https://www.jpl.nasa.gov/'
-feed_link_title = 'NASA JPL Videos'
-preferred_link = 'https://www.jpl.nasa.gov/videos/europa-flyby-animation'
-title = 'Animation: Europa Clipper’s closest flyby'
-image_url = 'https://www.jpl.nasa.gov/assets/images/europa-flyby-poster.jpg'
+datetime_long = 'October 25, 2026 at 4:36:03 PM'
+datetime_medium = 'Oct 25, 2026 at 4:36 PM'
+datetime_short = '10/25/26, 4:36 PM'
+feed_link = 'https://twit.tv/shows/this-week-in-tech'
+feed_link_title = 'This Week in Tech (Video)'
+image_url = 'https://elroy.twit.tv/sites/default/files/styles/twit_thumb_720x405/public/images/episodes/2026/10/863507/hero/TWIT1107_thumbnail.jpg'
+preferred_link = 'https://twit.tv/shows/this-week-in-tech/episodes/1107'
+text_size_class = 'largeText'
+thumbnail_url = 'https://elroy.twit.tv/sites/default/files/styles/twit_slideshow_400x300/public/images/episodes/2026/10/863507/hero/TWIT1107_thumbnail.jpg'
+time_long = '4:36:03 PM PDT'
+time_medium = '4:36:03 PM'
+time_short = '4:36 PM'
+title = "TWiT 1107: Spicy Hinges - Apple's 1st Foldable, GM Forward 2026, & PHP Vulnerabilities"
 body = '''
-<p>This animation shows the spacecraft’s closest pass over Europa, about 25 kilometers above the ice, with the instrument fields of view traced on the surface as it goes.</p>
-<p>The mission’s flyby schedule and the data each pass returned are in the fact sheet attached to this post.</p>
-'''
+<p>Apple's folding iPhone Duo lands with unique new features, an evolving developer scene, and early hardware hiccups that raise eyebrows. Also, a PHP bug threatens 70% of the world's websites while AI rapidly changes how exploits are found and patched. Find out how a single overlooked flaw sparked a global scramble and what it reveals about the fragile backbone of the modern web.</p><ul> 
+<li>iPhone Duo review</li> 
+<li>GM outlines plan for next-gen EV platform, Level 4 autonomous cars</li> 
+<li>TechCrunch Mobility: Blue-green is the color of autonomy (NHTSA proposes cyan AV lights)</li> 
+<li>Spotify launches its first native in-car app, on Audi's Android Automotive cars</li> 
+<li>Hackers Exploited the PHP Vulnerabilities Days Before They Were Patched</li> 
+<li>The non-gamer CEO racing to save Microsoft's Xbox</li> 
+<li>Saudis Aided Family of Engineer Accused of Bugging OpenAI, Prosecutors Say</li> 
+<li>How iTunes came back from the dead</li></ul> 
+<p><strong>Host:</strong> <a href="https://twit.tv/people/mikah-sargent">Mikah Sargent</a></p> 
+<p><strong>Guests:</strong> <a href="https://glennf.com/" target="_blank">Glenn Fleishman</a>, <a href="https://www.theverge.com/authors/allison-johnson" target="_blank">Allison Johnson</a>, and <a href="https://twit.tv/people/sam-abuelsamid">Sam Abuelsamid</a></p> 
+<p>Download or subscribe to <em>This Week in Tech</em> at <a href="https://twit.tv/shows/this-week-in-tech">https://twit.tv/shows/this-week-in-tech</a></p> 
+<p><strong>Join Club TWiT for Ad-Free Podcasts!</strong><br /> 
+Support what you love and get ad-free audio <em>and</em> video feeds, a members-only Discord, and exclusive content. Join today: <a href="https://twit.tv/clubtwit" rel="payment">https://twit.tv/clubtwit</a></p>
+<p><strong>Sponsors:</strong><ul>
+<li><a href="http://ZipRecruiter.com/twit" target="_blank" rel="sponsored">ZipRecruiter.com/twit</a></li>
+<li><a href="https://www.doppel.com/?utm_source=thisweekintech&utm_medium=audio&utm_campaign=fy27brandcampaign" target="_blank" rel="sponsored">doppel.com</a></li>
+<li><a href="http://tanium.com/mythos/?utm_source=twit&utm_source_platform=direct&utm_asset=none&utm_medium=podcast&utm_campaign=thrdprty-twit-awareness-tofu-all-GBL-atlas-audio-EN&utm_content=atlas&utm_id=701PI00002PPHSvYAP&utm_marketing_tactic=brand_awareness&utm_creative_format=audio" target="_blank" rel="sponsored">tanium.com/mythos-twit</a></li>
+<li><a href="http://superhuman.com" target="_blank" rel="sponsored">superhuman.com</a></li>
+<li><a href="http://namecheap.promo" target="_blank" rel="sponsored">namecheap.promo use code TWIT</a></li>
+</ul></p>'''
 
 [[attachments]]
-url = 'https://www.jpl.nasa.gov/videos/europa-flyby-animation.mp4'
+url = 'https://pscrb.fm/rss/p/mgln.ai/e/294/cdn.twit.tv/video/twit/twit1107/twit1107_h264m_1920x1080.mp4'
 mime_type = 'video/mp4'
-title = 'Europa Clipper’s closest flyby, animated. Credit: NASA/JPL-Caltech'
-size_in_bytes = 73400320
-duration_in_seconds = 94
-width = 1920
-height = 1080
-
-[[attachments]]
-url = 'https://www.jpl.nasa.gov/documents/europa-flyby-fact-sheet.pdf'
-mime_type = 'application/pdf'
-size_in_bytes = 1048576
+size_in_bytes = 2889797614
+duration_in_seconds = 9844
+medium = 'video'

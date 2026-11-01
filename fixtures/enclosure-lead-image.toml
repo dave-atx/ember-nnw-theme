@@ -1,25 +1,26 @@
-# A text post whose only picture is the article image a sync service supplies
-# (Feedbin's and Feedly's "image" field, or a feed's media:thumbnail), not in the
-# body. NetNewsWire shows it as an image enclosure because nothing else is visual;
-# Ember lifts it above the body as lead art, bleeding like a body image, and the
-# drop cap still opens the first paragraph. Hand-built; replace with a capture.
+# A news item whose only picture is a 240×134 media:thumbnail, not in the body.
+# NetNewsWire shows it as an image enclosure because nothing else is visual; Ember
+# lifts it above the body as lead art, never upscaled, so it sits at its own size
+# at the start of the column. The body is a one-sentence summary with no <p>, so
+# there's no drop cap. With no dimensions, previews show a 16:9 placeholder.
+# Captured from the BBC News feed (feeds.bbci.co.uk/news/rss.xml).
 # Preview with: npx nnw-theme@2 render enclosure-lead-image
 
-byline = 'Jason Snell'
-date_long = 'October 27, 2026'
-date_medium = 'Oct 27, 2026'
-date_short = '10/27/26'
+avatar_src = 'data:image/png;base64,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'
+date_long = 'October 31, 2026'
+date_medium = 'Oct 31, 2026'
+date_short = '10/31/26'
 dateline_style = 'articleDateline'
-datetime_long = 'October 27, 2026 at 11:12:40 AM'
-datetime_medium = 'Oct 27, 2026 at 11:12 AM'
-datetime_short = '10/27/26, 11:12 AM'
-feed_link = 'https://sixcolors.com/'
-feed_link_title = 'Six Colors'
-preferred_link = 'https://sixcolors.com/post/2026/10/the-quiet-mac-update/'
-title = 'The quiet Mac update that fixed the thing I complained about'
-image_url = 'https://sixcolors.com/wp-content/uploads/2026/10/mac-update-hero.jpg'
-body = '''
-<p>Every year I write a list of small annoyances, and every year most of them survive the next release. This time one of them didn’t, and I want to give credit where it’s due before I forget what it was like.</p>
-<p>The fix is not dramatic. Windows that used to forget their size after a restart now remember it, and the setting that controlled this, which nobody could find, is gone because it no longer needs to exist.</p>
-<p>That’s the best kind of fix: the one that removes a preference instead of adding one.</p>
-'''
+datetime_long = 'October 31, 2026 at 7:57:34 PM'
+datetime_medium = 'Oct 31, 2026 at 7:57 PM'
+datetime_short = '10/31/26, 7:57 PM'
+feed_link = 'https://www.bbc.co.uk/news'
+feed_link_title = 'BBC News'
+preferred_link = 'https://www.bbc.co.uk/news/articles/c62l4yz0eexpo?at_medium=RSS&at_campaign=rss'
+text_size_class = 'largeText'
+thumbnail_url = 'https://ichef.bbci.co.uk/ace/standard/240/cpsprodpb/bf5e/live/f417cd40-d595-11f1-a701-fddedf244c16.jpg'
+time_long = '7:57:34 PM PDT'
+time_medium = '7:57:34 PM'
+time_short = '7:57 PM'
+title = "Reeves says UK's future should be inside the EU"
+body = 'In her first major intervention since leaving the Treasury, Rachel Reeves says Brexit has made the UK "poorer, weaker and less secure".'

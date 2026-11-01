@@ -94,8 +94,10 @@ fixtures are captured from NetNewsWire with `npx nnw-theme@2 capture`.
   `.articleBody > …` rule. Its wrapper must stay hidden when it holds no
   `.nnw-enclosures` (older NNW leaves the macro as text; `check` renders that case).
   Never write the macro in double brackets in a comment: NNW tests for the literal
-  text anywhere in the template. `fixtures/enclosure-*.toml` cover each kind and are
-  hand-built; replace them with `capture`s when real articles are available.
+  text anywhere in the template. `fixtures/enclosure-*.toml` cover each kind with
+  articles captured from a NetNewsWire debug build. Captured images carry no size,
+  so `enclosure-podcast` points its artwork at a square stand-in in `fixtures/media/`,
+  and the site's enclosure tile is shot from `enclosure-podcast-no-artwork`.
 - Both light and dark grounds are warm (not a naive inversion); the accent is
   vermilion in light, a lighter coral in dark.
 - Commit messages are Conventional Commits; `.github/cliff.toml` turns them into

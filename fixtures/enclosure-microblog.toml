@@ -1,29 +1,31 @@
-# A Micro.blog episode post. Its body embeds the audio in an <audio> tag it never
-# closes, and the feed's enclosure points at the same episode on the CDN, a URL
-# the body doesn't contain, so NetNewsWire shows it too. The template's own
-# wrapper keeps the enclosure out of the unclosed tag. A title-less post with a
-# plain-text style body. Hand-built from the feed's shape; replace with a capture.
+# A title-less Micro.blog post with audio narration. Its body embeds the audio
+# from Micro.blog's CDN in an <audio style="display: none"> it never closes, and
+# the feed's enclosure points at the same file under the site's /uploads/, a URL
+# the body doesn't contain, so NetNewsWire shows it too. RSS enclosures have no
+# title, so the card's caption is the file name. The template's own wrapper keeps
+# the enclosure out of the unclosed tag. Captured from www.manton.org/podcast.xml.
 # Preview with: npx nnw-theme@2 render enclosure-microblog
 
-byline = 'Manton Reece'
-date_long = 'October 24, 2026'
-date_medium = 'Oct 24, 2026'
-date_short = '10/24/26'
+date_long = 'May 29, 2024'
+date_medium = 'May 29, 2024'
+date_short = '5/29/24'
 dateline_style = 'articleDatelineTitle'
-datetime_long = 'October 24, 2026 at 9:31:00 AM'
-datetime_medium = 'Oct 24, 2026 at 9:31 AM'
-datetime_short = '10/24/26, 9:31 AM'
+datetime_long = 'May 29, 2024 at 8:28:38 AM'
+datetime_medium = 'May 29, 2024 at 8:28 AM'
+datetime_short = '5/29/24, 8:28 AM'
 feed_link = 'https://www.manton.org/'
 feed_link_title = 'Manton Reece'
-preferred_link = 'https://www.manton.org/2026/10/24/timetable-episode.html'
+preferred_link = 'https://www.manton.org/2024/05/29/on-this-day.html'
+text_size_class = 'largeText'
+time_long = '8:28:38 AM PDT'
+time_medium = '8:28:38 AM'
+time_short = '8:28 AM'
 body = '''
-<p>New episode of Timetable: thinking about what “small” means for a web app now that the tools are so capable. About 9 minutes.</p>
-<p><audio controls="controls" src="https://www.manton.org/uploads/2026/timetable-212.mp3" preload="none">
-'''
+<p>On this day <a href="https://coreint.org/2008/05/episode-1-two-voices/">16 years ago</a>, Daniel and I released the first episode of Core Intuition. So many things have changed since then. Listening to episode 1 is like going back in a time machine, to weeks before WWDC, on the verge of the App Store launching, a snapshot of the Mac developer community. 🎂</p>
+<audio src="https://cdn.uploads.micro.blog/10/2024/birthday-cake-emoji.mp3" controls="controls" preload="metadata" style="display: none">'''
 
 [[attachments]]
-url = 'https://cdn.uploads.micro.blog/10/2026/timetable-212.mp3'
+url = 'https://www.manton.org/uploads/2024/birthday-cake-emoji.mp3'
 mime_type = 'audio/mpeg'
-title = 'Timetable 212: Small'
-size_in_bytes = 8650752
-duration_in_seconds = 541
+size_in_bytes = 266644
+duration_in_seconds = 18

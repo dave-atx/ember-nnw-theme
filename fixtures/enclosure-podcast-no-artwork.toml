@@ -1,0 +1,83 @@
+# A podcast episode with no artwork of its own: show notes in the body and an
+# audio <enclosure> with no title, so the card's caption is the file name. The
+# feed has only a channel-level itunes:image, which NetNewsWire doesn't use as the
+# article image, so nothing leads and the audio card sits under the dateline. The
+# site's enclosure tile is shot from this fixture. Captured from Accidental Tech
+# Podcast (atp.fm/rss); NetNewsWire's EnclosuresHTMLTests model ATP 311 from when
+# its episodes had their own artwork. nnwdump --no-icon keeps the generated icon.
+# Preview with: npx nnw-theme@2 render enclosure-podcast-no-artwork
+
+avatar_src = 'nnwImageIcon:99264c70c2748fdae09d09572a5e8711'
+date_long = 'October 29, 2026'
+date_medium = 'Oct 29, 2026'
+date_short = '10/29/26'
+dateline_style = 'articleDateline'
+datetime_long = 'October 29, 2026 at 9:15:18 AM'
+datetime_medium = 'Oct 29, 2026 at 9:15 AM'
+datetime_short = '10/29/26, 9:15 AM'
+feed_link = 'https://atp.fm/'
+feed_link_title = 'Accidental Tech Podcast'
+preferred_link = 'https://atp.fm/715'
+text_size_class = 'largeText'
+time_long = '9:15:18 AM PDT'
+time_medium = '9:15:18 AM'
+time_short = '9:15 AM'
+title = '715: Diner Lobster'
+body = '''
+<ul>
+<li>Pre-show: Marco has a new toy
+
+<ul>
+<li><a href="https://iphonestockchecker.com/">Stock checker</a></li>
+</ul></li>
+<li>🗣️ <a href="https://atp.fm/store">ATP Holiday Store</a> is here! 🗣️</li>
+<li>🗣️ New <a href="https://atp.fm/join">ATP Member</a>&#8217;s Special: <a href="https://atp.fm/atp-insider-time-management">ATP Insider: Time Management</a> is here! 🗣️</li>
+<li><a href="https://www.apple.com/iphone-duo">iPhone Duo</a> first impressions
+
+<ul>
+<li><a href="https://mastodon.social/@stephenrobles/117502280150643367">Stephen Robles</a>&#8217;s <a href="https://shortcut.bot/3UMAHH5">shortcut</a></li>
+</ul></li>
+<li>New Apple announcements
+
+<ul>
+<li>Monday: <a href="https://www.apple.com/newsroom/2026/10/apple-gives-ipad-mini-its-biggest-update-ever/">iPad Mini</a></li>
+<li>Tuesday: <a href="https://www.apple.com/newsroom/2026/10/apple-unveils-new-imac-with-m6/">M6 iMac</a></li>
+<li>Tuesday: <a href="https://www.apple.com/newsroom/2026/10/apple-introduces-the-new-14-inch-macbook-pro-with-m6/">M6 MacBook Pro</a></li>
+<li>Wednesday: <a href="https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/">OLED MacBook Pro</a>
+
+<ul>
+<li><a href="https://www.youtube.com/watch?v=hnZI5uUSdEo">Launch video</a></li>
+<li><a href="https://www.youtube.com/watch?v=WzuIZLoHqqA">Advertisement</a></li>
+<li>🚨 <a href="https://www.theverge.com/tech/1020549/macbook-studio-touchscreen-hands-on">THE LID LIGHT IS BACK!</a> 🚨</li>
+<li><a href="https://www.wired.com/story/the-inside-story-of-why-apple-finally-brought-a-touch-display-to-the-mac/">Stephen Levy at Wired</a></li>
+<li><a href="https://developer.apple.com/videos/play/tech-talks/111456/">Design for Touch on Mac</a></li>
+</ul></li>
+<li>Mac Studio with 512&#160;GB RAM</li>
+</ul></li>
+<li>Post-show: Marco&#8217;s new app, <a href="https://apps.apple.com/us/app/fineliner/id6820516041">Fineliner</a>
+
+<ul>
+<li><a href="https://parakeet.co/">Parakeet</a></li>
+</ul></li>
+<li><a href="https://atp.fm/join">Members-only</a> ATP Overtime: Is Apple re-entering the server market??
+
+<ul>
+<li><a href="https://www.macworld.com/article/3237195/apple-may-revive-xserve-for-the-ai-market.html">Macworld: Apple may revive Xserve for the AI market</a></li>
+<li><a href="https://www.theinformation.com/articles/apple-considers-return-server-market-talked-nvidia-use-network-tech">The Information</a></li>
+<li><a href="https://x.com/markgurman/status/2100252758859489391">Gurman responds on Twitter</a></li>
+</ul></li>
+</ul>
+
+<p>Sponsored by:</p>
+
+<ul>
+<li><a href="https://granola.ai/ATP">Granola</a>: The AI notepad for back-to-back meetings</li>
+</ul>
+
+<p><a href="https://atp.fm/join">Become a member</a> for ATP Overtime, ad-free episodes, member specials, and our early-release, unedited “bootleg” feed!</p>'''
+
+[[attachments]]
+url = 'https://atp.fm/audio/sjrmwni1vvnfemex/atp715.mp3'
+mime_type = 'audio/mpeg'
+size_in_bytes = 153352238
+duration_in_seconds = 9579

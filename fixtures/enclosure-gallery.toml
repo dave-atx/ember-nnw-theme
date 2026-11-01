@@ -1,54 +1,49 @@
-# A photo post whose feed attaches its pictures as Media RSS media:content items,
-# as Pixelfed and Flickr feeds do: two landscape and one portrait image, two with
-# captions, after a short body. More than one image stays below the body as a
-# stacked gallery, each bleeding like a body image. The first is also in the body,
-# so NetNewsWire skips it. Hand-built from the feed's shape; replace with a capture.
+# A Mastodon post whose RSS attaches its four photos as Media RSS media:content
+# items, with no width, height, or title, after a body of hashtags and one line of
+# text. More than one image stays below the body as a stacked gallery, each
+# bleeding like a body image; with no dimensions, previews show each as a 16:9
+# placeholder. Mastodon puts alt text in media:description, which NetNewsWire
+# doesn't caption. Captured from mastodon.social/@adrianco.rss.
 # Preview with: npx nnw-theme@2 render enclosure-gallery
 
-byline = 'Ines Calloway'
-date_long = 'October 19, 2026'
-date_medium = 'Oct 19, 2026'
-date_short = '10/19/26'
-dateline_style = 'articleDateline'
-datetime_long = 'October 19, 2026 at 7:40:00 AM'
-datetime_medium = 'Oct 19, 2026 at 7:40 AM'
-datetime_short = '10/19/26, 7:40 AM'
-feed_link = 'https://pixelfed.social/users/ines'
-feed_link_title = 'Ines Calloway'
-preferred_link = 'https://pixelfed.social/p/ines/918273645'
-title = 'The ridge at first light'
+avatar_src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAEKADAAQAAAABAAAAEAAAAAA0VXHyAAACY0lEQVQ4EZVSTUhUURT+zpv3ZkbKwSJUxkU/auCmWrWIQEr6EaMWQVGRofS3EVq1cNWmnUTQokVMSFCSQYIgE+0KImwjFFj2N+VOaXSyp/P37j2de9+8qVbVgftz7vnOd7577iXUrL+f2zxPXyHCfmZsluO4jMZauCCrlrEgYxpwbmcy9MrEyEyDg9W90Dwl25Tx/2qMQApdyozG79LQECf8QumrJLWYxKYNhI4OB4sLjPl5UxRItxHSaQe5nEb+G9szmcqKuN3182uHmdgmb9nq4OpwAg0NVhjGxyrwfcbA+QSkIioV4OZICW9nlSFJEFOfy0ptFwLL2tsXRzJJeHCvhFgMOH4yCaUYk4/LWF5mnB1I4shRF7NvhEmMmDe6rKsNYSeA5mZCYVnj6dSaBXTv87Cu0cHE+Kr1ew56aGl1pJ2B9aXZcVdKVDlUDEdiKmCIKgsolRiup+t+UGXEHKr7oluJAi23rDcmZK4RQEqYh4oIjW9OIl/6UnE1Kz8EmkgtQYcKblzPW1Vc8wVgQIh80VZwdRD4tRvg41wZCWliVGFpMSSSLGuf5ipYn3LqcR1zpun0oc+7RaX8rv8z0TI59mTbMbdaLs56cS/U/m8cKwIbdVEcNnCr/lTPuxm5264on4gPSDvkLrSJHDTKf/RJ44e80pclz32fzXaWI6xrNlqra4KekK0lZKJzqvj94qOXe4oR8Ezvh9T9bKep/odF/cOJ7tcX5GfdkmgiRNAKSOfsnqlV1tWHz3e2h7Ffs3yd0Maf7bgjUrtYBSNaBTOyxjjQXQh0k1bqhVb6coT9ff0J4cETVjFtWZIAAAAASUVORK5CYII='
+date_long = 'October 31, 2026'
+date_medium = 'Oct 31, 2026'
+date_short = '10/31/26'
+dateline_style = 'articleDatelineTitle'
+datetime_long = 'October 31, 2026 at 10:15:23 PM'
+datetime_medium = 'Oct 31, 2026 at 10:15 PM'
+datetime_short = '10/31/26, 10:15 PM'
+feed_link = 'https://mastodon.social/@adrianco'
+feed_link_title = 'Adrian Cockcroft'
+preferred_link = 'https://mastodon.social/@adrianco/117539479476474322'
+text_size_class = 'largeText'
+time_long = '10:15:23 PM PDT'
+time_medium = '10:15:23 PM'
+time_short = '10:15 PM'
 body = '''
-<p>Up at four for this one. The cloud lid burned off about ten minutes after sunrise, all at once, like someone pulled a sheet off the valley.</p>
-<p><img src="https://pxscdn.com/public/m/_v2/918273645/ridge-wide.jpg" width="2000" height="1000" alt="The ridge from the saddle, under cloud"></p>
-<p>#landscape #mountains #firstlight</p>
-'''
+<p><a href="https://mastodon.social/tags/WeirdCarMastodon" class="mention hashtag" rel="tag">#<span>WeirdCarMastodon</span></a> <a href="https://mastodon.social/tags/Fiat" class="mention hashtag" rel="tag">#<span>Fiat</span></a> <a href="https://mastodon.social/tags/FiatAmerica" class="mention hashtag" rel="tag">#<span>FiatAmerica</span></a> Nethercutt Museum emblems and a few post-war cars. <a href="https://mastodon.social/tags/photography" class="mention hashtag" rel="tag">#<span>photography</span></a></p>'''
 
 [[attachments]]
-url = 'https://pxscdn.com/public/m/_v2/918273645/ridge-wide.jpg'
+url = 'https://files.mastodon.social/media_attachments/files/117/539/478/242/548/939/original/575669aeeac9f181.jpeg'
 mime_type = 'image/jpeg'
-width = 2000
-height = 1000
+size_in_bytes = 811007
 medium = 'image'
 
 [[attachments]]
-url = 'https://pxscdn.com/public/m/_v2/918273645/cairn.jpg'
+url = 'https://files.mastodon.social/media_attachments/files/117/539/478/424/398/140/original/d959c278c87aa83c.jpeg'
 mime_type = 'image/jpeg'
-title = 'The cairn at the false summit, with the real one behind it.'
-width = 1600
-height = 1067
+size_in_bytes = 739701
 medium = 'image'
 
 [[attachments]]
-url = 'https://pxscdn.com/public/m/_v2/918273645/larch.jpg'
+url = 'https://files.mastodon.social/media_attachments/files/117/539/478/563/454/485/original/58d454fdc18a7701.jpeg'
 mime_type = 'image/jpeg'
-title = 'Larches turning on the north slope.'
-width = 1000
-height = 1500
+size_in_bytes = 664345
 medium = 'image'
 
 [[attachments]]
-url = 'https://pxscdn.com/public/m/_v2/918273645/valley.jpg'
+url = 'https://files.mastodon.social/media_attachments/files/117/539/479/415/099/531/original/069308d65ba21f36.jpeg'
 mime_type = 'image/jpeg'
-width = 1600
-height = 900
+size_in_bytes = 1504707
 medium = 'image'
