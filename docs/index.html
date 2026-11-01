@@ -81,6 +81,8 @@
   /* Feature tiles: each a crop of the same article, in the visitor's appearance */
   .tiles{display:grid; grid-template-columns:repeat(2,1fr); gap:40px 32px;}
   @media (max-width:640px){ .tiles{grid-template-columns:1fr;} }
+  /* An odd tile out sits centered under the pairs */
+  @media (min-width:641px){ .tile:last-child:nth-child(odd){grid-column:1 / -1; justify-self:center; width:calc(50% - 16px);} }
   .tile{margin:0;}
   .tile img{width:100%; height:auto; aspect-ratio:8/5; display:block; border-radius:12px;
     border:1px solid var(--rule); box-shadow:0 1px 3px rgba(0,0,0,.05),0 10px 28px rgba(0,0,0,.08);}
@@ -150,13 +152,14 @@
 <section>
   <div class="wrap">
     <h2>The details</h2>
-    <p class="lede wide">Every screenshot below is the same article in Ember, shown in whichever appearance (light or dark) your system is using.</p>
+    <p class="lede wide">The screenshots below are the same article in Ember (and a podcast episode), shown in whichever appearance (light or dark) your system is using.</p>
     <div class="tiles">
       <figure class="tile"><picture><source srcset="assets/features/opener-dark.webp" media="(prefers-color-scheme: dark)"><img src="assets/features/opener-light.webp" alt="The opening of an article in Ember: a feed name and byline, a large bold headline, a vermilion dateline, and a drop cap." width="960" height="600" loading="lazy"></picture><h3>Big headlines and a drop cap</h3><p>Headlines get a big, heavy type scale, and the first paragraph opens with an oversized vermilion capital.</p></figure>
       <figure class="tile"><picture><source srcset="assets/features/caption-dark.webp" media="(prefers-color-scheme: dark)"><img src="assets/features/caption-light.webp" alt="A photo with its caption in serif italic and a credit line in small caps beneath it." width="960" height="600" loading="lazy"></picture><h3>Captions set apart</h3><p>Captions are set in serif italic so they don’t read as body text, with photo credits in small caps. Works with WordPress, Ghost, Substack, Medium, etc.</p></figure>
       <figure class="tile"><picture><source srcset="assets/features/quote-dark.webp" media="(prefers-color-scheme: dark)"><img src="assets/features/quote-light.webp" alt="A pull-quote in a tinted panel with an accent rule, followed by a section heading flagged with a short accent bar." width="960" height="600" loading="lazy"></picture><h3>Pull-quotes and section headings</h3><p>Quotes sit in a tinted panel with an accent rule. A short accent bar marks each section heading, which makes long articles easier to scan.</p></figure>
       <figure class="tile"><picture><source srcset="assets/features/footnote-dark.webp" media="(prefers-color-scheme: dark)"><img src="assets/features/footnote-light.webp" alt="A footnote popover open beneath the paragraph that cites it, showing the note text." width="960" height="600" loading="lazy"></picture><h3>Footnotes that open in place</h3><p>Tap a footnote marker to read the note in a popover instead of jumping to the bottom of the article. Works with Markdown and Substack footnotes, plus about a dozen WordPress plugins.</p></figure>
       <figure class="tile"><picture><source srcset="assets/features/notes-dark.webp" media="(prefers-color-scheme: dark)"><img src="assets/features/notes-light.webp" alt="A section heading and paragraph, then the footnote list under an accent-colored “Notes” label." width="960" height="600" loading="lazy"></picture><h3>A quieter Notes section</h3><p>The footnote list gets a Notes label and smaller, muted type, so it stays out of the way at the end of the article.</p></figure>
+      <figure class="tile"><picture><source srcset="assets/features/enclosure-dark.webp" media="(prefers-color-scheme: dark)"><img src="assets/features/enclosure-light.webp" alt="A podcast episode in Ember: under the dateline, a card with the episode title, its duration and size in vermilion small caps, and an audio player." width="960" height="600" loading="lazy"></picture><h3>Podcasts, video, and photos</h3><p>Audio becomes a card with the episode’s title, length, and size. Video players and episode artwork lead the article, and attached photos follow it as a gallery.</p></figure>
       <figure class="tile"><img src="assets/features/modes.webp" alt="A pull-quote and section heading split diagonally: light mode on the left, dark mode on the right." width="960" height="600" loading="lazy"><h3>Light and dark, both warm</h3><p>Both modes use a warm background. The accent is vermilion in light mode and a lighter coral in dark mode.</p></figure>
     </div>
     <ul class="more">
