@@ -1,0 +1,39 @@
+# Unsung (Marcin Wichary), from its Atom feed, 2026-11-05: the article opens with an
+# aside wholly in parentheses, so the drop cap must skip it and go to the next
+# paragraph, not cap "(I" (dave-atx/ember-nnw-theme#8).
+# Preview with: npx nnw-theme@2 render unsung-aside
+
+byline = 'Marcin Wichary'
+date_long = 'October 31, 2026'
+date_medium = 'Oct 31, 2026'
+date_short = '10/31/26'
+dateline_style = 'articleDateline'
+datetime_long = 'October 31, 2026 at 11:51:57 AM'
+datetime_medium = 'Oct 31, 2026 at 11:51 AM'
+datetime_short = '10/31/26, 11:51 AM'
+feed_link = 'https://unsung.aresluna.org/'
+feed_link_title = 'Unsung'
+preferred_link = 'https://unsung.aresluna.org/an-unnamed-arcade-in-some-sleepy-suburb-of-portland'
+text_size_class = 'largeText'
+time_long = '11:51:57 AM CDT'
+time_medium = '11:51:57 AM'
+time_short = '11:51 AM'
+title = '“An unnamed arcade in some sleepy suburb of Portland”'
+body = '''
+<p>(It’s the last day of Halloween Week on Unsung, where we’re sharing scary, spooky, and creepy stories.)</p>
+<p><a href="https://youtu.be/_7X6Yeydgyg" target="_blank">A great video about Polybius</a> from Ahoy/&#8203;Stuart Brown:</p>
+<figure>
+        <a href="https://youtu.be/_7X6Yeydgyg" target="_blank">
+        <picture>
+          <source media="(resolution >= 2x) and (width >= 700px)" srcset="https://unsung.aresluna.org/_media/an-unnamed-arcade-in-some-sleepy-suburb-of-portland/yt1-play.2096w.avif" type="image/avif">
+          <source media="(resolution >= 3x) or (width >= 700px)" srcset="https://unsung.aresluna.org/_media/an-unnamed-arcade-in-some-sleepy-suburb-of-portland/yt1-play.1600w.avif" type="image/avif">
+          <source srcset="https://unsung.aresluna.org/_media/an-unnamed-arcade-in-some-sleepy-suburb-of-portland/yt1-play.1088w.avif" type="image/avif">
+          <source srcset="https://unsung.aresluna.org/_media/an-unnamed-arcade-in-some-sleepy-suburb-of-portland/yt1.1088w.jpg" type="image/jpeg">
+          <img src="https://unsung.aresluna.org/_media/an-unnamed-arcade-in-some-sleepy-suburb-of-portland/yt1-play.1088w.avif" alt="">
+        </picture>
+        </a>
+        </figure>
+<p>Polybius was a rumoured rare or secret 1981 arcade game published by Sinneslöschen that was addictive and had adverse effects on its players, causing hallucinations, amnesia, and seizures.</p>
+<p>In contrast with <a href="https://unsung.aresluna.org/players-are-still-trying-to-find-the-alternate-reality-that-might-be-hidden-underneath/">some of the August 32 videos</a> which sport a certain “we know the authors denied this, <em>but</em>” posture, this video doesn’t waste time pretending Polybius is anything more than an urban legend. Instead, it goes straight to investigating what happened and who might have started the rumour. </p>
+<p>It’s a really fun watch – and a really well-made mini-documentary, too – and ends up being a meditation on mythmaking in general.</p><a href="https://unsung.aresluna.org/tags/games/">#games</a> <a href="https://unsung.aresluna.org/tags/halloween/">#halloween</a> <a href="https://unsung.aresluna.org/tags/history/">#history</a> <a href="https://unsung.aresluna.org/tags/youtube/">#youtube</a>
+'''

@@ -106,6 +106,7 @@ enclosures: Audio and video players and images from the article's enclosures.
 	p.ember-caption and drop the repeat, and mark MacStories's caption once
 	Miniflux strips its class; then set any trailing "Credit: …" or "Source: …" apart
 	as span.ember-credit. Floated images are skipped: text beside them is copy.
+	Last, mark an opening aside in parentheses p.ember-aside for the drop cap.
 -->
 <script>
 (() => {
@@ -155,6 +156,26 @@ enclosures: Audio and video players and images from the article's enclosures.
 		credit.className = "ember-credit";
 		rest.before(credit);
 		while (credit.nextSibling) credit.append(credit.nextSibling);
+	}
+
+	// An article can open with an aside wholly in parentheses or brackets ("(It's
+	// Halloween Week on Unsung…)", "[Editor's note: …]"). Mark it p.ember-aside so
+	// the drop cap skips it, the way it skips a caption, and goes to the paragraph
+	// that starts the article proper instead of capping "(I".
+	const isAside = text => {
+		const close = {"(": ")", "[": "]"}[text[0]];
+		if (!close || !text.endsWith(close)) return false;
+		let depth = 0;
+		for (let i = 0; i < text.length; i++) {
+			if (text[i] === text[0]) depth++;
+			else if (text[i] === close && --depth === 0) return i === text.length - 1;
+		}
+		return false;
+	};
+	for (const paragraph of article.querySelectorAll(":scope > p")) {
+		if (paragraph.matches(":empty, .ember-caption, .wp-caption-text")) continue;
+		if (!isAside(squash(paragraph.textContent))) break;
+		paragraph.classList.add("ember-aside");
 	}
 })();
 </script>

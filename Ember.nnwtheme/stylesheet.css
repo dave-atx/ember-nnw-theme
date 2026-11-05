@@ -22,6 +22,7 @@
 	--ember-ink:       #1B1714;
 	--ember-ink-soft:  #3B342E;
 	--ember-ink-mute:  #857B72;
+	--ember-ink-aside: #7A7068;  /* mute, darkened to 4.7:1 on --ember-bg for body-size text */
 	--ember-accent:    #D6421F;
 	--ember-accent-2:  #A9310F;
 	--ember-surface:   #F2ECE4;
@@ -53,6 +54,7 @@
 		--ember-ink:       #ECE6DF;
 		--ember-ink-soft:  #CBC3BA;
 		--ember-ink-mute:  #9A9088;
+		--ember-ink-aside: var(--ember-ink-mute);
 		--ember-accent:    #FF7A50;
 		--ember-accent-2:  #FF9670;
 		--ember-surface:   #2A2320;
@@ -274,14 +276,15 @@ body .header a:link, .header a:visited {
    The opening paragraph is the first one that is neither empty nor a
    caption: an article can open on a captioned photo, which must not take the
    cap. The template marks a loose caption .ember-caption, so with Article
-   JavaScript off a caption only it recognizes can take the cap.
+   JavaScript off a caption only it recognizes can take the cap. It marks an
+   opening aside in parentheses .ember-aside the same way: a cap on it reads "(I".
 
    An article that opens with text in another block (podcast show notes that
    start with a list, a heading, a quote) gets no cap: its first paragraph is
    somewhere down the page, where a cap reads as a stray letter. */
-.articleBody > p:not(:is(:empty, .ember-caption, .wp-caption-text)):not(p:not(:is(:empty, .ember-caption, .wp-caption-text)) ~ p):not(:is(ul, ol, dl, blockquote, pre, table, h1, h2, h3, h4, h5, h6) ~ p):not(figure[style*="float"] ~ p) { display: flow-root; }
+.articleBody > p:not(:is(:empty, .ember-caption, .ember-aside, .wp-caption-text)):not(p:not(:is(:empty, .ember-caption, .ember-aside, .wp-caption-text)) ~ p):not(:is(ul, ol, dl, blockquote, pre, table, h1, h2, h3, h4, h5, h6) ~ p):not(figure[style*="float"] ~ p) { display: flow-root; }
 
-.articleBody > p:not(:is(:empty, .ember-caption, .wp-caption-text)):not(p:not(:is(:empty, .ember-caption, .wp-caption-text)) ~ p):not(:is(ul, ol, dl, blockquote, pre, table, h1, h2, h3, h4, h5, h6) ~ p)::first-letter {
+.articleBody > p:not(:is(:empty, .ember-caption, .ember-aside, .wp-caption-text)):not(p:not(:is(:empty, .ember-caption, .ember-aside, .wp-caption-text)) ~ p):not(:is(ul, ol, dl, blockquote, pre, table, h1, h2, h3, h4, h5, h6) ~ p)::first-letter {
 	float: left;
 	font-size: 3.5em;
 	line-height: 0.78;
@@ -290,6 +293,10 @@ body .header a:link, .header a:visited {
 	color: var(--ember-accent);
 	-webkit-hyphens: none;
 }
+
+/* The opening aside the drop cap skips is a note about the article, not its
+   first line: set it in gray, as Unsung's site does. */
+.articleBody > p.ember-aside { color: var(--ember-ink-aside); }
 
 /* Section headings, flagged with a short accent bar */
 h1 {
