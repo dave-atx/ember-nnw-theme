@@ -1,0 +1,83 @@
+# Six Colors through FreshRSS: SimplePie renames every id and class to
+# data-sanitized-id / data-sanitized-class, so the footnote references point at
+# notes with no id until Ember restores them (dave-atx/ember-nnw-theme#7).
+# Preview with: npx nnw-theme@2 render sixcolors-freshrss-footnotes
+
+avatar_src = 'data:image/png;base64,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'
+byline = 'Glenn Fleishman'
+date_long = 'November 2, 2026'
+date_medium = 'Nov 2, 2026'
+date_short = '11/2/26'
+dateline_style = 'articleDateline'
+datetime_long = 'November 2, 2026 at 11:00:00 AM'
+datetime_medium = 'Nov 2, 2026 at 11:00 AM'
+datetime_short = '11/2/26, 11:00 AM'
+feed_link = 'https://sixcolors.com/'
+feed_link_title = 'Six Colors'
+preferred_link = 'https://sixcolors.com/post/2026/11/siri-classic-brings-old-things-back-to-life/'
+text_size_class = 'largeText'
+time_long = '11:00:00 AM PST'
+time_medium = '11:00:00 AM'
+time_short = '11:00 AM'
+title = 'Siri Classic brings old things back to life'
+body = '''
+<figure><img sizes="(max-width: 1010px) calc(100vw - 60px), 690px" srcset="https://i0.wp.com/sixcolors.com/wp-content/uploads/2025/06/glenn-shaferbrown.png?ssl=1&amp;w=690&amp;quality=90 690w, https://i0.wp.com/sixcolors.com/wp-content/uploads/2025/06/glenn-shaferbrown.png?ssl=1&amp;w=1035&amp;quality=90 1035w, https://i0.wp.com/sixcolors.com/wp-content/uploads/2025/06/glenn-shaferbrown.png?ssl=1&amp;w=1380&amp;quality=90 1380w, https://i0.wp.com/sixcolors.com/wp-content/uploads/2025/06/glenn-shaferbrown.png?ssl=1&amp;w=2070&amp;quality=90 2070w, https://i0.wp.com/sixcolors.com/wp-content/uploads/2025/06/glenn-shaferbrown.png?ssl=1&amp;w=2760&amp;quality=90 2760w" data-recalc-dims="1" height="778" width="1360" decoding="async" src="https://i0.wp.com/sixcolors.com/wp-content/uploads/2025/06/glenn-shaferbrown.png?ssl=1&#038;w=1380&#038;quality=90" alt="Glenn Fleishman, art by Shafer Brown" /></figure>
+<p>A lot of mythology swirls around the Coca-Cola Company&#8217;s strange set of decisions in 1985 to release a reformulated version of its historic carbonated beverage in April—the so-called &#8220;New Coke&#8221;—then, a few months later, start producing the original flavor as &#8220;Coke Classic.&#8221; Movies, books, and lengthy blog entries offer competing narratives about what actually happened.</p>
+<figure data-sanitized-class="pull-right narrow"><img height="1274" sizes="(max-width: 1010px) 23vw, 173px" srcset="https://i0.wp.com/sixcolors.com/wp-content/uploads/2026/10/coke-classic-can-6c.png?ssl=1&amp;w=690&amp;quality=90 690w, https://i0.wp.com/sixcolors.com/wp-content/uploads/2026/10/coke-classic-can-6c.png?ssl=1&amp;w=1035&amp;quality=90 1035w, https://i0.wp.com/sixcolors.com/wp-content/uploads/2026/10/coke-classic-can-6c.png?ssl=1&amp;w=1380&amp;quality=90 1380w, https://i0.wp.com/sixcolors.com/wp-content/uploads/2026/10/coke-classic-can-6c.png?ssl=1&amp;w=2070&amp;quality=90 2070w, https://i0.wp.com/sixcolors.com/wp-content/uploads/2026/10/coke-classic-can-6c.png?ssl=1&amp;w=2760&amp;quality=90 2760w" width="690" data-recalc-dims="1" decoding="async" src="https://i0.wp.com/sixcolors.com/wp-content/uploads/2026/10/coke-classic-can-6c.png?ssl=1&#038;w=1380&#038;quality=90" alt="A red Coca-Cola Classic can covered in condensation droplets, featuring the white script logo and a curving white and yellow ribbon design." /><figcaption>Coke brings good things back from the dead.</figcaption></figure>
+<p>In the end, Coke Classic won. People liked its taste better, and New Coke—renamed Coke II in 1990—disappeared entirely in 2002.<sup data-sanitized-id="fnref-42133-confidence"><a href="https://sixcolors.com/post/2026/11/siri-classic-brings-old-things-back-to-life/#fn-42133-confidence" data-sanitized-class="jetpack-footnote" title="Read footnote.">1</a></sup></p>
+<p>You might think this is an analogy for Siri AI and the original Siri, which Apple has sort of dubbed &#8220;Siri Classic.&#8221; I say &#8220;sort of&#8221; because you might not know Apple uses that name at all for the Siri-before-Siri AI.</p>
+<p>And I don&#8217;t think Siri Classic has the great taste we all missed with the release of Siri AI. But I&#8217;m getting ahead of myself.</p>
+<p>This column is really about how you can turn off Siri AI and some Apple Intelligence features in the version 27 operating systems, even though you can&#8217;t <em>per se</em> disable Apple Intelligence altogether.</p>
+<h2>Hidden uncanny valley settings</h2>
+<p>When Apple introduced Apple Intelligence, it appeared in Siri &amp; Apple Intelligence in Settings and System Settings. If you so chose, you could disable Apple Intelligence and leave everything else on.</p>
+<p>The release of iOS 27, iPadOS 27, and macOS 27 omitted that switch. You can still turn Siri on or off altogether, and some clever folks realized you could <a href="https://support.apple.com/en-us/127893">set Siri&#8217;s language to one not supported by Siri AI</a> and Apple Intelligence<sup data-sanitized-id="fnref-42133-language"><a href="https://sixcolors.com/post/2026/11/siri-classic-brings-old-things-back-to-life/#fn-42133-language" data-sanitized-class="jetpack-footnote" title="Read footnote.">2</a></sup> to disable it, although that choice can cause other inconveniences.</p>
+
+<p>If that&#8217;s not to your liking, you can flip a variety of Apple Intelligence features off using Screen Time. This isn&#8217;t a hidden feature, but it&#8217;s not advertised—you can&#8217;t find it in Settings/System Settings: Siri, for instance.</p>
+<p>Take a deep breath and go to Settings: Screen Time: Content &amp; Privacy Restrictions: Siri, or System Settings: Screen Time: Content &amp; Privacy: Siri. You can choose Siri Classic from the Siri menu, and it&#8217;s like you&#8217;re living in fall 2025 to summer 2026 again!<sup data-sanitized-id="fnref-42133-siridisable"><a href="https://sixcolors.com/post/2026/11/siri-classic-brings-old-things-back-to-life/#fn-42133-siridisable" data-sanitized-class="jetpack-footnote" title="Read footnote.">3</a></sup> Siri Classic is almost identical—perhaps actually identical—to the version available in the version 26 operating systems.</p>
+<p>If you choose to re-enable Siri AI, go to the same place and choose Siri AI (Beta). Go to Settings: Siri and re-enroll in the beta, too.</p>
+<figure><img height="1150" sizes="(max-width: 1010px) calc(100vw - 60px), 690px" srcset="https://i0.wp.com/sixcolors.com/wp-content/uploads/2026/10/remove-ai-features-27-6c.png?ssl=1&amp;w=690&amp;quality=90 690w, https://i0.wp.com/sixcolors.com/wp-content/uploads/2026/10/remove-ai-features-27-6c.png?ssl=1&amp;w=1035&amp;quality=90 1035w, https://i0.wp.com/sixcolors.com/wp-content/uploads/2026/10/remove-ai-features-27-6c.png?ssl=1&amp;w=1380&amp;quality=90 1380w, https://i0.wp.com/sixcolors.com/wp-content/uploads/2026/10/remove-ai-features-27-6c.png?ssl=1&amp;w=2070&amp;quality=90 2070w, https://i0.wp.com/sixcolors.com/wp-content/uploads/2026/10/remove-ai-features-27-6c.png?ssl=1&amp;w=2760&amp;quality=90 2760w" width="1380" data-recalc-dims="1" decoding="async" src="https://i0.wp.com/sixcolors.com/wp-content/uploads/2026/10/remove-ai-features-27-6c.png?ssl=1&#038;w=1380&#038;quality=90" alt="Two iOS Screen Time screenshots side-by-side showing Siri AI (Beta) parental controls, with settings for Broad World Knowledge, Writing Assistance (Don't Allow), Math Assistance, Image Creation, Realistic Images, Sensitive Topics, Explicit Language, and Extensions." /><figcaption>The Screen Time settings let you downgrade Siri AI and disable or downgrade certain Apple Intelligence features.</figcaption></figure>
+<h2>That doesn&#8217;t seem very intelligent</h2>
+<p>You can flip off—er, disable—other Apple Intelligence features, too:</p>
+<ul>
+<li><strong>Writing Assistance:</strong> So far, I&#8217;ve never found Writing Assistance (formerly Writing Tools) to be of any use. I keep Siri AI active, but disable this feature.</li>
+<li><strong>Image Creation and Realistic Images:</strong> Disabling these options ensures that you don&#8217;t accidentally generate images, and that Siri doesn&#8217;t, either.</li>
+<li><strong>Extensions:</strong> This option prevents ChatGPT from being consulted, whether pseudo-anonymously (without an account) or otherwise.</li>
+</ul>
+<p>Apple has other locations for turning off Apple Intelligence features scattered throughout Settings and apps. To exclude apps you don&#8217;t want to be used by Apple Intelligence for information it gathers across your system, go to Settings/System Settings: Siri: Excluded Apps, tap or click Add Apps, and pick apps. (Tap or click Edit to revise this list.)</p>
+<p>Other places to make changes, either in Settings on iOS/iPadOS or as noted, are:</p>
+<ul>
+<li><strong>Message summaries:</strong> Apps: Messages (iOS/iPadOS) or Messages: Settings: General (macOS), disable Summarize Messages.</li>
+<li><strong>Email summaries:</strong> Apps: Mail (iOS/iPadOS) or Mail: Settings: Viewing (macOS), turn off Summarize Message Previews.</li>
+<li><strong>Notification summaries:</strong> Notifications: Summarize Notifications, then disable Summarize Notifications.</li>
+<li><strong>Priority notifications:</strong> Notifications: Prioritize Notifications (iOS/iPadOS), and turn off Prioritize Notifications.</li>
+<li><strong>Personalized Smart Replies in Mail:</strong> Apps: Mail, then disable Personalize Smart Replies.</li>
+<li><strong>Voicemail suggestions in Phone:</strong> Apps: Phone (iOS/iPadOS) or Phone: Settings: Calls (macOS), turn off Suggestions in Voicemail.</li>
+</ul>
+<h2>Why is off so frightening?</h2>
+<p>With a Siri that mostly delivers on what Apple promised a few years ago, you can see why the company wouldn&#8217;t want to have a simple &#8220;off&#8221; switch on Apple Intelligence features. Yet, if public opinion is any guide, some people don&#8217;t want to use LLMs in any substantive form.</p>
+<p>This Siri AI downgrade is an option, but it feels like a half measure compared to a true off switch for Apple Intelligence, even if it were buried like the Siri Classic choice.</p>
+<p>[<em>Got a question for the column? You can email glenn@sixcolors.com or use</em> <code>/glenn</code> <em>in our <a href="https://sixcolors.com/subscribe/">subscriber-only</a> Discord community.</em>]</p>
+<div data-sanitized-class="footnotes">
+<hr />
+<ol>
+<li data-sanitized-id="fn-42133-confidence">
+It&#8217;s a real sign of confidence when a product is renamed a few years after its introduction. That kind of renaming is used to escape the stank of bad decisions, like Philip Morris changing its name to Altria.&#160;<a href="https://sixcolors.com/post/2026/11/siri-classic-brings-old-things-back-to-life/#fnref-42133-confidence" title="Return to main content.">&#8617;</a>
+</li>
+<li data-sanitized-id="fn-42133-language">
+Apple just updated supported languages for Siri AI and Apple Intelligence; <a href="https://www.apple.com/newsroom/2026/10/siri-ai-is-available-in-more-languages-starting-today/">consult this press release</a>.&#160;<a href="https://sixcolors.com/post/2026/11/siri-classic-brings-old-things-back-to-life/#fnref-42133-language" title="Return to main content.">&#8617;</a>
+</li>
+<li data-sanitized-id="fn-42133-siridisable">
+You can also disable Siri entirely from this location or from Settings/System Settings: Siri.&#160;<a href="https://sixcolors.com/post/2026/11/siri-classic-brings-old-things-back-to-life/#fnref-42133-siridisable" title="Return to main content.">&#8617;</a>
+</li>
+</ol>
+</div>
+'''
+
+[expect.footnotes]
+# Every marker stays on the line of the word it annotates.
+keep_with_word = true
+
+[expect.footnotes.notes]
+"1" = "It’s a real sign of confidence when a product is renamed a few years after its introduction. That kind of renaming is used to escape the stank of bad decisions, like Philip Morris changing its name to Altria."
+"2" = "Apple just updated supported languages for Siri AI and Apple Intelligence; consult this press release."
+"3" = "You can also disable Siri entirely from this location or from Settings/System Settings: Siri."

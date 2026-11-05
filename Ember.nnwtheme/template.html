@@ -189,13 +189,39 @@ enclosures: Audio and video players and images from the article's enclosures.
 		baseUrl = null;
 	}
 
+	// The page's base URL isn't always the article's: when the article has no link of
+	// its own, NetNewsWire falls back to the feed's home page, as it does for every
+	// article synced through the Google Reader API (FreshRSS, Miniflux). The title
+	// links to the article's own URL, so links to that page count as local too.
+	let articleUrl;
+	try {
+		const titleLink = document.querySelector(".articleTitle a")?.getAttribute("href");
+		articleUrl = titleLink && baseUrl ? new URL(titleLink, baseUrl) : null;
+	} catch (_) {
+		articleUrl = null;
+	}
+
+	function isSamePage(url, page) {
+		return url.origin === page.origin && url.pathname === page.pathname && url.search === page.search;
+	}
+
+	// FreshRSS renames every id in an article to data-sanitized-id, which leaves each
+	// footnote reference pointing at nothing. Put back the ones that don't collide.
+	for (const element of article.querySelectorAll("[data-sanitized-id]")) {
+		const id = element.dataset.sanitizedId;
+		if (id && !element.id && !document.getElementById(id)) element.id = id;
+	}
+
 	function localHashId(link) {
 		const href = link.getAttribute("href");
 		if (!href?.includes("#") || !baseUrl) return;
 		try {
 			const url = new URL(href, baseUrl);
-			if (url.origin !== baseUrl.origin || !url.hash) return;
-			if ((url.pathname !== baseUrl.pathname || url.search !== baseUrl.search) && (url.pathname !== "/" || url.search)) return;
+			if (!url.hash) return;
+			const isLocal = isSamePage(url, baseUrl) ||
+				(articleUrl && isSamePage(url, articleUrl)) ||
+				(url.origin === baseUrl.origin && url.pathname === "/" && !url.search);
+			if (!isLocal) return;
 			return decodeURIComponent(url.hash.slice(1));
 		} catch (_) {
 			return;
