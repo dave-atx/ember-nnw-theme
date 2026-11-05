@@ -42,7 +42,9 @@
 	--article-title-color:       var(--ember-ink);
 	--article-date-color:        var(--ember-accent);
 	--table-cell-border-color:   var(--ember-rule-2);
-	--sup-link-color:            rgba(255, 255, 255, 0.95);
+	/* A footnote marker the adapter in template.html didn't turn into a chip
+	   (Article JavaScript off, markup it doesn't know) is a plain link. */
+	--sup-link-color:            var(--ember-accent);
 }
 
 @media (prefers-color-scheme: dark) {
