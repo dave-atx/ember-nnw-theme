@@ -107,7 +107,8 @@ enclosures: Audio and video players and images from the article's enclosures.
 	Miniflux strips its class; then set any trailing "Credit: …" or "Source: …" apart
 	as span.ember-credit. Floated images are skipped: text beside them is copy.
 	Then mark an opening aside in parentheses p.ember-aside for the drop cap. Last,
-	mark a WordPress feed's "appeared first on" line p.ember-feed-credit to hide it.
+	mark a WordPress feed's "appeared first on" line p.ember-feed-credit to hide it,
+	and size a WordPress embed's card, hiding its plain link, once the card loads.
 -->
 <script>
 (() => {
@@ -188,6 +189,38 @@ enclosures: Audio and video players and images from the article's enclosures.
 	const last = [...article.children].findLast(element => squash(element.textContent) || element.matches("img, video, iframe, hr") || element.querySelector("img, video, iframe"));
 	if (last?.matches("p") && last.querySelectorAll("a").length >= 2 && feedCredit.test(squash(last.textContent))) {
 		last.classList.add("ember-feed-credit");
+	}
+
+	// A WordPress embed (one post quoting another) is a block quote holding a plain
+	// link, then the quoted post's card in an iframe. On the site, WordPress sizes the
+	// card to the height it reports and hides the link; here the card would stay cut
+	// off at its 282px placeholder height under a link that repeats its title. Do the
+	// same once the card reports in, so a card that never loads keeps its link. The
+	// card also hands its link clicks to the page; follow those within its own site,
+	// as WordPress does, through a real link so NetNewsWire opens the browser.
+	const embeds = [...article.querySelectorAll("iframe.wp-embedded-content")];
+	if (embeds.length) {
+		window.addEventListener("message", event => {
+			const embed = embeds.find(frame => frame.contentWindow === event.source);
+			const {message, value} = event.data ?? {};
+			if (!embed) return;
+			if (message === "height" && Number.isFinite(value)) {
+				// NetNewsWire sizes an iframe by the aspect ratio of its attributes.
+				embed.style.aspectRatio = "auto";
+				embed.style.height = `${Math.min(Math.max(value, 200), 1000)}px`;
+				const link = embed.previousElementSibling;
+				if (link?.matches("blockquote.wp-embedded-content")) link.classList.add("ember-embed-fallback");
+			} else if (message === "link" && typeof value === "string") {
+				try {
+					if (new URL(value).host !== new URL(embed.src).host) return;
+				} catch (_) {
+					return;
+				}
+				const link = document.createElement("a");
+				link.href = value;
+				link.click();
+			}
+		});
 	}
 })();
 </script>
