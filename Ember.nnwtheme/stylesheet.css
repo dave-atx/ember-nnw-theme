@@ -929,8 +929,10 @@ body > .systemMessage { color: var(--system-message-color); }
 
 /* ---------- WordPress ----------------------------------------------- */
 
-/* Spacer blocks add fixed-height gaps on top of Ember's own spacing. */
-.articleBody .wp-block-spacer { display: none; }
+/* Spacer blocks add fixed-height gaps on top of Ember's own spacing. The
+   "appeared first on" line many feeds end with is marked by template.html; the
+   site itself never shows it. */
+.articleBody :is(.wp-block-spacer, .ember-feed-credit) { display: none; }
 
 /* WordPress floats by class, which its theme CSS styles and the feed leaves
    behind: a classic-editor image inside a paragraph, a block image's figure,

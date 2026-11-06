@@ -106,7 +106,8 @@ enclosures: Audio and video players and images from the article's enclosures.
 	p.ember-caption and drop the repeat, and mark MacStories's caption once
 	Miniflux strips its class; then set any trailing "Credit: …" or "Source: …" apart
 	as span.ember-credit. Floated images are skipped: text beside them is copy.
-	Last, mark an opening aside in parentheses p.ember-aside for the drop cap.
+	Then mark an opening aside in parentheses p.ember-aside for the drop cap. Last,
+	mark a WordPress feed's "appeared first on" line p.ember-feed-credit to hide it.
 -->
 <script>
 (() => {
@@ -176,6 +177,17 @@ enclosures: Audio and video players and images from the article's enclosures.
 		if (paragraph.matches(":empty, .ember-caption, .wp-caption-text")) continue;
 		if (!isAside(squash(paragraph.textContent))) break;
 		paragraph.classList.add("ember-aside");
+	}
+
+	// Many WordPress feeds end every item with "The post <title> appeared first on
+	// <site>.", a line the site itself never shows. Mark it p.ember-feed-credit so the
+	// stylesheet hides it. It has to be the article's last block and hold two links,
+	// the post and the site. The wordings, common translations included, come from
+	// Daisy (github.com/shane-hendry/daisy).
+	const feedCredit = /^(?:The post|Der Beitrag|L[’']article|La entrada|Il post|O post|Het bericht|Inlägget|Indlægget) .{1,300} (?:appeared first on|erschien zuerst auf|est apparu en premier sur|apareció primero en|è apparso per primo su|apareceu primeiro em|verscheen eerst op|dök upp först på|dukkede op først på) .{1,200}$/i;
+	const last = [...article.children].findLast(element => squash(element.textContent) || element.matches("img, video, iframe, hr") || element.querySelector("img, video, iframe"));
+	if (last?.matches("p") && last.querySelectorAll("a").length >= 2 && feedCredit.test(squash(last.textContent))) {
+		last.classList.add("ember-feed-credit");
 	}
 })();
 </script>
