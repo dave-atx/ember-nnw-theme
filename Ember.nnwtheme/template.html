@@ -106,7 +106,8 @@ enclosures: Audio and video players and images from the article's enclosures.
 	p.ember-caption and drop the repeat, and mark MacStories's caption once
 	Miniflux strips its class; then set any trailing "Credit: …" or "Source: …" apart
 	as span.ember-credit. Floated images are skipped: text beside them is copy.
-	Then mark an opening aside in parentheses p.ember-aside for the drop cap. Last,
+	Then mark an opening aside in parentheses p.ember-aside for the drop cap, and an
+	opening paragraph that starts with a symbol p.ember-uncapped to go without. Last,
 	mark a WordPress feed's "appeared first on" line p.ember-feed-credit to hide it,
 	and size a WordPress embed's card, hiding its plain link, once the card loads.
 -->
@@ -174,10 +175,18 @@ enclosures: Audio and video players and images from the article's enclosures.
 		}
 		return false;
 	};
+	// The paragraph that does start the article can open with a symbol ("℅ Automattic
+	// Design:", "→", "$1,999"), which a cap would blow up into a stray glyph. Mark it
+	// p.ember-uncapped: the article gets no cap, as when it opens with a heading.
 	for (const paragraph of article.querySelectorAll(":scope > p")) {
 		if (paragraph.matches(":empty, .ember-caption, .wp-caption-text")) continue;
-		if (!isAside(squash(paragraph.textContent))) break;
-		paragraph.classList.add("ember-aside");
+		const text = squash(paragraph.textContent);
+		if (isAside(text)) {
+			paragraph.classList.add("ember-aside");
+			continue;
+		}
+		if (/^[\p{P}\s]*[^\p{L}\p{N}\p{P}\s]/u.test(text)) paragraph.classList.add("ember-uncapped");
+		break;
 	}
 
 	// Many WordPress feeds end every item with "The post <title> appeared first on

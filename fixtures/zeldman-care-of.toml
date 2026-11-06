@@ -1,0 +1,33 @@
+# Jeffrey Zeldman's link post opens with "℅", a symbol: Ember gives the article
+# no drop cap rather than cap the symbol. The quoted post's embed card is left out
+# (the tooling blocks network iframes), so its plain link stays, as it does when
+# the card can't load. The body ends with the "appeared first on" line Ember hides.
+# Body from zeldman.com/feed/, as NetNewsWire stores it for a direct subscription.
+# Preview with: npx nnw-theme@2 render zeldman-care-of
+
+byline = 'L. Jeffrey Zeldman'
+date_long = 'October 20, 2026'
+date_medium = 'Oct 20, 2026'
+date_short = '10/20/26'
+dateline_style = 'articleDateline'
+datetime_long = 'October 20, 2026 at 4:33:20 AM'
+datetime_medium = 'Oct 20, 2026 at 4:33 AM'
+datetime_short = '10/20/26, 4:33 AM'
+feed_link = 'https://zeldman.com/'
+feed_link_title = 'Jeffrey Zeldman Presents'
+preferred_link = 'https://zeldman.com/2026/10/20/figma-tips-and-shortcuts/'
+text_size_class = 'largeText'
+time_long = '4:33:20 AM PDT'
+time_medium = '4:33:20 AM'
+time_short = '4:33 AM'
+title = 'Figma Tips and Shortcuts'
+body = '''
+<p class="wp-block-paragraph">℅ <a href="https://automattic.design/">Automattic Design</a>:</p>
+
+
+
+<figure class="wp-block-embed is-type-wp-embed is-provider-automattic-design wp-block-embed-automattic-design"><div class="wp-block-embed__wrapper">
+<blockquote class="wp-embedded-content" data-secret="KJ8v2Kgu57"><a href="https://automattic.design/2026/10/19/figma-tips-and-shortcuts-i-wish-i-knew-earlier/">Figma Tips and Shortcuts I Wish I Knew&nbsp;Earlier</a></blockquote>
+</div></figure>
+<span hidden class="__iawmlf-post-loop-links" data-iawmlf-links="[{&quot;id&quot;:6823,&quot;href&quot;:&quot;https:\/\/automattic.design&quot;,&quot;archived_href&quot;:&quot;&quot;,&quot;redirect_href&quot;:&quot;&quot;,&quot;checks&quot;:[],&quot;broken&quot;:false,&quot;last_checked&quot;:null,&quot;process&quot;:&quot;done&quot;}]"></span><p>The post <a href="https://zeldman.com/2026/10/20/figma-tips-and-shortcuts/">Figma Tips and Shortcuts</a> appeared first on <a href="https://zeldman.com">Jeffrey Zeldman Presents</a>.</p>
+'''

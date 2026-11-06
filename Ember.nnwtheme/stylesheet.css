@@ -278,13 +278,15 @@ body .header a:link, .header a:visited {
    cap. The template marks a loose caption .ember-caption, so with Article
    JavaScript off a caption only it recognizes can take the cap. It marks an
    opening aside in parentheses .ember-aside the same way: a cap on it reads "(I".
+   An opening paragraph that starts with a symbol, .ember-uncapped ("℅ …"), gets
+   no cap, and the cap doesn't move on to the next paragraph.
 
    An article that opens with text in another block (podcast show notes that
    start with a list, a heading, a quote) gets no cap: its first paragraph is
    somewhere down the page, where a cap reads as a stray letter. */
-.articleBody > p:not(:is(:empty, .ember-caption, .ember-aside, .wp-caption-text)):not(p:not(:is(:empty, .ember-caption, .ember-aside, .wp-caption-text)) ~ p):not(:is(ul, ol, dl, blockquote, pre, table, h1, h2, h3, h4, h5, h6) ~ p):not(figure[style*="float"] ~ p) { display: flow-root; }
+.articleBody > p:not(.ember-uncapped):not(:is(:empty, .ember-caption, .ember-aside, .wp-caption-text)):not(p:not(:is(:empty, .ember-caption, .ember-aside, .wp-caption-text)) ~ p):not(:is(ul, ol, dl, blockquote, pre, table, h1, h2, h3, h4, h5, h6) ~ p):not(figure[style*="float"] ~ p) { display: flow-root; }
 
-.articleBody > p:not(:is(:empty, .ember-caption, .ember-aside, .wp-caption-text)):not(p:not(:is(:empty, .ember-caption, .ember-aside, .wp-caption-text)) ~ p):not(:is(ul, ol, dl, blockquote, pre, table, h1, h2, h3, h4, h5, h6) ~ p)::first-letter {
+.articleBody > p:not(.ember-uncapped):not(:is(:empty, .ember-caption, .ember-aside, .wp-caption-text)):not(p:not(:is(:empty, .ember-caption, .ember-aside, .wp-caption-text)) ~ p):not(:is(ul, ol, dl, blockquote, pre, table, h1, h2, h3, h4, h5, h6) ~ p)::first-letter {
 	float: left;
 	font-size: 3.5em;
 	line-height: 0.78;
