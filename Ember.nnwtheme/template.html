@@ -233,6 +233,25 @@ enclosures: Audio and video players and images from the article's enclosures.
 		if (id && !element.id && !document.getElementById(id)) element.id = id;
 	}
 
+	// Feedly deletes every id outright, so there is nothing to put back. The notes'
+	// return links survive, though: the list item holding a link to #fnref-1 is the
+	// note that #fn-1 names. Rebuild that id, and the reference's own, wherever a
+	// reference still points at the missing note.
+	const missingTargets = new Map();
+	for (const link of article.querySelectorAll("a[href*='#']")) {
+		const id = localHashId(link);
+		if (id && !missingTargets.has(id) && !document.getElementById(id)) missingTargets.set(id, link);
+	}
+	for (const [referenceId, backlink] of missingTargets) {
+		const noteId = referenceId.replace("fnref", "fn");
+		const reference = missingTargets.get(noteId);
+		const note = backlink.closest("li");
+		if (noteId === referenceId || !reference || !note || note.id || note.contains(reference) || document.getElementById(noteId)) continue;
+		note.id = noteId;
+		const marker = reference.closest("sup");
+		if (marker && !marker.id && !document.getElementById(referenceId)) marker.id = referenceId;
+	}
+
 	function localHashId(link) {
 		const href = link.getAttribute("href");
 		if (!href?.includes("#") || !baseUrl) return;
