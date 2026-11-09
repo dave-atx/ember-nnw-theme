@@ -1,11 +1,11 @@
 # A primary image with a caption, which no article captured so far has: the image
-# needs a title that differs from the article's, as a JSON Feed attachment or a
-# Media RSS media:title can give it. Synthetic, in the shape of the JSON Feed case
-# in NetNewsWire's EnclosuresHTMLTests: the feed's image is also its first
-# attachment, which supplies the dimensions and title. Ember sets it above the body
-# with NetNewsWire's caption under it. The second attachment isn't the primary
-# media, so it stays below the body with its own caption, and the body has an image
-# of its own between the two.
+# needs a title that differs from the article's. Only a JSON Feed attachment or an
+# Atom enclosure link can give it one, and neither gives dimensions, so previews show
+# a 16:9 placeholder; NetNewsWire doesn't read media:title. Synthetic, in the shape of
+# a JSON Feed: the feed's image is also its first attachment, which supplies the
+# title. Ember sets it above the body with NetNewsWire's caption under it. The second
+# attachment isn't the primary media, so it stays below the body with its own
+# caption, and the body has an image of its own between the two.
 # Preview with: npx nnw-theme@2 render primary-image-caption
 
 byline = 'Sam Example'
@@ -36,12 +36,8 @@ body = '''
 url = 'https://example.org/uploads/2026/11/heron.jpg'
 mime_type = 'image/jpeg'
 title = 'Great blue heron on the north shore'
-width = 1200
-height = 800
 
 [[attachments]]
 url = 'https://example.org/uploads/2026/11/coots.jpg'
 mime_type = 'image/jpeg'
 title = 'Coots near the boat launch'
-width = 1200
-height = 800

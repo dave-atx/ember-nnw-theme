@@ -1,0 +1,32 @@
+# An article whose only picture is an RSS <enclosure>, with no article image, no
+# thumbnail, and no dimensions: NetNewsWire makes the first image attachment the
+# primary media. The body is plain text with no <p>, so there's no drop cap, and its
+# blank line collapses. Taken from NASA Image of the Day (nasa.gov/feeds/iotd-feed/),
+# one of the feeds Brent Simmons tested enclosures with. Built from the feed.
+# Preview with: npx nnw-theme@2 render primary-attachment-image
+
+date_long = 'November 9, 2026'
+date_medium = 'Nov 9, 2026'
+date_short = '11/9/26'
+dateline_style = 'articleDateline'
+datetime_long = 'November 9, 2026 at 8:57:00 AM'
+datetime_medium = 'Nov 9, 2026 at 8:57 AM'
+datetime_short = '11/9/26, 8:57 AM'
+feed_link = 'https://www.nasa.gov/image-of-the-day/'
+feed_link_title = 'NASA Image of the Day'
+preferred_link = 'https://www.nasa.gov/image-detail/20261106-artemiscelebrationgala-sl1-4202/'
+text_size_class = 'largeText'
+time_long = '8:57:00 AM PST'
+time_medium = '8:57:00 AM'
+time_short = '8:57 AM'
+title = 'Astronauts Across Generations Share the Stage'
+body = '''
+On Nov. 6, 2026, Purpose Entertainment hosted the Artemis Celebration Gala at NASA's Kennedy Space Center Visitor Complex in Merritt Island, Florida. Held on the eve of NASA's MAX POWER event, the gala celebrated the explorers, innovators, and visionaries advancing the next era of human spaceflight.
+
+The event honored the successful completion of the agency's Artemis II mission, marking a historic milestone in America's return to deep space exploration. As one of the signature events concluding the nation's 250th anniversary celebration, the gala commemorated the achievements of Artemis II while looking ahead to humanity's return to the lunar surface through the Artemis campaign.
+'''
+
+[[attachments]]
+url = 'https://www.nasa.gov/wp-content/uploads/2026/11/20261106-artemiscelebrationgala-sl1-4202.jpg'
+mime_type = 'image/jpeg'
+size_in_bytes = 6604333
