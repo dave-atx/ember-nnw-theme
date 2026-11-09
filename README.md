@@ -51,11 +51,10 @@ Then choose **Ember** as your article theme in NetNewsWire's settings.
 A recent version of NetNewsWire (which supports custom `.nnwtheme` themes) on macOS,
 iOS, or iPadOS.
 
-Enclosures (podcast audio, video, and attached images) need a NetNewsWire release
-with enclosure support, which is on NetNewsWire's development branch as of October
-2026. Earlier releases don't show enclosures at all, and Ember reads as before there.
-Placing players and artwork above the article, and splitting the audio card's title
-from its details, also take Article JavaScript; without it, enclosures follow the article.
+Enclosures (podcast audio, video, and attached images) need NetNewsWire 7.3, in beta
+as of November 2026. Earlier releases don't show enclosures at all, and Ember reads as
+before there. Splitting the audio card's title from its details also takes Article
+JavaScript; without it, the whole caption heads the card.
 
 Ember's additional footnote formats require NetNewsWire's **Article JavaScript**
 setting, which is enabled by default. If it is disabled, Ember still renders normally,

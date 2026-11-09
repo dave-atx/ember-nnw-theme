@@ -565,8 +565,9 @@ figure {
      image, and its mark on a caption a feed reader stripped of its class
      (MacStories through Miniflux), so with Article JavaScript off that one
      reads as copy;
-   - div.nnw-enclosure-caption, NetNewsWire's caption under an enclosure image
-     or video (an audio caption heads its card instead; see Enclosures).
+   - div.nnw-enclosure-caption and div.nnw-primary-image-caption, NetNewsWire's
+     captions under an enclosure image or video and the article's main image
+     (an audio caption heads its card instead; see Enclosures).
    Set in the serif italic against the sans body, so a caption never reads as
    copy; the template sets a trailing credit apart in muted small caps.
    Only the caption shrinks: a figure also holds tables, embeds and cards,
@@ -600,17 +601,17 @@ figcaption,
 
 /* ---------- Enclosures --------------------------------------------- */
 
-/* NetNewsWire shows an article's enclosures (a podcast's audio, a video file,
-   a YouTube channel's player, Media RSS images) as div.nnw-enclosure blocks
-   in one div.nnw-enclosures, which the template places in .ember-enclosures
-   after the body. Its script lifts what leads the article (players, and a
-   lone image such as a podcast episode's artwork) into .ember-enclosures-lead
-   above the body; more than one image stays below as a gallery. The wrapper
-   carries the macOS text-size class, so it scales with the body.
+/* NetNewsWire 7.3 picks an article's main media (a video, else audio with the
+   article's image, else that image) as one div.nnw-primary-media, which the
+   template places in .ember-primary-media above the body. The rest of its
+   enclosures (a podcast's audio, a video file, a YouTube channel's player,
+   Media RSS images) come as div.nnw-enclosure blocks in one div.nnw-enclosures,
+   in the .ember-enclosures after the body. Both wrappers carry the macOS
+   text-size class, so they scale with the body.
 
-   An article without enclosures leaves the wrapper empty, and a NetNewsWire
-   too old for enclosures leaves the macro in it as text: either way it holds
-   no .nnw-enclosures, so it doesn't show. */
+   An article with no media leaves a wrapper empty, and a NetNewsWire too old
+   for a macro leaves it in the wrapper as text: either way the wrapper holds
+   no media, so it doesn't show. */
 .ember-enclosures:not(:has(.nnw-enclosures, .nnw-primary-media)) { display: none; }
 
 .ember-enclosures {
@@ -627,15 +628,15 @@ figcaption,
 
 .ember-enclosures .nnw-enclosure:last-child { margin-bottom: 0; }
 
-/* Leading enclosures open the article below the dateline, so they take the
+/* Leading media opens the article below the dateline, so it takes the
    rule the body would draw there, and the body follows without one. */
-.ember-enclosures-lead {
+.ember-primary-media {
 	margin-top: 24px;
 	padding-top: 24px;
 	border-top: 1px solid var(--ember-rule);
 }
 
-.ember-enclosures-lead:has(.nnw-enclosures, .nnw-primary-media) + .articleBody {
+.ember-primary-media:has(.nnw-primary-media) + .articleBody {
 	margin-top: 1.6em;
 	padding-top: 0;
 	border-top: none;
@@ -656,7 +657,7 @@ figcaption,
    edge would fill the window before a word of the article. Cap its height;
    with both dimensions auto, the cap keeps its shape. width: auto overrides
    the feed's width attribute, which would otherwise hold the width. */
-.ember-enclosures-lead :is(.nnw-enclosure-image, .nnw-primary-image) > img {
+.ember-primary-media .nnw-primary-image > img {
 	width: auto;
 	max-height: min(70vh, 36em);
 }
