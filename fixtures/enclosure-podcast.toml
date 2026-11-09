@@ -1,8 +1,7 @@
-# A podcast episode as NetNewsWire renders it with enclosure support: show notes in
-# the body, an audio <enclosure> with no title (so the card's caption is the file
-# name), and the episode's itunes:image, which NetNewsWire shows as an enclosure
-# because nothing else is visual. Ember lifts both above the body: the artwork as
-# lead art, capped in height because it's square, then the audio card. Captured
+# A podcast episode: show notes in the body, an audio <enclosure> with no title (so
+# the card's caption is the file name), and the episode's itunes:image. NetNewsWire
+# makes the audio with its image the primary media, which Ember sets above the body:
+# the artwork as lead art, capped in height because it's square, then the audio card. Captured
 # from The Talk Show (daringfireball.net/thetalkshow/rss); its artwork has no
 # dimensions, so image_url points at a square stand-in in media/ instead of
 # https://daringfireball.net/thetalkshow/graphics/df-the-talk-show-album-art.png

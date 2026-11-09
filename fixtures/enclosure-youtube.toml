@@ -1,8 +1,8 @@
 # A YouTube channel feed item. The channel's Atom feed lists the video as a
 # media:content Flash URL (youtube.com/v/ID, 640×390), which NetNewsWire turns into
-# its privacy-enhanced iframe player; the media:thumbnail is suppressed because the
-# player is visual. The body is the video description from media:description, all
-# <br> lines and bare URLs. Ember lifts the player above the body. Previews replace
+# its privacy-enhanced iframe player; the media:thumbnail isn't shown because the
+# video comes first. The body is the video description from media:description, all
+# <br> lines and bare URLs. The player is the primary media, above the body. Previews replace
 # it with a same-size placeholder. Captured from Practical Engineering's channel
 # feed (youtube.com/feeds/videos.xml?channel_id=UCMOqf8ab-42UUQIdVoKwjlQ).
 # Preview with: npx nnw-theme@2 render enclosure-youtube

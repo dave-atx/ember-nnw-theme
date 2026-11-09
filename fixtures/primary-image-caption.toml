@@ -1,0 +1,47 @@
+# A primary image with a caption, which no article captured so far has: the image
+# needs a title that differs from the article's, as a JSON Feed attachment or a
+# Media RSS media:title can give it. Synthetic, in the shape of the JSON Feed case
+# in NetNewsWire's EnclosuresHTMLTests: the feed's image is also its first
+# attachment, which supplies the dimensions and title. Ember sets it above the body
+# with NetNewsWire's caption under it. The second attachment isn't the primary
+# media, so it stays below the body with its own caption, and the body has an image
+# of its own between the two.
+# Preview with: npx nnw-theme@2 render primary-image-caption
+
+byline = 'Sam Example'
+date_long = 'November 7, 2026'
+date_medium = 'Nov 7, 2026'
+date_short = '11/7/26'
+dateline_style = 'articleDateline'
+datetime_long = 'November 7, 2026 at 8:12:00 AM'
+datetime_medium = 'Nov 7, 2026 at 8:12 AM'
+datetime_short = '11/7/26, 8:12 AM'
+feed_link = 'https://example.org/'
+feed_link_title = 'Field Notes'
+image_url = 'https://example.org/uploads/2026/11/heron.jpg'
+preferred_link = 'https://example.org/2026/11/07/green-lake/'
+text_size_class = 'largeText'
+time_long = '8:12:00 AM PST'
+time_medium = '8:12:00 AM'
+time_short = '8:12 AM'
+title = 'A Cold Morning at Green Lake'
+body = '''
+<p>The fog had not lifted by eight, and the north shore was quiet except for the coots arguing near the boat launch. I walked the long way round, past the pitch-and-putt and the shuttered concession stand, and found the path nearly empty.</p>
+<p>By the time the sun came through, the light had gone flat and silver. The water held the color of the sky so closely that the far bank looked as if it were floating.</p>
+<figure><img src="https://example.org/uploads/2026/11/north-shore.jpg" width="1600" height="900" alt="The north shore in fog"><figcaption>The north shore, a little after eight.</figcaption></figure>
+<p>I stayed until my hands stopped working, which is the only reliable way I know to end a walk like this one.</p>
+'''
+
+[[attachments]]
+url = 'https://example.org/uploads/2026/11/heron.jpg'
+mime_type = 'image/jpeg'
+title = 'Great blue heron on the north shore'
+width = 1200
+height = 800
+
+[[attachments]]
+url = 'https://example.org/uploads/2026/11/coots.jpg'
+mime_type = 'image/jpeg'
+title = 'Coots near the boat launch'
+width = 1200
+height = 800

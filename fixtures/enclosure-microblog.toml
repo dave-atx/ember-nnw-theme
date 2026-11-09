@@ -2,8 +2,9 @@
 # from Micro.blog's CDN in an <audio style="display: none"> it never closes, and
 # the feed's enclosure points at the same file under the site's /uploads/, a URL
 # the body doesn't contain, so NetNewsWire shows it too. RSS enclosures have no
-# title, so the card's caption is the file name. The template's own wrapper keeps
-# the enclosure out of the unclosed tag. Captured from www.manton.org/podcast.xml.
+# title, so the card's caption is the file name. The audio is the primary media,
+# above the body and clear of the unclosed tag. Captured from
+# www.manton.org/podcast.xml.
 # Preview with: npx nnw-theme@2 render enclosure-microblog
 
 date_long = 'May 29, 2024'

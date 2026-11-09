@@ -1,7 +1,7 @@
 # A podcast episode with no artwork of its own: show notes in the body and an
 # audio <enclosure> with no title, so the card's caption is the file name. The
 # feed has only a channel-level itunes:image, which NetNewsWire doesn't use as the
-# article image, so nothing leads and the audio card sits under the dateline. The
+# article image, so the audio card alone is the primary media, under the dateline. The
 # site's enclosure tile is shot from this fixture. Captured from Accidental Tech
 # Podcast (atp.fm/rss); NetNewsWire's EnclosuresHTMLTests model ATP 311 from when
 # its episodes had their own artwork. nnwdump --no-icon keeps the generated icon.

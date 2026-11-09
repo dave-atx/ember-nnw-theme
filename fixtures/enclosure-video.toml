@@ -1,8 +1,8 @@
 # A video podcast episode: an mp4 <enclosure> with no width or height, show notes
 # in the body, and a per-episode itunes:image that NetNewsWire uses as the video's
-# poster. Ember lifts the player above the body, edge to edge; RSS enclosures have
-# no title, so there's no caption. Previews drop the video's source and show the
-# poster as a placeholder. Captured from This Week in Tech's video feed
+# poster. The video is the primary media, set above the body edge to edge; RSS
+# enclosures have no title, so there's no caption. Previews drop the video's source
+# and show the poster as a placeholder. Captured from This Week in Tech's video feed
 # (feeds.twit.tv/twit_video_hd.xml).
 # Preview with: npx nnw-theme@2 render enclosure-video
 

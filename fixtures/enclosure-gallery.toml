@@ -1,7 +1,7 @@
 # A Mastodon post whose RSS attaches its four photos as Media RSS media:content
 # items, with no width, height, or title, after a body of hashtags and one line of
-# text. More than one image stays below the body as a stacked gallery, each
-# bleeding like a body image; with no dimensions, previews show each as a 16:9
+# text. A short untitled post has no primary image, so all four stay below the body
+# as a stacked gallery, each bleeding like a body image; with no dimensions, previews show each as a 16:9
 # placeholder. Mastodon puts alt text in media:description, which NetNewsWire
 # doesn't caption. Captured from mastodon.social/@adrianco.rss.
 # Preview with: npx nnw-theme@2 render enclosure-gallery

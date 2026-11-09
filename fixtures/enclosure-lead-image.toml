@@ -1,8 +1,8 @@
 # A news item whose only picture is a 240×134 media:thumbnail, not in the body.
-# NetNewsWire shows it as an image enclosure because nothing else is visual; Ember
-# lifts it above the body as lead art, never upscaled, so it sits at its own size
-# at the start of the column. The body is a one-sentence summary with no <p>, so
-# there's no drop cap. With no dimensions, previews show a 16:9 placeholder.
+# NetNewsWire makes the thumbnail the primary media because the article has no other
+# image; Ember sets it above the body as lead art, never upscaled, so it sits at its
+# own size at the start of the column. The body is a one-sentence summary with no
+# <p>, so there's no drop cap. With no dimensions, previews show a 16:9 placeholder.
 # Captured from the BBC News feed (feeds.bbci.co.uk/news/rss.xml).
 # Preview with: npx nnw-theme@2 render enclosure-lead-image
 
