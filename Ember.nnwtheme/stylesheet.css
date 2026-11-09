@@ -574,7 +574,7 @@ figure {
    it also sets its gap: snug under its image, a figure's margin after. */
 figcaption,
 .articleBody :is(.wp-caption-text, p.image-caption, .ember-caption),
-.ember-enclosures .nnw-enclosure-caption {
+.ember-enclosures :is(.nnw-enclosure-caption, .nnw-primary-image-caption) {
 	margin-top: 0.7em;
 	font-family: ui-serif, "New York", Georgia, serif;
 	font-style: italic;
@@ -611,7 +611,7 @@ figcaption,
    An article without enclosures leaves the wrapper empty, and a NetNewsWire
    too old for enclosures leaves the macro in it as text: either way it holds
    no .nnw-enclosures, so it doesn't show. */
-.ember-enclosures:not(:has(.nnw-enclosures)) { display: none; }
+.ember-enclosures:not(:has(.nnw-enclosures, .nnw-primary-media)) { display: none; }
 
 .ember-enclosures {
 	margin-top: 2.4em;
@@ -619,7 +619,9 @@ figcaption,
 	color: var(--ember-ink);
 }
 
-.ember-enclosures .nnw-enclosures { margin: 0; }
+.ember-enclosures :is(.nnw-enclosures, .nnw-primary-media, .nnw-primary-image) { margin: 0; }
+
+.ember-enclosures .nnw-primary-image:has(+ .nnw-enclosure) { margin-bottom: 1.6em; }
 
 .ember-enclosures .nnw-enclosure { margin: 0 0 1.6em; }
 
@@ -633,7 +635,7 @@ figcaption,
 	border-top: 1px solid var(--ember-rule);
 }
 
-.ember-enclosures-lead + .articleBody {
+.ember-enclosures-lead:has(.nnw-enclosures, .nnw-primary-media) + .articleBody {
 	margin-top: 1.6em;
 	padding-top: 0;
 	border-top: none;
@@ -641,7 +643,7 @@ figcaption,
 
 /* An enclosure image bleeds as a body image does (see Bleeding media): its
    own size, never upscaled, spreading into the margins up to edge to edge. */
-.ember-enclosures .nnw-enclosure-image > img {
+.ember-enclosures :is(.nnw-enclosure-image, .nnw-primary-image) > img {
 	display: block;
 	margin-left: calc(-1 * var(--ember-bleed));
 	margin-right: auto;
@@ -654,7 +656,7 @@ figcaption,
    edge would fill the window before a word of the article. Cap its height;
    with both dimensions auto, the cap keeps its shape. width: auto overrides
    the feed's width attribute, which would otherwise hold the width. */
-.ember-enclosures-lead .nnw-enclosure-image > img {
+.ember-enclosures-lead :is(.nnw-enclosure-image, .nnw-primary-image) > img {
 	width: auto;
 	max-height: min(70vh, 36em);
 }

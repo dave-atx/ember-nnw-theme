@@ -27,6 +27,7 @@ time_short: Long version of the publish time.
 
 text_size_class: The size class that the user has selected in Preferences for article text.
 body: The body of the article.
+primary_media: The article's main media: a video, else audio with the article image, else the article image.
 enclosures: Audio and video players and images from the article's enclosures.
 
 -->
@@ -44,26 +45,28 @@ enclosures: Audio and video players and images from the article's enclosures.
 <div class="articleTitle"><h1><a href="[[preferred_link]]">[[title]]</a></h1></div>
 <div class="[[dateline_style]]"><a href="[[preferred_link]]">[[datetime_medium]]</a></div>
 <div class="externalLink">[[external_link_label]] <a href="[[external_link]]">[[external_link_stripped]]</a></div>
+<div class="ember-primary-media ember-enclosures ember-enclosures-lead [[text_size_class]]">[[primary_media]]</div>
 <div id="bodyContainer" class="articleBody [[text_size_class]]">[[body]]</div>
 <div class="ember-enclosures [[text_size_class]]">[[enclosures]]</div>
 </article>
 
 <!--
-	Enclosure adapter. NetNewsWire writes every enclosure into one block after the
-	body. Lift what leads the article above it: audio and video players, and a lone
-	image, which is the article's own image when nothing else is visual (a podcast
-	episode's artwork). More than one image stays below, as a gallery. Then split an
-	audio caption, "Title · 1:54:09 · 54.9 MB", into the card's title and its
-	duration and size. With Article JavaScript off, everything stays below the body.
-	A NetNewsWire too old for enclosures leaves the macro as text; CSS hides the
-	wrapper whenever it holds no .nnw-enclosures.
+	Enclosure adapter. NetNewsWire 7.3 places the article's main media itself, in
+	.ember-primary-media. A release before that leaves its macro there as text, which
+	CSS hides, and writes every enclosure into one block after the body: for those,
+	lift what leads the article above it: audio and video players, and a lone image
+	(a podcast episode's artwork). More than one image stays below, as a gallery. Then
+	split an audio caption, "Title · 1:54:09 · 54.9 MB", into the card's title and its
+	duration and size. A NetNewsWire too old for enclosures leaves that macro as text
+	too; CSS hides the wrapper whenever it holds no media.
 -->
 <script>
 (() => {
 	const below = document.querySelector(".ember-enclosures > .nnw-enclosures");
 	const body = document.querySelector(".articleBody");
-	if (!below || !body) return;
-	const all = [...below.children];
+	const primary = document.querySelector(".ember-primary-media");
+	const literalMacro = primary && !primary.children.length && primary.textContent.trim();
+	const all = below && body && literalMacro ? [...below.children] : [];
 	const images = all.filter(item => item.matches(".nnw-enclosure-image"));
 	const leading = all.filter(item => item.matches(".nnw-enclosure-audio, .nnw-enclosure-video") ||
 		(images.length === 1 && item === images[0] &&
