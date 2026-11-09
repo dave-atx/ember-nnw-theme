@@ -12,5 +12,9 @@
 	<string>Dave Marquard</string>
 	<key>Version</key>
 	<integer>20</integer>
+	<key>CFBundleGetInfoString</key>
+	<string>2.13</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2026 Dave Marquard</string>
 </dict>
 </plist>

@@ -106,19 +106,24 @@ fixtures are captured from NetNewsWire with `npx nnw-theme@2 capture`.
 
 ### Releasing
 
-Two version numbers move together, and they are **not** the same number:
+Three version values move together, and the integer is **not** the same number as
+the other two:
 
 | Where | Form | Example |
 |-------|------|---------|
 | Git tag | `vMAJOR.MINOR` | `v2.2` |
 | `Ember.nnwtheme/Info.plist` → `Version` | a plain monotonic **integer**, +1 every release | `8` |
+| `Ember.nnwtheme/Info.plist` → `CFBundleGetInfoString` | the tag without its `v` | `2.2` |
 
 NetNewsWire compares that integer to decide whether an installed theme is
 out of date, so it must increase on every release regardless of how the tag
-moves. It is *not* derived from the tag.
+moves. It is *not* derived from the tag. `CFBundleGetInfoString` is the version
+Finder's Get Info shows; `bump` doesn't touch it, and it's the only bundle version
+key Finder reads from a theme's flat layout.
 
 ```sh
 npx nnw-theme@2 bump                 # Version +1
+plutil -replace CFBundleGetInfoString -string 2.2 Ember.nnwtheme/Info.plist
 git commit -am 'chore(release): v2.2'
 git push
 ```
