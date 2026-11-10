@@ -118,12 +118,12 @@ the other two:
 NetNewsWire compares that integer to decide whether an installed theme is
 out of date, so it must increase on every release regardless of how the tag
 moves. It is *not* derived from the tag. `CFBundleGetInfoString` is the version
-Finder's Get Info shows; `bump` doesn't touch it, and it's the only bundle version
-key Finder reads from a theme's flat layout.
+Finder's Get Info shows, and it's the only bundle version key Finder reads from a
+theme's flat layout. `bump` increases its last number; for a new major version, pass
+`--get-info-version 3.0`.
 
 ```sh
-npx nnw-theme@2 bump                 # Version +1
-plutil -replace CFBundleGetInfoString -string 2.2 Ember.nnwtheme/Info.plist
+npx nnw-theme@2 bump                 # Version +1, and 2.1 -> 2.2 for Get Info
 git commit -am 'chore(release): v2.2'
 git push
 ```
