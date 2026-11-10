@@ -11,9 +11,9 @@
 	<key>CreatorName</key>
 	<string>Dave Marquard</string>
 	<key>Version</key>
-	<integer>21</integer>
+	<integer>22</integer>
 	<key>CFBundleShortVersionString</key>
-	<string>2.14</string>
+	<string>2.15</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2026 Dave Marquard</string>
 </dict>
