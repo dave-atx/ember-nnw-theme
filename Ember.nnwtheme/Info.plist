@@ -12,7 +12,7 @@
 	<string>Dave Marquard</string>
 	<key>Version</key>
 	<integer>21</integer>
-	<key>CFBundleGetInfoString</key>
+	<key>CFBundleShortVersionString</key>
 	<string>2.14</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2026 Dave Marquard</string>

@@ -113,14 +113,13 @@ the other two:
 |-------|------|---------|
 | Git tag | `vMAJOR.MINOR` | `v2.2` |
 | `Ember.nnwtheme/Info.plist` → `Version` | a plain monotonic **integer**, +1 every release | `8` |
-| `Ember.nnwtheme/Info.plist` → `CFBundleGetInfoString` | the tag without its `v` | `2.2` |
+| `Ember.nnwtheme/Info.plist` → `CFBundleShortVersionString` | the tag without its `v` | `2.2` |
 
 NetNewsWire compares that integer to decide whether an installed theme is
 out of date, so it must increase on every release regardless of how the tag
-moves. It is *not* derived from the tag. `CFBundleGetInfoString` is the version
-Finder's Get Info shows, and it's the only bundle version key Finder reads from a
-theme's flat layout. `bump` increases its last number; for a new major version, pass
-`--get-info-version 3.0`.
+moves. It is *not* derived from the tag. `CFBundleShortVersionString` is the
+version Finder's Get Info window shows; it ignores `CFBundleGetInfoString`. `bump`
+increases its last number; for a new major version, pass `--get-info-version 3.0`.
 
 ```sh
 npx nnw-theme@2 bump                 # Version +1, and 2.1 -> 2.2 for Get Info
