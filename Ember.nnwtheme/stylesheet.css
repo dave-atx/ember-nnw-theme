@@ -863,6 +863,9 @@ body > .systemMessage { color: var(--system-message-color); }
    never starts with a marker. newsfoot opens the popover inside that span, and
    the note must wrap normally there. */
 .articleBody .ember-footnote-joined { white-space: nowrap; }
+/* Newer WebKit's text-wrap: pretty can break inside that nowrap span and
+   strand the marker on the next line, so blocks holding one wrap greedily. */
+.articleBody :is(p, li, dd, td, th, figcaption):has(.ember-footnote-joined) { text-wrap-style: auto; }
 .articleBody .ember-footnote-joined .newsfoot-footnote-popover { white-space: normal; }
 
 /* Stock newsfoot listens for clicks whose target is the marker anchor itself. */
