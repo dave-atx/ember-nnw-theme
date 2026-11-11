@@ -32,7 +32,9 @@
 	--ember-footnote-ink: #FFFFFF;
 	--ember-footnote-chip:      rgba(214, 66, 31, 0.14);
 	--ember-footnote-chip-edge: rgba(214, 66, 31, 0.28);
-	--ember-bleed:     0px; /* set to the body side padding per platform */
+	--ember-popover-edge:   var(--ember-rule-2);
+	--ember-popover-shadow: 0 1px 2px rgba(27, 23, 20, 0.08), 0 8px 24px rgba(27, 23, 20, 0.14);
+	--ember-bleed:    0px; /* set to the body side padding per platform */
 
 	--header-table-border-color: var(--ember-rule);
 	--header-color:              var(--ember-ink-mute);
@@ -64,6 +66,7 @@
 		--ember-footnote-ink: #1A1613;
 		--ember-footnote-chip:      rgba(255, 122, 80, 0.18);
 		--ember-footnote-chip-edge: rgba(255, 122, 80, 0.36);
+		--ember-popover-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.36);
 
 		--header-color:              var(--ember-ink-mute);
 		--body-code-color:           var(--ember-ink);
@@ -71,6 +74,12 @@
 		--article-title-color:       var(--ember-ink);
 		--table-cell-border-color:   var(--ember-rule-2);
 	}
+}
+
+/* Increase Contrast: the popover's hairline is the only thing separating it
+   from the page it floats over, so draw it in muted ink. */
+@media (prefers-contrast: more) {
+	:root { --ember-popover-edge: var(--ember-ink-mute); }
 }
 
 /* ---------- Base layout & canvas ------------------------------------ */
@@ -760,19 +769,62 @@ body > .systemMessage { color: var(--system-message-color); }
 
 /* ---------- Newsfoot footnotes -------------------------------------- */
 
+/* The popover is a card in the page's own ground: newsfoot's 1px of padding
+   shows the popover's background as a hairline ring, and a soft two-layer
+   shadow lifts it. The radii are Ember's, not core.css's, so the card keeps
+   its shape across NetNewsWire releases (NetNewsWire PR #5547 moves core's
+   from 0.3em to 1em).
+
+   It fades in and settles down from just above its marker. NetNewsWire
+   releases with PR #5547 also add .is-closing and wait for the fade before
+   removing the popover; older ones remove it at once. The whole card moves,
+   arrow included, so the inner box's own transform from that PR is undone. */
 .newsfoot-footnote-popover {
-	background: var(--ember-rule-2);
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35), 0 3px 6px rgba(0, 0, 0, 0.2);
+	background: var(--ember-popover-edge);
+	box-shadow: var(--ember-popover-shadow);
 	color: var(--ember-ink);
 	padding: 1px;
+	border: 0;
+	border-radius: 12px;
+	opacity: 1;
+	translate: 0 0;
+	transition: opacity 180ms ease-out, translate 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@starting-style {
+	.newsfoot-footnote-popover {
+		opacity: 0;
+		translate: 0 -0.3em;
+	}
+}
+
+.newsfoot-footnote-popover.is-closing {
+	opacity: 0;
+	translate: 0 -0.15em;
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.newsfoot-footnote-popover,
+	.newsfoot-footnote-popover.is-closing { translate: none; }
+
+	@starting-style {
+		.newsfoot-footnote-popover { translate: none; }
+	}
 }
 
 .newsfoot-footnote-popover-arrow {
 	background: var(--ember-bg);
-	border: 1px solid var(--ember-rule-2);
+	border: 1px solid var(--ember-popover-edge);
 }
 
-.newsfoot-footnote-popover-inner { background: var(--ember-bg); }
+.newsfoot-footnote-popover-inner,
+.newsfoot-footnote-popover.is-closing .newsfoot-footnote-popover-inner {
+	background: var(--ember-bg);
+	border-radius: 11px;
+	transform: none;
+	transition: none;
+}
 
 /* Inline reference marker: one presentation no matter how the provider wrote it.
    Whether a reference is wrapped in <sup> is arbitrary across formats, and while
@@ -840,7 +892,7 @@ body > .systemMessage { color: var(--system-message-color); }
 
 /* Touched or open, the chip fills in — the loud state is the transient one. */
 .articleBody a.footnote:hover,
-.newsfoot-footnote-popover + a.footnote {
+.newsfoot-footnote-popover:not(.is-closing) + a.footnote {
 	background-color: var(--ember-accent);
 	border-bottom: none;
 	color: var(--ember-footnote-ink);
