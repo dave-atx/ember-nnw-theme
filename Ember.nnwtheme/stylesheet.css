@@ -1328,7 +1328,14 @@ body > .systemMessage { color: var(--system-message-color); }
 
    NetNewsWire marks the platform itself: on macOS it gives .articleBody a
    text-size class (smallText … xxLargeText); on iOS and iPadOS it never
-   does. Each block below keys on that, so it needs no script and holds with
+   does. The template's .ember-primary-media carries the same class ahead of
+   any media, and the test looks there too: an audio or video player makes
+   WebKit style the page mid-parse, before .articleBody exists, and WebKit
+   never re-tests :root's :has() once it arrives. The root would keep the iOS
+   branch's 13px system font, which narrows the 44em column, until the next
+   full restyle (switching light and dark) widened it again.
+
+   Each block below keys on that, so it needs no script and holds with
    Article JavaScript off. :where() adds no specificity, so every rule keeps
    the weight it would have unwrapped. Colors come from the light-dark()
    palette, so neither block needs a dark-mode branch.
@@ -1339,7 +1346,7 @@ body > .systemMessage { color: var(--system-message-color); }
    ===================================================================== */
 
 /* iOS / iPadOS */
-:where(:root:not(:has(.articleBody:is(.smallText, .mediumText, .largeText, .xLargeText, .xxLargeText, .xlargeText, .xxlargeText)))) {
+:where(:root:not(:has(:is(.ember-primary-media, .articleBody):is(.smallText, .mediumText, .largeText, .xLargeText, .xxLargeText, .xlargeText, .xxlargeText)))) {
 
 	& body {
 		margin-top: 3px;
@@ -1420,7 +1427,7 @@ body > .systemMessage { color: var(--system-message-color); }
 }
 
 /* macOS */
-:where(:root:has(.articleBody:is(.smallText, .mediumText, .largeText, .xLargeText, .xxLargeText, .xlargeText, .xxlargeText))) {
+:where(:root:has(:is(.ember-primary-media, .articleBody):is(.smallText, .mediumText, .largeText, .xLargeText, .xxLargeText, .xlargeText, .xxlargeText))) {
 
 	& body {
 		margin-top: 20px;
