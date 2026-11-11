@@ -15,32 +15,41 @@
    vermilion accent that shifts to a lighter coral in the dark so links
    and marks keep their contrast. The --*-color names below are the ones
    NNW's base rules reference; --ember-* are Ember's own tokens.
+
+   Each color is light-dark(light, dark), so one declaration covers both
+   modes; the root's color-scheme picks the side, and also gives native
+   controls (the audio player, scrollbars) their dark appearance.
 */
 
 :root {
-	--ember-bg:        #FDFCFA;
-	--ember-ink:       #1B1714;
-	--ember-ink-soft:  #3B342E;
-	--ember-ink-mute:  #857B72;
-	--ember-ink-aside: #7A7068;  /* mute, darkened to 4.7:1 on --ember-bg for body-size text */
-	--ember-accent:    #D6421F;
-	--ember-accent-2:  #A9310F;
-	--ember-surface:   #F2ECE4;
-	--ember-rule:      rgba(27, 23, 20, 0.10);
-	--ember-rule-2:    rgba(27, 23, 20, 0.16);
-	--ember-quote-bg:  rgba(214, 66, 31, 0.05);
-	--ember-footnote-ink: #FFFFFF;
-	--ember-footnote-chip:      rgba(214, 66, 31, 0.14);
-	--ember-footnote-chip-edge: rgba(214, 66, 31, 0.28);
-	--ember-popover-edge:   var(--ember-rule-2);
-	--ember-popover-shadow: 0 1px 2px rgba(27, 23, 20, 0.08), 0 8px 24px rgba(27, 23, 20, 0.14);
-	--ember-bleed:    0px; /* set to the body side padding per platform */
+	color-scheme: light dark;
+
+	--ember-bg:        light-dark(#FDFCFA, #1A1613);
+	--ember-ink:       light-dark(#1B1714, #ECE6DF);
+	--ember-ink-soft:  light-dark(#3B342E, #CBC3BA);
+	--ember-ink-mute:  light-dark(#857B72, #9A9088);
+	/* Light: mute, darkened to 4.7:1 on --ember-bg for body-size text. */
+	--ember-ink-aside: light-dark(#7A7068, #9A9088);
+	--ember-accent:    light-dark(#D6421F, #FF7A50);
+	--ember-accent-2:  light-dark(#A9310F, #FF9670);
+	--ember-surface:   light-dark(#F2ECE4, #2A2320);
+	--ember-rule:      light-dark(rgba(27, 23, 20, 0.10), rgba(236, 230, 223, 0.12));
+	--ember-rule-2:    light-dark(rgba(27, 23, 20, 0.16), rgba(236, 230, 223, 0.18));
+	--ember-quote-bg:  light-dark(rgba(214, 66, 31, 0.05), rgba(255, 122, 80, 0.08));
+	--ember-footnote-ink:       light-dark(#FFFFFF, #1A1613);
+	--ember-footnote-chip:      light-dark(rgba(214, 66, 31, 0.14), rgba(255, 122, 80, 0.18));
+	--ember-footnote-chip-edge: light-dark(rgba(214, 66, 31, 0.28), rgba(255, 122, 80, 0.36));
+	--ember-popover-edge:       var(--ember-rule-2);
+	--ember-popover-shadow:
+		0 1px 2px light-dark(rgba(27, 23, 20, 0.08), rgba(0, 0, 0, 0.2)),
+		0 8px 24px light-dark(rgba(27, 23, 20, 0.14), rgba(0, 0, 0, 0.36));
+	--ember-bleed:     0px; /* set to the body side padding per platform */
 
 	--header-table-border-color: var(--ember-rule);
 	--header-color:              var(--ember-ink-mute);
 	--body-code-color:           var(--ember-ink);
 	--code-background-color:     var(--ember-surface);
-	--system-message-color:      #cbcbcb;
+	--system-message-color:      light-dark(#cbcbcb, #5f5f5f);
 	--feedlink-color:            var(--ember-accent);
 	--article-title-color:       var(--ember-ink);
 	--article-date-color:        var(--ember-accent);
@@ -48,32 +57,6 @@
 	/* A footnote marker the adapter in template.html didn't turn into a chip
 	   (Article JavaScript off, markup it doesn't know) is a plain link. */
 	--sup-link-color:            var(--ember-accent);
-}
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--ember-bg:        #1A1613;
-		--ember-ink:       #ECE6DF;
-		--ember-ink-soft:  #CBC3BA;
-		--ember-ink-mute:  #9A9088;
-		--ember-ink-aside: var(--ember-ink-mute);
-		--ember-accent:    #FF7A50;
-		--ember-accent-2:  #FF9670;
-		--ember-surface:   #2A2320;
-		--ember-rule:      rgba(236, 230, 223, 0.12);
-		--ember-rule-2:    rgba(236, 230, 223, 0.18);
-		--ember-quote-bg:  rgba(255, 122, 80, 0.08);
-		--ember-footnote-ink: #1A1613;
-		--ember-footnote-chip:      rgba(255, 122, 80, 0.18);
-		--ember-footnote-chip-edge: rgba(255, 122, 80, 0.36);
-		--ember-popover-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.36);
-
-		--header-color:              var(--ember-ink-mute);
-		--body-code-color:           var(--ember-ink);
-		--system-message-color:      #5f5f5f;
-		--article-title-color:       var(--ember-ink);
-		--table-cell-border-color:   var(--ember-rule-2);
-	}
 }
 
 /* Increase Contrast: the popover's hairline is the only thing separating it
@@ -104,7 +87,7 @@
 body {
 	margin-left: auto;
 	margin-right: auto;
-	word-wrap: break-word;
+	overflow-wrap: break-word;
 	max-width: 44em;
 	--ember-column: min(100cqw - 2 * var(--ember-bleed), 44em);
 
@@ -302,7 +285,7 @@ body .header a:link, .header a:visited {
 	font-weight: 800;
 	margin: 0.02em 0.09em 0 0;
 	color: var(--ember-accent);
-	-webkit-hyphens: none;
+	hyphens: none;
 }
 
 /* The opening aside the drop cap skips is a note about the article, not its
@@ -384,7 +367,7 @@ blockquote cite {
 code, pre {
 	font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Courier, monospace;
 	font-size: 1em;
-	-webkit-hyphens: none;
+	hyphens: none;
 	background: var(--code-background-color);
 }
 
@@ -430,7 +413,7 @@ pre code {
 .nnw-overflow table table { margin-bottom: 0; border: none; }
 
 .nnw-overflow td, .nnw-overflow th {
-	-webkit-hyphens: none;
+	hyphens: none;
 	word-break: normal;
 	border: 1px solid var(--table-cell-border-color);
 	border-top: none;
@@ -696,7 +679,7 @@ figcaption,
 /* Audio is a card: the episode's title in the headline face, its duration
    and size in the dateline's small caps, and the system player beneath. The
    script splits NetNewsWire's one-line caption into those two; without it,
-   the whole caption heads the card. color-scheme (see Platform specifics)
+   the whole caption heads the card. color-scheme (see Palette)
    gives the player its dark controls. */
 .ember-enclosures .nnw-enclosure-audio {
 	display: flex;
@@ -1347,8 +1330,8 @@ body > .systemMessage { color: var(--system-message-color); }
    text-size class (smallText … xxLargeText); on iOS and iPadOS it never
    does. Each block below keys on that, so it needs no script and holds with
    Article JavaScript off. :where() adds no specificity, so every rule keeps
-   the weight it would have unwrapped, and each nested selector starts with
-   an explicit & so it parses on iOS 17.0, before relaxed nesting.
+   the weight it would have unwrapped. Colors come from the light-dark()
+   palette, so neither block needs a dark-mode branch.
 
    Not @supports (-webkit-touch-callout: none), the usual iOS test: no
    desktop WebKit implements it, so previews and checks would only ever see
@@ -1364,19 +1347,18 @@ body > .systemMessage { color: var(--system-message-color); }
 		padding-left: 20px;
 		padding-right: 20px;
 		word-break: break-word;
-		-webkit-hyphens: auto;
+		hyphens: auto;
 		-webkit-text-size-adjust: none;
 	}
 
 	&:root {
-		color-scheme: light dark;
 		font: -apple-system-body;
 		/* The font-size is replaced at runtime by the dynamic type size */
 		font-size: [[font-size]]px;
 		--primary-accent-color: var(--ember-accent);
 		--secondary-accent-color: var(--ember-accent);
 		--block-quote-border-color: var(--ember-accent);
-		--ios-hover-color: rgba(214, 66, 31, 0.12);
+		--ios-hover-color: light-dark(rgba(214, 66, 31, 0.12), rgba(255, 122, 80, 0.18));
 		--ember-bleed: 20px; /* matches iOS body side padding */
 	}
 
@@ -1388,16 +1370,6 @@ body > .systemMessage { color: var(--system-message-color); }
 	@media (min-width: 500px) {
 		&:root { font-size: calc([[font-size]]px * 1.2); }
 		& body .header { font-size: calc([[font-size]]px * 1.2); }
-	}
-
-	@media (prefers-color-scheme: dark) {
-		&:root {
-			--primary-accent-color: var(--ember-accent);
-			--secondary-accent-color: var(--ember-accent);
-			--block-quote-border-color: var(--ember-accent);
-			--header-table-border-color: var(--ember-rule);
-			--ios-hover-color: rgba(255, 122, 80, 0.18);
-		}
 	}
 
 	& body a, & body a:visited, & body a * {
@@ -1467,22 +1439,11 @@ body > .systemMessage { color: var(--system-message-color); }
 	& .xxLargeText, & .xxlargeText { font-size: 22px; }
 
 	&:root {
-		color-scheme: light dark;
 		--accent-color: var(--ember-accent);
 		--block-quote-border-color: var(--ember-accent);
 		--hover-gradient-color-start: var(--ember-accent-2);
 		--hover-gradient-color-end: var(--ember-accent);
 		--ember-bleed: 48px; /* matches macOS body side padding */
-	}
-
-	@media (prefers-color-scheme: dark) {
-		&:root {
-			--accent-color: var(--ember-accent);
-			--block-quote-border-color: var(--ember-accent);
-			--header-table-border-color: var(--ember-rule);
-			--hover-gradient-color-start: var(--ember-accent-2);
-			--hover-gradient-color-end: var(--ember-accent);
-		}
 	}
 
 	& body a, & body a:visited, & body a * {

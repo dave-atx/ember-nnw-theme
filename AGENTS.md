@@ -82,6 +82,10 @@ fixtures are captured from NetNewsWire with `npx nnw-theme@2 capture`.
 
 ### Conventions
 
+- **Browser support:** Ember only runs in NetNewsWire's WebKit. The floor is
+  NetNewsWire's own (macOS 15, iOS 18, so Safari 18): use any CSS, HTML, or JS
+  feature WebKit shipped by then without fallbacks; newer ones only as progressive
+  enhancement.
 - Fixtures are TOML in `fixtures/` (keys mirror the template variables; HTML bodies
   use `'''triple-quoted'''` literals). Keep interesting edge cases: long byline,
   long title, pull-quotes, figures, footnotes, smart quotes.

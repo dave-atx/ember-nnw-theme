@@ -198,11 +198,8 @@ enclosures: Audio and video players and images from the article's enclosures.
 				const link = embed.previousElementSibling;
 				if (link?.matches("blockquote.wp-embedded-content")) link.classList.add("ember-embed-fallback");
 			} else if (message === "link" && typeof value === "string") {
-				try {
-					if (new URL(value).host !== new URL(embed.src).host) return;
-				} catch (_) {
-					return;
-				}
+				const host = URL.parse(value)?.host;
+				if (!host || host !== URL.parse(embed.src)?.host) return;
 				const link = document.createElement("a");
 				link.href = value;
 				link.click();
@@ -235,24 +232,14 @@ enclosures: Audio and video players and images from the article's enclosures.
 	let referenceNumber = 0;
 	let noteNumber = 0;
 
-	let baseUrl;
-	try {
-		baseUrl = new URL(document.baseURI);
-	} catch (_) {
-		baseUrl = null;
-	}
+	const baseUrl = URL.parse(document.baseURI);
 
 	// The page's base URL isn't always the article's: when the article has no link of
 	// its own, NetNewsWire falls back to the feed's home page, as it does for every
 	// article synced through the Google Reader API (FreshRSS, Miniflux). The title
 	// links to the article's own URL, so links to that page count as local too.
-	let articleUrl;
-	try {
-		const titleLink = document.querySelector(".articleTitle a")?.getAttribute("href");
-		articleUrl = titleLink && baseUrl ? new URL(titleLink, baseUrl) : null;
-	} catch (_) {
-		articleUrl = null;
-	}
+	const titleLink = document.querySelector(".articleTitle a")?.getAttribute("href");
+	const articleUrl = titleLink && baseUrl ? URL.parse(titleLink, baseUrl) : null;
 
 	function isSamePage(url, page) {
 		return url.origin === page.origin && url.pathname === page.pathname && url.search === page.search;
@@ -287,13 +274,14 @@ enclosures: Audio and video players and images from the article's enclosures.
 	function localHashId(link) {
 		const href = link.getAttribute("href");
 		if (!href?.includes("#") || !baseUrl) return;
+		const url = URL.parse(href, baseUrl);
+		if (!url?.hash) return;
+		const isLocal = isSamePage(url, baseUrl) ||
+			(articleUrl && isSamePage(url, articleUrl)) ||
+			(url.origin === baseUrl.origin && url.pathname === "/" && !url.search);
+		if (!isLocal) return;
+		// A malformed escape ("#fn%") throws.
 		try {
-			const url = new URL(href, baseUrl);
-			if (!url.hash) return;
-			const isLocal = isSamePage(url, baseUrl) ||
-				(articleUrl && isSamePage(url, articleUrl)) ||
-				(url.origin === baseUrl.origin && url.pathname === "/" && !url.search);
-			if (!isLocal) return;
 			return decodeURIComponent(url.hash.slice(1));
 		} catch (_) {
 			return;
