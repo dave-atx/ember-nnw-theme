@@ -183,6 +183,7 @@ body .header a:link, .header a:visited {
 	font-weight: 800;
 	letter-spacing: -0.021em;
 	line-height: 1.08;
+	text-wrap: balance;
 }
 
 .articleTitle a:link, .articleTitle a:visited {
@@ -244,7 +245,13 @@ body .header a:link, .header a:visited {
 	line-height: 1.66;
 	letter-spacing: -0.003em;
 	color: var(--ember-ink);
+	/* Avoid a lone word on a paragraph's last line and smooth the rag. */
+	text-wrap: pretty;
 }
+
+/* Headings break into lines of even length rather than a full line and a
+   stub. */
+.articleBody :is(h1, h2, h3, h4, h5, h6) { text-wrap: balance; }
 
 .articleBody p {
 	margin-top: 0;
