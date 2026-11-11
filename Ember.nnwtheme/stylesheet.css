@@ -107,27 +107,30 @@ a:hover {
 
 /* ---------- Masthead (feed title / byline / avatar) ----------------- */
 
-.headerTable {
-	width: 100%;
-	height: 68px;
-}
-
-body .headerTable {
+/* Feed title and byline on the left, the feed's icon on the right, both
+   centered vertically. The avatar is sized to a standard two-line feed title +
+   byline stack (see .avatar img), so in the common case it fills the masthead;
+   when a byline runs to three or more lines the avatar sits at the vertical
+   middle of the taller stack rather than clinging to the top. */
+.masthead {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	align-items: center;
+	box-sizing: border-box;
+	min-height: 68px;
+	/* The masthead was a table, which quirks mode sets in the medium size
+	   whatever the page's; keep that on macOS (iOS sizes .header itself). */
+	font-size: medium;
 	border-bottom: 1px solid var(--header-table-border-color);
 	color: var(--header-color);
 }
 
+/* The global div rule centers with auto margins, which a grid honors. */
+.masthead > .header { margin: 0; }
+
 body .header {
 	color: var(--header-color);
 	line-height: 1.45;
-}
-
-/* Center both cells vertically. The avatar is sized to a standard two-line
-   feed title + byline stack (see .avatar img), so in the common case it fills
-   the masthead; when a byline runs to three or more lines the avatar sits at
-   the vertical middle of the taller stack rather than clinging to the top. */
-.headerTable td.header {
-	vertical-align: middle;
 }
 
 body .header a:link, .header a:visited {
@@ -145,9 +148,9 @@ body .header a:link, .header a:visited {
 	color: var(--feedlink-color);
 }
 
-/* Fixed, non-shrinking column for the icon with a gap so a long byline can
-   never crowd or overlap it. Width tracks the avatar so the column is no wider
-   than the icon it holds. */
+/* Non-shrinking column for the icon with a gap so a long byline can never
+   crowd or overlap it. Width tracks the avatar so the column is no wider than
+   the icon it holds. */
 .avatar {
 	width: 2.3em;
 	padding-inline-start: 16px;
@@ -168,9 +171,6 @@ body .header a:link, .header a:visited {
 .feedIcon {
 	border-radius: 9px;
 }
-
-.rightAlign { text-align: end; }
-.leftAlign  { text-align: start; }
 
 /* ---------- Title & dateline ---------------------------------------- */
 
@@ -428,8 +428,8 @@ pre code {
 	letter-spacing: 0.03em;
 }
 
-.nnw-overflow tr :matches(td, th):last-child { border-right: none; }
-.nnw-overflow :matches(thead, tbody, tfoot):last-child > tr:last-child :matches(td, th) { border-bottom: none; }
+.nnw-overflow tr :is(td, th):last-child { border-right: none; }
+.nnw-overflow :is(thead, tbody, tfoot):last-child > tr:last-child :is(td, th) { border-bottom: none; }
 .nnw-overflow td pre { border: none; padding: 0; }
 .nnw-overflow table[border="0"] { border-width: 0; }
 
