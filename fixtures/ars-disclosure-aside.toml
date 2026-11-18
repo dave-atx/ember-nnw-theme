@@ -1,0 +1,30 @@
+# Ars Technica (Jonathan M. Gitlin), from Miniflux, 2026-11-16: a trip disclosure in
+# an <aside> sits between the lead figure and the opening paragraph. Ars's own feed
+# has the aside (class "pullbox sidebar fullwidth", which Miniflux strips) directly
+# before the first <p>; Miniflux only adds the figure. The aside needs its own gap
+# above the drop-cap paragraph. Body trimmed to the opening paragraphs.
+# Preview with: npx nnw-theme@2 render ars-disclosure-aside
+
+byline = 'Jonathan M. Gitlin'
+date_long = 'November 16, 2026'
+date_medium = 'Nov 16, 2026'
+date_short = '11/16/26'
+dateline_style = 'articleDateline'
+datetime_long = 'November 16, 2026 at 8:00:05 AM'
+datetime_medium = 'Nov 16, 2026 at 8:00 AM'
+datetime_short = '11/16/26, 8:00 AM'
+feed_link = 'https://arstechnica.com/'
+feed_link_title = 'Ars Technica'
+preferred_link = 'https://arstechnica.com/cars/2026/11/mercedes-clever-new-driving-assist-handles-complex-traffic-like-a-champ/'
+text_size_class = 'mediumText'
+time_long = '8:00:05 AM CST'
+time_medium = '8:00:05 AM'
+time_short = '8:00 AM'
+title = "Mercedes' clever new driving assist handles complex traffic like a champ"
+body = '''
+<figure><img src="https://cdn.arstechnica.net/wp-content/uploads/2026/11/MB-ADAS-day-1-of-5-1152x648-1794831237.jpg" loading="lazy"/><figcaption>Mercedes&#39; new point-to-point driving assist was quite at home on the chaotic streets of San Francisco. Credit: Mercedes-Benz</figcaption></figure>
+                            <aside>Mercedes-Benz provided flights from Washington, DC, to San Francisco and accommodation so Ars could try its new driver assistance systems. Ars does not accept paid editorial content.</aside>
+<p>SAN FRANCISCO—When Ars first drove the new Mercedes-Benz CLA <a href="https://arstechnica.com/cars/2025/12/2026-mercedes-cla-first-drive-entry-level-doesnt-mean-basic/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">last year</a>, the automaker also gave us a sneak preview of its next driver assist. Called Drive Assist Pro, it’s for collaborative partially assisted driving, and from the passenger seat at the time, <a href="https://arstechnica.com/cars/2026/01/mercedes-teaches-its-driver-assist-how-to-handle-surface-streets/" referrerpolicy="no-referrer" rel="noopener noreferrer" target="_blank">the demo was impressive</a>. Now the automaker is getting ready to start rolling out Drive Assist Pro to customers with cars running the new MB.OS operating system here in the US and in Germany, and it let us have some time behind the wheel.</p>
+<p>While most automakers want a reputation for safety, Mercedes has long used passive and active technology to do so in its products. It was one of the first OEMs to introduce airbags, and a decade later started adding active safety systems like anti-lock brakes, electronic stability control, and adaptive cruise control. And so, by giving the car’s electronics the ability to control the brakes and throttle, we arrive at the first level of assisted driving—called “level 1” in automotive engineer-speak.</p>
+<p>“Level 2” assisted driving, where the car also controls the steering as well as the acceleration and braking, got famous with Tesla Autopilot. But the first lane-keeping assists predate it by almost a decade in passenger cars, when Toyota introduced a system in 2004. The human driver behind the wheel is still in charge, responsible for situational awareness (and anything that arises from a lack thereof), with the idea that long drives become less tiring and a little more effortless when the car does the boring job of keeping a constant speed or a constant distance to the car ahead and between the white lines.</p>
+'''

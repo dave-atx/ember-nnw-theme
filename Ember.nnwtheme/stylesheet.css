@@ -300,6 +300,18 @@ body .header a:link, .header a:visited {
    first line: set it in gray, as Unsung's site does. */
 .articleBody > p.ember-aside { color: var(--ember-ink-aside); }
 
+/* A feed's own <aside> is the same kind of note (Ars Technica's trip
+   disclosures open the article with one). Neither core.css nor the UA
+   stylesheet gives it a margin, so set the paragraph gap below it, or the
+   opening paragraph and its drop cap sit right against it. */
+.articleBody aside {
+	margin-top: 0;
+	margin-bottom: 1.15em;
+	color: var(--ember-ink-aside);
+}
+
+.articleBody aside > :last-child { margin-bottom: 0; }
+
 /* Section headings, flagged with a short accent bar */
 h1 {
 	line-height: 1.15em;
